@@ -1,0 +1,157 @@
+is_global = true
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = PizzaShop.Web
+build_property.RootNamespace = PizzaShop.Web
+build_property.ProjectDir = E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web
+build_property._RazorSourceGeneratorDebug = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/Account/Forget.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxGb3JnZXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/Account/Reset.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZXNldC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/Home/ChangePassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDaGFuZ2VQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/Home/MyProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNeVByb2ZpbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/Menu/MenuItem.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxNZW51SXRlbS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/Menu/_AddCategory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxfQWRkQ2F0ZWdvcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/Menu/_AddItem.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxfQWRkSXRlbS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/Menu/_AddModifierGroup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxfQWRkTW9kaWZpZXJHcm91cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/Menu/_CategoryList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxfQ2F0ZWdvcnlMaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/Menu/_ItemListPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxfSXRlbUxpc3RQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/Menu/_ModifierGroupList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxfTW9kaWZpZXJHcm91cExpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/Menu/_ModifierListInModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxfTW9kaWZpZXJMaXN0SW5Nb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/Menu/_SelectedModifier.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxfU2VsZWN0ZWRNb2RpZmllci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/Menu/_SelectedModifierGroup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxfU2VsZWN0ZWRNb2RpZmllckdyb3VwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/RoleAndPermission/Permission.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZUFuZFBlcm1pc3Npb25cUGVybWlzc2lvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/RoleAndPermission/Role.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZUFuZFBlcm1pc3Npb25cUm9sZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/RoleAndPermission/_PermissionPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZUFuZFBlcm1pc3Npb25cX1Blcm1pc3Npb25QYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/SectionAndTables/SectionAndTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VjdGlvbkFuZFRhYmxlc1xTZWN0aW9uQW5kVGFibGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/SectionAndTables/_AddSection.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VjdGlvbkFuZFRhYmxlc1xfQWRkU2VjdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/SectionAndTables/_SectionList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VjdGlvbkFuZFRhYmxlc1xfU2VjdGlvbkxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/SectionAndTables/_TableList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VjdGlvbkFuZFRhYmxlc1xfVGFibGVMaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/Shared/_AccountLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BY2NvdW50TGF5b3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/Shared/_Notification.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Ob3RpZmljYXRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/User/AddUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxBZGRVc2VyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/User/EditUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxFZGl0VXNlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/User/UserList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxVc2VyTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/User/_UserPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxfVXNlclBhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/TatvaSoft/Clone/PizzaShop-N-Tier/PizzaShop.Web/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-7a5thk4fru

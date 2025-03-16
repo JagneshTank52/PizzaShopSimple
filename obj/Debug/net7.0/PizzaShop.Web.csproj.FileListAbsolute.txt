@@ -1,0 +1,180 @@
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\appsettings.Development.json
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\appsettings.json
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Web.staticwebassets.runtime.json
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Web.exe
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Web.deps.json
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Web.runtimeconfig.json
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Web.dll
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Web.pdb
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Humanizer.dll
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.dll
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.dll
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Mono.TextTemplating.dll
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Npgsql.dll
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\System.CodeDom.dll
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Entity.dll
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Entity.pdb
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.csproj.AssemblyReference.cache
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.GeneratedMSBuildEditorConfig.editorconfig
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.AssemblyInfoInputs.cache
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.AssemblyInfo.cs
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.csproj.CoreCompileInputs.cache
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.MvcApplicationPartsAssemblyInfo.cache
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.RazorAssemblyInfo.cache
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.RazorAssemblyInfo.cs
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\staticwebassets\msbuild.PizzaShop.Web.Microsoft.AspNetCore.StaticWebAssets.props
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\staticwebassets\msbuild.build.PizzaShop.Web.props
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.PizzaShop.Web.props
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.PizzaShop.Web.props
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\staticwebassets.pack.json
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\staticwebassets.build.json
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\staticwebassets.development.json
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\scopedcss\bundle\PizzaShop.Web.styles.css
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\scopedcss\projectbundle\PizzaShop.Web.bundle.scp.css
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.csproj.CopyComplete
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.dll
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\refint\PizzaShop.Web.dll
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.pdb
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.genruntimeconfig.cache
+E:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\ref\PizzaShop.Web.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Repository.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Service.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Repository.pdb
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Service.pdb
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.AspNetCore.JsonPatch.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.AspNetCore.Razor.Language.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.CodeAnalysis.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.CodeAnalysis.CSharp.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.CodeAnalysis.Razor.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.Design.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.Caching.Abstractions.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.Caching.Memory.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.Configuration.Abstractions.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.FileProviders.Composite.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.FileSystemGlobbing.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.Hosting.Abstractions.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.Localization.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.Localization.Abstractions.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.Logging.Abstractions.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.ObjectPool.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.Primitives.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.WebEncoders.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Newtonsoft.Json.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\Npgsql.EntityFrameworkCore.PostgreSQL.Design.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\System.Diagnostics.DiagnosticSource.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\System.Formats.Asn1.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\System.Security.Cryptography.Pkcs.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\System.Security.Cryptography.Xml.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\System.Text.Encodings.Web.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\bin\Debug\net7.0\runtimes\browser\lib\net7.0\System.Text.Encodings.Web.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.MvcApplicationPartsAssemblyInfo.cs
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\appsettings.Development.json
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\appsettings.json
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Web.staticwebassets.runtime.json
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Web.exe
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Web.deps.json
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Web.runtimeconfig.json
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Web.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Web.pdb
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Humanizer.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.AspNetCore.JsonPatch.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.AspNetCore.Razor.Language.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.CodeAnalysis.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.CodeAnalysis.CSharp.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.CodeAnalysis.Razor.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.Design.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.Caching.Abstractions.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.Caching.Memory.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.Configuration.Abstractions.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.FileProviders.Composite.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.FileSystemGlobbing.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.Hosting.Abstractions.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.Localization.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.Localization.Abstractions.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.Logging.Abstractions.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.ObjectPool.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.Primitives.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.Extensions.WebEncoders.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Mono.TextTemplating.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Newtonsoft.Json.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Npgsql.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\Npgsql.EntityFrameworkCore.PostgreSQL.Design.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\System.CodeDom.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\System.Diagnostics.DiagnosticSource.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\System.Formats.Asn1.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\System.Security.Cryptography.Pkcs.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\System.Security.Cryptography.Xml.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\System.Text.Encodings.Web.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\runtimes\browser\lib\net7.0\System.Text.Encodings.Web.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Entity.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Repository.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Service.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Entity.pdb
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Repository.pdb
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\bin\Debug\net7.0\PizzaShop.Service.pdb
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.csproj.AssemblyReference.cache
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.GeneratedMSBuildEditorConfig.editorconfig
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.AssemblyInfoInputs.cache
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.AssemblyInfo.cs
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.csproj.CoreCompileInputs.cache
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.MvcApplicationPartsAssemblyInfo.cs
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.MvcApplicationPartsAssemblyInfo.cache
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.RazorAssemblyInfo.cache
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.RazorAssemblyInfo.cs
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\staticwebassets\msbuild.PizzaShop.Web.Microsoft.AspNetCore.StaticWebAssets.props
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\staticwebassets\msbuild.build.PizzaShop.Web.props
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.PizzaShop.Web.props
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.PizzaShop.Web.props
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\staticwebassets.pack.json
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\staticwebassets.build.json
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\staticwebassets.development.json
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\scopedcss\bundle\PizzaShop.Web.styles.css
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\scopedcss\projectbundle\PizzaShop.Web.bundle.scp.css
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.csproj.CopyComplete
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\refint\PizzaShop.Web.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.pdb
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\PizzaShop.Web.genruntimeconfig.cache
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Web\obj\Debug\net7.0\ref\PizzaShop.Web.dll

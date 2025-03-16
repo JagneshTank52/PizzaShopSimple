@@ -1,0 +1,417 @@
+{
+  "Files": [
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\PizzaShop.Web.bundle.scp.css",
+      "PackagePath": "staticwebassets\\PizzaShop.Web.bundle.scp.css"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\Images\\Default_pfp.svg.png",
+      "PackagePath": "staticwebassets\\Images\\Default_pfp.svg.png"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\Images\\customer.svg",
+      "PackagePath": "staticwebassets\\Images\\customer.svg"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\Images\\dashboard-default.svg",
+      "PackagePath": "staticwebassets\\Images\\dashboard-default.svg"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\Images\\dining-menu.png",
+      "PackagePath": "staticwebassets\\Images\\dining-menu.png"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\Images\\dominos_background.jpg",
+      "PackagePath": "staticwebassets\\Images\\dominos_background.jpg"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\Images\\eye.svg",
+      "PackagePath": "staticwebassets\\Images\\eye.svg"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\Images\\header-logo.svg",
+      "PackagePath": "staticwebassets\\Images\\header-logo.svg"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\Images\\hero-image.png",
+      "PackagePath": "staticwebassets\\Images\\hero-image.png"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\Images\\logo.svg",
+      "PackagePath": "staticwebassets\\Images\\logo.svg"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\Images\\menu-bar-primary.svg",
+      "PackagePath": "staticwebassets\\Images\\menu-bar-primary.svg"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\Images\\menu-bar.svg",
+      "PackagePath": "staticwebassets\\Images\\menu-bar.svg"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\Images\\non-veg-icon.svg",
+      "PackagePath": "staticwebassets\\Images\\non-veg-icon.svg"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\Images\\pencil-square.svg",
+      "PackagePath": "staticwebassets\\Images\\pencil-square.svg"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\Images\\people.svg",
+      "PackagePath": "staticwebassets\\Images\\people.svg"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\Images\\person-gear.svg",
+      "PackagePath": "staticwebassets\\Images\\person-gear.svg"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\Images\\pizzashop_logo.png",
+      "PackagePath": "staticwebassets\\Images\\pizzashop_logo.png"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\Images\\profile_div_bg.jpg",
+      "PackagePath": "staticwebassets\\Images\\profile_div_bg.jpg"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\Images\\table.svg",
+      "PackagePath": "staticwebassets\\Images\\table.svg"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\Images\\trash.svg",
+      "PackagePath": "staticwebassets\\Images\\trash.svg"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\Images\\veg-icon.svg",
+      "PackagePath": "staticwebassets\\Images\\veg-icon.svg"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\Images\\vegan-icon.svg",
+      "PackagePath": "staticwebassets\\Images\\vegan-icon.svg"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\css\\custom.css",
+      "PackagePath": "staticwebassets\\css\\custom.css"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\html\\emailHtml.html",
+      "PackagePath": "staticwebassets\\html\\emailHtml.html"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\html\\newUserMail.html",
+      "PackagePath": "staticwebassets\\html\\newUserMail.html"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\uploads\\02d9d9f5-307a-422b-9749-e943b53910ef.png",
+      "PackagePath": "staticwebassets\\uploads\\02d9d9f5-307a-422b-9749-e943b53910ef.png"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\uploads\\23c7d7af-4700-4f8f-8e7b-e1b75bd24b32.pdf",
+      "PackagePath": "staticwebassets\\uploads\\23c7d7af-4700-4f8f-8e7b-e1b75bd24b32.pdf"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\uploads\\3e883d22-8162-4a47-94c2-6a00282c6d95.jpg",
+      "PackagePath": "staticwebassets\\uploads\\3e883d22-8162-4a47-94c2-6a00282c6d95.jpg"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\uploads\\4bcdb3a4-316c-4d55-aae7-fa0ec364fb90.jpg",
+      "PackagePath": "staticwebassets\\uploads\\4bcdb3a4-316c-4d55-aae7-fa0ec364fb90.jpg"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\uploads\\81b60ee8-c7f9-4f15-a06d-e17c82d0fe73.txt",
+      "PackagePath": "staticwebassets\\uploads\\81b60ee8-c7f9-4f15-a06d-e17c82d0fe73.txt"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\uploads\\8d5354b2-d75e-4a2c-b9fb-1f6839de47a7.png",
+      "PackagePath": "staticwebassets\\uploads\\8d5354b2-d75e-4a2c-b9fb-1f6839de47a7.png"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\uploads\\9f42fbee-c79e-44cd-8490-3625c91ce1fa.jpg",
+      "PackagePath": "staticwebassets\\uploads\\9f42fbee-c79e-44cd-8490-3625c91ce1fa.jpg"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\uploads\\be01d274-8240-4470-9cd1-3522c147bc3a.png",
+      "PackagePath": "staticwebassets\\uploads\\be01d274-8240-4470-9cd1-3522c147bc3a.png"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\uploads\\c031f169-e795-424c-b407-0cba5b10cdf0.pdf",
+      "PackagePath": "staticwebassets\\uploads\\c031f169-e795-424c-b407-0cba5b10cdf0.pdf"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\uploads\\c35744e1-b9fa-4534-9589-3fbb55ce7eb3.txt",
+      "PackagePath": "staticwebassets\\uploads\\c35744e1-b9fa-4534-9589-3fbb55ce7eb3.txt"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\uploads\\d999a2bf-6421-41cc-94fd-614efd4d1225.jpg",
+      "PackagePath": "staticwebassets\\uploads\\d999a2bf-6421-41cc-94fd-614efd4d1225.jpg"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\uploads\\dba5ae8b-cd4f-44eb-8daf-cd385258e1ff.pdf",
+      "PackagePath": "staticwebassets\\uploads\\dba5ae8b-cd4f-44eb-8daf-cd385258e1ff.pdf"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\uploads\\e106b015-6565-40fb-b1bf-d1e2494ddf88.png",
+      "PackagePath": "staticwebassets\\uploads\\e106b015-6565-40fb-b1bf-d1e2494ddf88.png"
+    },
+    {
+      "Id": "E:\\TatvaSoft\\Clone\\PizzaShop-N-Tier\\PizzaShop.Web\\wwwroot\\uploads\\e7b9a613-bdf5-44b6-8465-05441cc75927.png",
+      "PackagePath": "staticwebassets\\uploads\\e7b9a613-bdf5-44b6-8465-05441cc75927.png"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.PizzaShop.Web.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.PizzaShop.Web.props",
+      "PackagePath": "build\\PizzaShop.Web.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.PizzaShop.Web.props",
+      "PackagePath": "buildMultiTargeting\\PizzaShop.Web.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.PizzaShop.Web.props",
+      "PackagePath": "buildTransitive\\PizzaShop.Web.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
