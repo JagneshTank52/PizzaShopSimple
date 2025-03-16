@@ -1,0 +1,38 @@
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Service\bin\Debug\net7.0\PizzaShop.Service.deps.json
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Service\bin\Debug\net7.0\PizzaShop.Service.runtimeconfig.json
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Service\bin\Debug\net7.0\PizzaShop.Service.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Service\bin\Debug\net7.0\PizzaShop.Service.pdb
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Service\bin\Debug\net7.0\PizzaShop.Entity.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Service\bin\Debug\net7.0\PizzaShop.Repository.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Service\bin\Debug\net7.0\PizzaShop.Repository.pdb
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Service\bin\Debug\net7.0\PizzaShop.Entity.pdb
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Service\obj\Debug\net7.0\PizzaShop.Service.csproj.AssemblyReference.cache
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Service\obj\Debug\net7.0\PizzaShop.Service.GeneratedMSBuildEditorConfig.editorconfig
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Service\obj\Debug\net7.0\PizzaShop.Service.AssemblyInfoInputs.cache
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Service\obj\Debug\net7.0\PizzaShop.Service.AssemblyInfo.cs
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Service\obj\Debug\net7.0\PizzaShop.Service.csproj.CoreCompileInputs.cache
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Service\obj\Debug\net7.0\PizzaShop.Service.csproj.CopyComplete
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Service\obj\Debug\net7.0\PizzaShop.Service.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Service\obj\Debug\net7.0\refint\PizzaShop.Service.dll
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Service\obj\Debug\net7.0\PizzaShop.Service.pdb
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Service\obj\Debug\net7.0\PizzaShop.Service.genruntimeconfig.cache
+e:\Pizza Shop N-tier\PizzaShop\PizzaShop.Service\obj\Debug\net7.0\ref\PizzaShop.Service.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Service\bin\Debug\net7.0\PizzaShop.Service.deps.json
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Service\bin\Debug\net7.0\PizzaShop.Service.runtimeconfig.json
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Service\bin\Debug\net7.0\PizzaShop.Service.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Service\bin\Debug\net7.0\PizzaShop.Service.pdb
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Service\bin\Debug\net7.0\PizzaShop.Entity.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Service\bin\Debug\net7.0\PizzaShop.Repository.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Service\bin\Debug\net7.0\PizzaShop.Repository.pdb
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Service\bin\Debug\net7.0\PizzaShop.Entity.pdb
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Service\obj\Debug\net7.0\PizzaShop.Service.csproj.AssemblyReference.cache
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Service\obj\Debug\net7.0\PizzaShop.Service.GeneratedMSBuildEditorConfig.editorconfig
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Service\obj\Debug\net7.0\PizzaShop.Service.AssemblyInfoInputs.cache
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Service\obj\Debug\net7.0\PizzaShop.Service.AssemblyInfo.cs
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Service\obj\Debug\net7.0\PizzaShop.Service.csproj.CoreCompileInputs.cache
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Service\obj\Debug\net7.0\PizzaShop.Service.csproj.CopyComplete
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Service\obj\Debug\net7.0\PizzaShop.Service.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Service\obj\Debug\net7.0\refint\PizzaShop.Service.dll
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Service\obj\Debug\net7.0\PizzaShop.Service.pdb
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Service\obj\Debug\net7.0\PizzaShop.Service.genruntimeconfig.cache
+E:\TatvaSoft\Clone\PizzaShop-N-Tier\PizzaShop.Service\obj\Debug\net7.0\ref\PizzaShop.Service.dll
