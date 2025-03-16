@@ -1,0 +1,165 @@
+@using PizzaShop.Entity.ViewModels.MenuVM
+@using PizzaShop.Service.Helper
+
+@model PaginatedList<ModifierListVM>
+
+@{
+    var dynamicHeader = Model[0].isGetById? "modifierheaderMain" : "modifierheaderChek" ;
+    var dynamicCheckBox = Model[0].isGetById? "modifier-checkbox-main" : "modifier-checkbox" ;
+    Console.WriteLine(dynamicHeader);
+}
+
+@if(Model.Count == 0){
+    <p>No Data Found</p>
+}
+else{
+    <table class="table">
+    <thead>
+        <tr>
+            <th scope="col">
+                <div class="form-check">
+                    <input class="form-check-input @dynamicHeader" type="checkbox" value="">
+                </div>
+            </th>
+            <th scope="col">
+                Name
+            </th>
+            @* <th scope="col">Unit</th> *@
+            <th scope="col">Rate</th>
+            <th scope="col">Quantity</th>
+            @if(Model[0].isGetById){
+             <th scope="col">Action</th>
+            }
+            
+        </tr>
+    </thead>
+    <tbody id="table">
+
+        @foreach (var modifier in Model)
+        {
+            <tr>
+                <td scope="row" style="width: 100px;">
+                    <div class="form-check">
+                        <input class="form-check-input @dynamicCheckBox" type="checkbox" value="" id="chekbox"
+                            data-id=@modifier.Id data-name="@modifier.Name">
+                    </div>
+                </td>
+                <td>
+                    <span class="me-1">
+                        <img src="../images/dining-menu.png" height="30" width="30" alt="">
+                    </span>
+                    <span>
+                        @modifier.Name
+                    </span>
+                </td>
+                <td>
+                    @modifier.Rate
+                </td>
+                <td>
+                    @modifier.Quantity
+                </td>
+                @if(modifier.isGetById)
+                {
+                <td>
+                    <span>
+                        <a asp-action="EditUser" asp-controller="User" asp-route-id="@modifier.Id" class="link-dark">
+                            <i class="bi bi-pen me-3 edit"></i>
+                        </a>
+                    </span>
+                    <span>
+                        <i class="bi bi-trash delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id=@modifier.Id></i>
+                    </span>
+                </td>
+                }
+                
+            </tr>
+        }
+    </tbody>
+</table>        
+}
+
+<div class="col-12 d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-center justify-content-sm-end "
+    style="gap: 10px;">
+    <div class="d-flex flex-row align-items-center">
+        <h6 class="mb-0 me-1">Items per page</h5>
+            <select class="form-select w-auto me-2" id="modifierPageSize" aria-label="Default select example">
+                <option value="3" selected="@(Model.PageSize == 3 ? "selected" : null)">3</option>
+                <option value="5" selected="@(Model.PageSize == 5 ? "selected" : null)">5</option>
+                <option value="10" selected="@(Model.PageSize == 10 ? "selected" : null)">10</option>
+                <option value="20" selected="@(Model.PageSize == 20 ? "selected" : null)">20</option>
+            </select>
+    </div>
+    <div class="d-flex flex-row align-items-center">
+        <h5 class="mb-0 me-1"> page @(Model.FromCount + 1) - @(Model.ToCount < Model.TotalCount ? Model.ToCount : Model.TotalCount) of @Model.TotalCount</h5>
+        <ul class="pagination justify-content-end mb-0">
+            @if (Model.TotalPages > 1)
+            {
+                <li class="page-item @(Model.PageIndex > 1 ? " " : "disabled")">
+                    <a class="page-link" id="previousModifierPg" aria-label="Previous" data-index="@Model.PageIndex">
+                        <span aria-hidden="true"><i class="bi bi-caret-left-fill" style="color: var(--primary-color);"></i>
+                        </span>
+                    </a>
+                </li>
+
+                <li class="page-item @(Model.PageIndex < Model.TotalPages ? " " : "disabled")">
+                    <a class="page-link" id="nextModifierPg" aria-label="Next" data-index="@Model.PageIndex">
+                        <span aria-hidden="true"> <i class="bi bi-caret-right-fill" style="color: var(--primary-color);">
+                            </i> </span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+
+
+
+<script>
+    restoreCheckbox();
+
+    @* single item selected *@
+    $(".modifier-checkbox").on("click",function(){
+    const id = $(this).data('id');
+    const name = $(this).data('name');
+    if ($(this).prop("checked")) {
+        if (!selectedModifier.includes(id)) {
+            selectedModifier.push({Id:id, Name: name});
+        }
+    } else {
+        selectedModifier = selectedModifier.filter(item => item.Id !== id);
+    }
+    });
+
+    @* Check header wise check all check box *@
+    $(".modifierheaderChek").change(function() {
+        console.log("isChecked")
+        var isChecked = $(this).prop("checked");
+        console.log("Is all checked")
+        $(".modifier-checkbox").prop("checked", isChecked);
+
+        $(".modifier-checkbox").each(function(){
+            const id = $(this).data('id');
+            const name = $(this).data('name');
+            if (isChecked && !selectedModifier.includes(id)) {
+                selectedModifier.push({Id:id, Name: name});
+            }
+            else if(!isChecked){
+                selectedModifier = selectedModifier.filter(item => item.Id !== id);
+            }
+        });
+    });
+
+    @* Restore Check box *@
+    function restoreCheckbox(){
+        console.log("restoreCheckbox checkbox called");
+        $(".modifier-checkbox").each(function(){
+        const id = $(this).data('id');
+        const name = $(this).data('name');
+        
+        if (selectedModifier.some(item => item.Id === id)){
+            $(this).prop('checked', true);
+            }
+        });
+    };
+</script>

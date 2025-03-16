@@ -1,0 +1,10 @@
+@using PizzaShop.Entity.ViewModels.MenuVM;
+@model List<SelectedModifierVM>
+
+
+@foreach(var modifier in Model){
+    <div class="badge rounded-pill border me-2" style="font-size: 18px; color: #909090;">
+        @modifier.Name
+    <i class="bi bi-x-lg fw-bold" onclick=RemoveModifier(@modifier.Id)></i>
+    </div>
+}

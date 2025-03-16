@@ -1,0 +1,53 @@
+@using PizzaShop.Entity.ViewModels.RolePermissionVM;
+@model List<PermissionVM>
+<table class="table">
+<thead>
+    <tr>
+        <th scope="col">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+
+            </div>
+        </th>
+        <th scope="col">
+            Permission
+        </th>
+        <th scope="col">Can View</th>
+        <th scope="col">Can Add/Edit</th>
+        <th scope="col">Can Delete</th>
+    </tr>
+</thead>
+<tbody>
+
+    @foreach (var permission in Model)
+    {
+        <tr>
+            <td scope="row">
+                <div class="form-check">
+                    <input class="form-check-input checkbox-form" type="checkbox" value="" id="flexCheckDefault">
+
+                </div>
+            </td>
+            <td>
+                @permission.PermissionName
+            </td>
+            <td>
+                <div class="form-check form-switch text-center">
+                    <input class="form-check-input" type="checkbox" role="switch" asp-for=@permission.CanView>
+                </div>
+            </td>
+            <td>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" asp-for=@permission.CanEdit>
+                </div>
+
+            </td>
+            <td>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" asp-for="@permission.CanDelete">
+                </div>
+            </td>
+        </tr>
+    }
+</tbody>
+</table>

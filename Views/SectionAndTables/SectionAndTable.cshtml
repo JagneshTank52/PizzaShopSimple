@@ -1,0 +1,237 @@
+<div class="top-navbar d-flex justify-content-between mb-3">
+    <div class="navbar-left d-flex">
+        <P class="page-title mb-0 fs-3 fw-bold">Section/Tables</P>
+    </div>
+</div>
+
+<div class="card">
+    <div class="d-flex">
+        <div class="tab-pane-left offcanvas-lg offcanvas-start" tabindex="-1" id="sectionOffcanvas"
+            aria-labelledby="sectionOffcanvasLabel">
+            <div class="row mx-0 py-2" style="gap: 40px;">
+                <div class="col-12 d-flex justify-content-between">
+                    <h4 class="mb-0 group-name">Sections</h4>
+                    <button class="add-icon-btn p-0" id="add-section-btn" data-bs-toggle="modal"
+                        data-bs-target="#sectionModal" onclick=getSectionForm(0)>
+                        <i class="bi bi-plus-lg fs-5 fw-bold"></i>
+                    </button>
+                </div>
+                <div class="col-12 px-3" id="section-list">
+                    @* PARTIAL VIEW - CATEGORY LIST *@
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane-right">
+            <div class="row gy-2 mb-5 m-0">
+                <div class="col-12 d-flex align-items-center ">
+                    <button class="btn bg-transparent border-0 me-3 d-lg-none" type="button" id="item-menu-btn"
+                        data-bs-toggle="offcanvas" data-bs-target="#sectionOffcanvas" aria-controls="sectionOffcanvas">
+                        <img src="../images/menu-bar-primary.svg" width="25" height="25" alt="">
+                    </button>
+                    <h4 class="mb-0 list-name">Tables</h4>
+                </div>
+
+                <div class="col-12 d-flex justify-content-end ">
+                    <div class="position-relative d-flex me-3" style="width: 300px;">
+                        <input type="text" class="form-control " id="table-search" placeholder="Search"
+                            style="padding-right: 16%;">
+                        <Button type="submit" class="search-btn " id="item-search-btn"
+                            style="background-color: transparent; border: none;">
+                            <i class="bi bi-search fs-5"></i>
+                        </Button>
+                    </div>
+
+                    <button type="button" class="btn trash-btn me-2" id="multi-delete-btn">
+                        <img src="../images/trash.svg" height="20" width="20" alt="">
+                    </button>
+
+                    <button type="button" class="btn btn-primary" id="add-item-btn" data-bs-toggle="modal"
+                        onclick=getItemForm(0) data-bs-target="#itemModel">
+                        <span>
+                            <i class="bi bi-plus-lg"></i>
+                        </span>
+                        <span>New Table</span>
+                    </button>
+                </div>
+
+                <div class="col-12 table-responsive-xl" id="table-list">
+                    @* PARTIAL VIEW TABLE LIST *@
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@* ============ MODALS ============= *@
+
+@* Add Section Modal *@
+<div class="modal fade" id="sectionModal" tabindex="-1" aria-labelledby="sectionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="fs-5" id="sectionModalLabel">Add Section</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="add-section-form">
+                @*PARTIAL VIEW - ADD SECTION FORM*@
+            </div>
+        </div>
+    </div>
+</div>
+
+@* DELETE SECTION MODAL *@
+<div class="modal fade" id="delete-section" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="selete-section-label">Delete Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex flex-column align-items-center">
+                <i class="bi bi-exclamation-triangle-fill text-warning fs-3"></i>
+                <h5>Are you sure you want to delete Section?</h5>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" id="delete-section-btn" class="btn btn-primary">Yes</button>
+                <button type="button" class="btn outline-btn" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+       let pageIndex = 1;
+        let pageSize = 5;
+        let searchString = "";
+        let categoryId = 1;
+
+        var modal = new bootstrap.Modal(document.getElementById("delete-section"));
+        var addModal = new bootstrap.Modal(document.getElementById("sectionModal"));
+
+        $(document).ready(function () {
+            getSectionList();
+
+            $("#table-list").on("click", "#next", function () {
+                console.log("next clicked");
+                getTableList(categoryId, searchString, pageIndex + 1, pageSize);
+                pageIndex++;
+            });
+            $("#table-list").on("click", "#previous", function () {
+                getTableList(categoryId, searchString, pageIndex - 1, pageSize);
+                pageIndex--;
+            });
+            $("#table-list").on("change", "#itemPageSize", function () {
+                pageSize = $(this).val();
+                searchString = $("#table-search").val() || '';
+                pageIndex = 1;
+                getTableList(categoryId, searchString, pageIndex, pageSize);
+            });
+            $("#section-list").on("click", "#section-id", function () {
+                console.log("section selected");
+                categoryId = $(this).data("id");
+                let pageIndex = 1;
+                getTableList(categoryId, searchString, pageIndex, pageSize);
+
+            });
+            $("#table-search").keyup(function () {
+                searchString = $("#table-search").val().trim() || '';
+                console.log(searchString);
+                getTableList(categoryId, searchString, pageIndex, pageSize);
+            });
+        });
+
+        @* Get section form *@
+            function getSectionForm(id) {
+                if (id != 0) {
+                    $("#sectionModalLabel").text("Edit Section");
+                }
+                else {
+                    $("#sectionModalLabel").text("Add Section");
+                }
+                $.ajax({
+                    url: "/SectionAndTables/GetSectionById",
+                    data: { id },
+                    type: "GET",
+                    dataType: "html",
+                    success: function (response) {
+                        $("#add-section-form").html(response);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        alert("No Projects Found");
+                        $("#add-section-form").html('An error has occurred');
+                    }
+                });
+            };
+        
+        @* DELETE SECTION *@
+        function DeleteSection(id){
+            // Here this .off do any previous click event to prevent multiple triggers
+            $("#delete-section-btn").off("click").on("click",function() {
+                 $.ajax({
+                    url: "/SectionAndTables/DeleteSection",
+                    data: { id },
+                    type: "GET",
+                    dataType: "html",
+                    success: function (response) {
+                        var message = JSON.parse(response).msg;
+                        modal.hide();
+                        toastr.success(message); 
+                        getSectionList();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        alert("No Projects Found");
+                        $("#category-list").html('An error has occurred');
+                    }
+                });
+            });
+        }
+
+        @* GET SECTION LIST *@
+            function getSectionList() {
+                $.ajax({
+                    url: "/SectionAndTables/GetSectionList",
+                    type: "GET",
+                    dataType: "html",
+                    success: function (response) {
+                        $("#section-list").html(response);
+                        getTableList(1);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        alert("No Projects Found");
+                        $("#section-list").html('An error has occurred');
+                    }
+                });
+            }
+
+        @* GET TABLE LIST *@
+            function getTableList(id, searchString, pageIndex, pageSize) {
+                console.log("call")
+                if (pageIndex === 0) {
+                    pageIndex = 1;
+                }
+                $.ajax({
+                    url: "/SectionAndTables/GetTableList",
+                    data: { 'pageSize': pageSize, 'pageIndex': pageIndex, 'searchString': searchString, 'id': id },
+                    type: "GET",
+                    dataType: "html",
+                    success: function (data) {
+                        $("#table-list").html(data);
+                    },
+                    error: function () {
+                        alert("No Projects Found");
+                        $("#table-list").html('An error has occurred');
+                    }
+                });
+            };
+    </script>
+}

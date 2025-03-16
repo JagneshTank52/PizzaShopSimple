@@ -1,0 +1,95 @@
+@using PizzaShop.Entity.ViewModels.MenuVM
+@model ModifierGroupVM;
+
+<form id="ModifierGroupForm">
+    <div class="modal-body">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="ModifierGroup-Id" placeholder="ModifierGroup id"
+                asp-for="Id" hidden>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="ModifierGroup-name" placeholder="ModifierGroup Name"
+                asp-for="ModifierGroupName">
+            <span asp-validation-for="ModifierGroupName" class="text-danger" id="ModifierGroup-validation"></span>
+            <label for="floatingInput" class="col-form-label">Name</label>
+        </div>
+        <div class="form-floating mb-4">
+            <textarea class="form-control" placeholder="Write a description here" id="ModifierGroup-description"
+                asp-for="Description"></textarea>
+            <label for="ModifierGroup-description">Description</label>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <a style="color: var(--primary-color);" onclick=openAddModifierModal()>
+                <i class="bi bi-plus-lg fs-6 fw-bold" style="color: var(--primary-color);"></i>
+                 Add Existing Modifiers
+                </a>
+        </div>
+        <div id="selected-modifier">
+            
+        </div>
+
+        @* <partial name="_SelectedModifier" model=Model.SelectedModifiers> *@
+
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="reset" class="btn outline-btn" data-bs-dismiss="modal" onclick=clearSelectedModifier()>Cancle</button>
+    </div>
+</form>
+
+<script>
+    selectedModifier = @Html.Raw(Json.Serialize(Model.SelectedModifiers ?? new List<SelectedModifierVM>()));
+    console.log(selectedModifier);
+
+    showModifier();
+
+    @* Post - Add ModifierGroup *@
+    $("#ModifierGroupForm").on("submit", function (e) {
+        e.preventDefault();
+        var defaultUrl = ((@Model.Id == 0 ? "/Menu/AddModifierGroup" : "/Menu/EditModifierGroup"));
+        var formData = $(this).serializeArray();
+        var modifierGroup = {};
+        console.log(selectedModifier);
+        $.each(formData, function (index, field) {
+        modifierGroup[field.name] = field.value;
+        });
+        $.ajax({
+            url: defaultUrl,
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(
+            {
+                Id: modifierGroup.Id,
+                ModifierGroupName: modifierGroup.ModifierGroupName,
+                Description: modifierGroup.Description,
+                selectedModifiers: selectedModifier
+            }),       
+            success: function (response) {
+                if (response.success) {
+                    window.location.href = '/Menu/MenuItem';
+                }
+                else {
+                    $("#add-ModifierGroup-form").html(response);
+                }
+            },
+            error: function () {
+                alert("An error occurred while saving the ModifierGroup.");
+            }
+        });
+    });
+
+    function RemoveModifier(id){
+        selectedModifier = selectedModifier.filter(item => item.Id !== id);
+        console.log(selectedModifier);
+        showModifier();
+    }
+
+
+
+
+</script>
+
+@{
+    <partial name="_ValidationScriptsPartial"></partial>
+}

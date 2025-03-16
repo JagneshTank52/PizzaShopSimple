@@ -1,0 +1,202 @@
+@using PizzaShop.Entity.ViewModels.UserVM
+
+@{
+    ViewData["Title"] = "My Profile";
+    Layout = "_Layout";
+}
+@model UserVM;
+
+<section class="main-section flex-grow-1 py-3 px-4">
+
+    <!-- mani section navbar -->
+    <div class="top-navbar d-flex justify-content-between mb-3">
+
+        <!-- left-navbar -->
+        <div class="navbar-left d-flex">
+            <P class="mb-0 fs-3 fw-bold">My Profile </P>
+        </div>
+    </div>
+
+
+    <div class="my-profile-bg"></div>
+    
+    <div class="card p-3">
+   
+        <form asp-controller="Home" asp-action="MyProfile" method="post" asp enctype="multipart/form-data">
+            <div class="my-profile-header d-flex justify-content-between mb-3 align-items-center">
+                <div class="left-my-profile-header d-flex">
+    
+                    <div>
+                        <img id="profileImage" src="@(@Model.ProfileImage ?? "/images/Default_pfp.svg.png")"  height="90" width="90" alt="Profile Image" style="border-radius: 50%;  ">
+                        <label for="fileInput">
+                            <i class="bi bi-camera z-3" style="font-size: 35px;"></i>
+                        </label>
+                        <input type="file" name="ProfileImageFile" id="fileInput" asp-for="ProfileImageFile" hidden>
+                    </div>
+                    <div class="d-flex flex-column justify-content-center ms-2">
+                        <p class="mb-1"><span>@Model.FirstName</span> <span>@Model.LastName</span></p>
+                        <p class="mb-0">@Model.UserRoleName</p>
+                    </div>
+                </div>
+                <div class="right-my-profile-header">
+                    <p class="mb-0">@Model.Email</p>
+                </div>
+            </div>
+            <div class="row g-2">
+                <div class="col-md-6 col-12">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="firstname" placeholder="First Name" asp-for="FirstName">
+                        <label for="firstname">First Name</label>
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="lastname" placeholder="Last Name" asp-for="LastName">
+                        <label for="floatingInput">Last Name</label>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="username" placeholder="User Name" asp-for="UserName">
+                        <label for="username">User Name</label>
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="phone" placeholder="Phone"  asp-for="PhoneNumber">
+                        <label for="phone">Phone</label>
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        <input type="email" class="form-control" id="email" value="name@example.com" asp-for="Email" hidden>
+                    </div>
+                </div>
+                <div class="row g-2">
+                    <div class="col-md-4 col-12">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="country" aria-label="Select Country" asp-for="CountryId" asp-items="Model.CountryList">
+                            </select>
+                            <label asp-for="CountryId">Country</label>
+                            <span asp-validation-for="CountryId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="state" aria-label="Select State" asp-for="StateId" asp-items="Model.StateList">
+                            </select>
+                            <label asp-for="StateId">State</label>
+                            <span asp-validation-for="StateId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="city" aria-label="Select City" asp-for="CityId" asp-items="Model.CityList">
+                                
+                            </select>
+                            <label asp-for="CityId">City</label>
+                            <span asp-validation-for="CityId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-12">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="address" placeholder="Address" asp-for="Address">
+                            <label for="floatingInput">Address</label>
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="password" placeholder="password" asp-for="Password"  value="11234567" hidden>
+                    </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="zipcode" placeholder="Zip Code" asp-for="ZipCode">
+                            <label for="number">Zip Code</label>
+                            <span asp-validation-for="ZipCode" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid d-md-block" style="gap: 10px;">
+                    <button class="btn btn-primary" type="submit">
+                        Edit User</button>
+                    <button class="btn outline-btn" type="button" onclick="goBack()">Cancel</button>
+                </div>
+
+        </form>
+    </div>
+</section>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            $("#fileInput").change(function () {
+                var file = this.files[0];
+                 if (file) {
+                     var reader = new FileReader();
+                    reader.onload = function (e) {
+                     $("#profileImage").attr("src", e.target.result);
+                    };          
+                    reader.readAsDataURL(file);
+                }
+            });
+        
+            $("select").change(function () {
+                var value = 0;
+                if ($(this).val() != "") {
+                    value = $(this).val();
+                }
+                var id = $(this).attr("id");
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/AjaxMethod",
+                    data: { value: value, type: id },
+                    success: function (response) {
+                        switch (id) {
+                            case "country":
+                                console.log(response);
+                                console.log(response.stateList);
+                                DisableDropDown("#state");
+                                DisableDropDown("#city");
+                                PopulateDropDown("#state", response.stateList);
+                                break;
+                            case "state":
+                                DisableDropDown("#city");
+                                PopulateDropDown("#city", response.cityList);
+                                break;
+                        }
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            });
+
+        });
+ 
+        function goBack() {
+         window.history.back();
+        }
+        function DisableDropDown(dropDownId) {
+            $(dropDownId).attr("disabled", "disabled");
+            $(dropDownId).empty().append('<option selected="selected" value="0">Please select</option>');
+        }
+
+        function PopulateDropDown(dropDownId, list) {
+            if (list != null && list.length > 0) {
+                $(dropDownId).removeAttr("disabled");
+                $.each(list, function (i, item) {
+                    $(dropDownId).append(`<option value="${item.value}">${item.text}</option>`);
+                });
+            }
+        }
+    </script>
+
+    @section Scripts{
+        @{
+            <partial name="_ValidationScriptsPartial"></partial>
+        }
+    }

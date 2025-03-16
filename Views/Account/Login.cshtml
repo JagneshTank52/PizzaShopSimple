@@ -1,0 +1,103 @@
+@using PizzaShop.Entity.ViewModels.AccountVM
+
+@model LoginVM
+@{
+    Layout = "_AccountLayout";
+}
+
+<main class="login vh-100 w-100 d-flex">
+
+    <section class="login-banner bg-secondary">
+        <img src="../images/dominos_background.jpg" class="img-fluid" alt="login-banner">
+    </section>
+
+    <section class="login-section d-flex align-items-center justify-content-center">
+
+        <div class="login-container d-flex flex-column justify-content-center">
+
+            <div class="branding d-flex flex-row mb-5  align-self-center">
+                <img src="../images/pizzashop_logo.png" alt="brand-logo" class="brand-logo align-self-center me-2"
+                    height="50px" width="60px">
+                <p class="brand-name mb-0 fs-4 fw-bolder align-self-center">PIZZASHOP</p>
+            </div>
+
+            <p class="fs-4 fw-bold mb-4">Welcome,</p>
+
+            <form class="login-form needs-validation" id="login-form" asp-controller="Account" asp-action="Login">
+
+                <div class="mb-4">
+                    <div class="position-relative form-floating mb-3">
+                        <input type="email" class="form-control form-control-lg" id="email"
+                            placeholder="name@example.com" asp-for="Email" required>
+                        <label for="email" class="form-label">Email address*</label>
+                        <i class="bi bi-person-fill login-icons" style="font-size: 25px;"></i>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <div class="position-relative form-floating mb-3">
+                        <input type="password" id="password" class="form-control form-control-lg" placeholder="password"
+                            aria-describedby="passwordHelpBlock" asp-for="Password" required minlength="6">
+                        <label for="password" class="form-label">Password*</label>
+                        <i class="bi bi-eye-slash login-icons" id="togglePassword" style="font-size: 25px;"></i>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="login-credantial d-flex justify-content-between mb-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="RememberMe" id="invalidCheck">
+                        <label class="form-check-label" for="invalidCheck">
+                            Remember me
+                        </label>
+                    </div>
+                    <a id="forget-password" asp-route-email="@ViewBag.email" class="text-decoration-none">forget
+                        password?</a>
+                </div>
+
+                <button class="btn btn-primary fw-bolder w-100" type="submit">Login</button>
+            </form>
+        </div>
+    </section>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#togglePassword").click(function () {
+            var passwordInput = $("#password");
+            var eyeIcon = $("#togglePassword");
+
+            if (passwordInput.attr("type") === "password") {
+                passwordInput.attr("type", "text"); 
+                eyeIcon.removeClass("bi-eye");
+                eyeIcon.addClass("bi-eye-slash");
+            } else {
+                passwordInput.attr("type", "password"); 
+                eyeIcon.removeClass("bi-eye-slash"); 
+                eyeIcon.addClass("bi-eye");
+            }
+        });
+
+        $('#forget-password').click(function (e) {
+            e.preventDefault();
+            const email = $('#email').val();
+            let url = ""
+
+            if (email) {
+                url = '@Url.Action("Forget", "Account")?email=' + encodeURIComponent(email)
+            }
+            else {
+                url = '@Url.Action("Forget", "Account")'
+            }
+            window.location.href = url;
+        });
+    });
+</script>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial"></partial>
+    }
+}

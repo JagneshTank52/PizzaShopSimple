@@ -1,0 +1,101 @@
+@using PizzaShop.Entity.ViewModels.AccountVM
+
+@model ResetPasswordVM
+@{
+    Layout = "_AccountLayout";
+}
+
+<main class="login vh-100 w-100 d-flex">
+    <section class="login-banner bg-secondary">
+        <img src="../images/dominos_background.jpg" class="img-fluid" alt="login-banner">
+    </section>
+    <section class="login-section d-flex align-items-center justify-content-center">
+        <div class="login-container d-flex flex-column justify-content-center">
+
+            <div class="branding d-flex flex-row mb-5    align-self-center">
+                <img src="../images/pizzashop_logo.png" alt="brand-logo" class="brand-logo align-self-center me-2"
+                    height="50px" width="60px">
+                <p class="brand-name mb-0 fs-4 fw-bolder align-self-center">PIZZASHOP</p>
+            </div>
+
+            <p class="fs-4 fw-semibold mb-4">Reset Your Passowrd,</p>
+
+            <form class="login-form needs-validation" asp-action="Reset" asp-controller="Account"
+                id="login-form" novalidate>
+                <div class="mb-4">
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="new-password" placeholder="Password"
+                            asp-for="NewPassword">
+                        <label for="new-password">New Password*</label>
+                        <i class="bi bi-eye login-icons" id="togglePassword-new" style="font-size: 25px;"></i>
+                        <span asp-validation-for="NewPassword" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <div class="position-relative form-floating mb-3">
+                        <!-- <label for="exampleFormControlInput1" class="form-label">Email address</label> -->
+                        <input type="email" class="form-control form-control-lg" id="email"
+                            placeholder="name@example.com" asp-for="Email" required hidden>
+                        <img src="../images/customer.svg" class="login-icons" height="24px" width="24px" alt="">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="confirm-password" placeholder="Password"
+                            asp-for="ConfirmPassword">
+                        <label for="confirm-password">Confirm New Password*</label>
+                        <i class="bi bi-eye login-icons" id="togglePassword-confirm" style="font-size: 25px;"></i>
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary fw-bolder mb-3 w-100" type="submit">Submit</button>
+            </form>
+            <a asp-action="Login" asp-controller="Account" class="text-decoration-none fs-6 align-self-center">Back to
+                Login</a>
+        </div>
+    </section>
+</main>
+
+<script>
+    $(document).ready(function () {
+        $("#togglePassword-current").click(function () {
+            var passwordInput = $("#current-password");
+            var eyeIcon = $("#togglePassword-current");
+
+            if (passwordInput.attr("type") === "password") {
+                passwordInput.attr("type", "text");
+                eyeIcon.removeClass("bi-eye");
+                eyeIcon.addClass("bi-eye-slash");
+            } else {
+                passwordInput.attr("type", "password"); 
+                eyeIcon.removeClass("bi-eye-slash"); 
+                eyeIcon.addClass("bi-eye");
+            }
+        });
+
+        $("#togglePassword-new").click(function () {
+            var passwordInput = $("#new-password");
+            var eyeIcon = $("#togglePassword-new");
+
+            if (passwordInput.attr("type") === "password") {
+                passwordInput.attr("type", "text"); 
+                eyeIcon.removeClass("bi-eye");
+                eyeIcon.addClass("bi-eye-slash");
+            } else {
+                passwordInput.attr("type", "password"); 
+                eyeIcon.removeClass("bi-eye-slash"); 
+                eyeIcon.addClass("bi-eye");
+            }
+        });
+    });
+</script>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial"></partial>
+    }
+}

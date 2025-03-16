@@ -1,0 +1,56 @@
+@using PizzaShop.Entity.ViewModels.AccountVM
+
+@model ForgetPasswordVM
+@{
+    Layout = "_AccountLayout";
+}
+
+<main class="login vh-100 w-100 d-flex">
+
+    <section class="login-banner bg-secondary">
+        <img src="../images/dominos_background.jpg" class="img-fluid" alt="login-banner">
+    </section>
+    <section class="login-section d-flex align-items-center justify-content-center">
+        <div class="login-container d-flex flex-column justify-content-center">
+            <div class="branding d-flex flex-row mb-5    align-self-center">
+                <img src="../images/pizzashop_logo.png" alt="brand-logo" class="brand-logo align-self-center me-2"
+                    height="50px" width="60px">
+                <p class="brand-name mb-0 fs-4 fw-bolder align-self-center">PIZZASHOP</p>
+            </div>
+
+            <p class="fs-4 fw-semibold mb-4">Forget Password,</p>
+
+            <form class="login-form needs-validation" id="login-form" method="post" asp-action="Forget"
+                asp-controller="Account" novalidate>
+                <div class="mb-4">
+                    <div id="passwordHelpBlock" class="form-text mb-3">
+                        Enter your Email and we will Send your a link to reset password.
+                    </div>
+                    <div class="position-relative form-floating mb-3">
+                        <input type="email" class="form-control form-control-lg" id="forgotEmail"
+                            placeholder="name@example.com" asp-for="Email" required aria-describedby="passwordHelpBlock">
+                        <label for="exampleFormControlInput1" class="form-label">Email address*</label>
+                        <i class="bi bi-person-fill login-icons" style="font-size: 25px;"></i>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <button class="btn btn-primary fw-bolder mb-3 w-100" type="submit">Send</button>
+            </form>
+
+            <a asp-action="Login" asp-controller="Account" class="text-decoration-none fs-6 align-self-center">Back to
+                Login</a>
+        </div>
+    </section>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var urlParams = new URLSearchParams(window.location.search);
+        var email = urlParams.get("email");
+        if (email) {
+            $("#forgotEmail").val(email);
+        }
+    });
+</script>
+

@@ -1,0 +1,234 @@
+@using PizzaShop.Entity.ViewModels.MenuVM
+
+@model ItemVM;
+
+<form id="itemForm" method="post"  asp-controller="Menu">
+                <div class="modal-body row mx-0 ">
+
+                    @* ADD ITEM PART *@
+                    <div class="col-lg-8 col-12">
+                        <div class="row g-2">
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating">
+                                <select class="form-select " id="role" aria-label="Select Role" asp-for="CategoryId"
+                                    asp-items="Model.CategoryList">
+                                </select>
+                                <label asp-for="CategoryId">Category*</label>
+                                <span asp-validation-for="CategoryId" class="text-danger"></span>
+                            </div>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="name" placeholder="Name" asp-for="ItemName">
+                                    <label for="name">Name*</label>
+                                    <span asp-validation-for="ItemName" class="text-danger"></span>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="item-id" placeholder="Id" asp-for="Id" hidden>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        @* 2nd row *@
+                        <div class="row g-2">
+                            <div class="col-6 col-lg-3">
+                                <div class="form-floating">
+                                    <select class="form-select" id="item-type" aria-label="Select Role" asp-for="ItemTypeId"
+                                        asp-items="Model.ItemTypeList">
+                                    </select>
+                                    <label asp-for="ItemTypeId">Item Type*</label>
+                                    <span asp-validation-for="ItemTypeId" class="text-danger"></span>
+                                 </div>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="rate" placeholder="Rate"
+                                        asp-for="ItemRate">
+                                    <label for="firstname">Rate*</label>
+                                    <span asp-validation-for="ItemRate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="quantity" placeholder="Quantity"
+                                        asp-for="ItemQuantity">
+                                    <label for="firstname">Quantity*</label>
+                                    <span asp-validation-for="ItemQuantity" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <div class="form-floating">
+                                <select class="form-select" id="item-type" aria-label="Select Role" asp-for="UnitId"
+                                    asp-items="Model.UnitIdList">
+                                </select>
+                                <label asp-for="UnitId">Unit*</label>
+                                <span asp-validation-for="UnitId" class="text-danger"></span>
+                            </div>
+                            </div>
+                        </div>
+                        @* 3rd row *@
+                        <div class="row g-2">
+                            <div class="col-6 col-lg-3">
+                                <div class="form-check form-switch d-flex align-items-center justify-content-center">
+                                    <input class="form-check-input me-3" type="checkbox" role="switch" asp-for=IsAvaiable
+                                        id="available" style="width: 3.5rem; height: 2rem;">
+                                    <label for="available">Available</label>
+                                </div>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <div class="form-check form-switch d-flex align-items-center justify-content-center">
+                                    <input class="form-check-input me-3" type="checkbox" role="switch" asp-for=IsDefaultTax
+                                        id="default-tax" style="width: 3.5rem; height: 2rem;">
+                                    <label for="available">Default Tax</label>
+                                </div>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="tax" placeholder="Tax Percentage"
+                                        asp-for="TaxPercentage">
+                                    <label for="tax">Tax Percentage</label>
+                                    <span asp-validation-for="TaxPercentage" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="short-name" placeholder="Short Name"
+                                        asp-for="ShortCode">
+                                    <label for="short-name">Short Code</label>
+                                    <span asp-validation-for="ShortCode" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        @* 4th row *@
+                        <div class="row g-2">
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control" placeholder="Write a description here"
+                                        id="category-description" asp-for="ItemDescription" style="height: 80px"></textarea>
+                                    <label for="category-description">Description</label>
+                                    <span asp-validation-for="ItemDescription" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        @* 5th row *@
+                        <div class="row g-2">
+                            <div class="col-12">
+                                <input type="file" id="fileInput" class="d-none" name="ProfileImageFile"
+                                    asp-for="ProfileImageFile">
+                                <label for="fileInput"
+                                id="upload-file"
+                                    style="width: 100%; height: 5rem; border-width: 2px; border-style: dashed;"
+                                    class="text-secondary d-flex flex-row align-items-center justify-content-center">
+                                    <span class="me-5 d-none" id="uploadedImg">
+                                        <img id="profileImage" src="/images/Default_pfp.svg.png" height="60" width="60"
+                                            alt="Profile Image" style="border-radius: 50%;  ">
+                                    </span>
+                                    <div class="d-dlex flex-column justify-content-center">
+                                        <i class="bi bi-cloud-arrow-up fs-4 mb-0"></i>
+                                        <p class="mb-0">Upload</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*  ADD MODIFIER GROUP PART *@
+                    <div class="col-lg-4 col-12 py-3" style="background-color: #FDF5E6;">
+                       <div class="row g-2 mx-0">
+                         <div class="col">
+                            <div class="form-floating mb-2">
+                                <select class="form-select" id="item-modifier-group-list" aria-label="Select Role"
+                                    asp-items="Model.ModifierGroupList">
+                                    <option value="">Select Modifier Group</option>
+                                </select>
+                                <label for="modifier-group-list">Modifier Group*</label>
+                            </div>
+
+                            <div class="item-modifier-group">
+                                
+                            </div>
+
+                       </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Cancle</button>
+                </div>
+</form>
+
+<script>
+
+    @* Post - Add Item *@
+    $("#itemForm").on("submit", function (e) {
+        e.preventDefault();
+        var defaultUrl = ((@Model.Id == 0 ? "/Menu/AddItem" : "/Menu/EditItem"));
+        $.ajax({
+            url: defaultUrl,
+            type: "POST",
+            data: $(this).serialize(),
+            success: function (response) {
+                if (response.success) {
+                    window.location.href = '/Menu/MenuItem';
+                }
+                else {
+                    $("#add-item-form").html(response);
+                }
+            },
+            error: function () {
+                alert("An error occurred while saving the category.");
+            }
+        });
+    });
+    $("#upload-filet").on("dragenter", function (evt) {
+        evt.preventDefault();
+        evt.stopPropagation();
+    });
+
+    $("#upload-file").on("dragover", function (evt) {
+        evt.preventDefault();
+        evt.stopPropagation();
+    });
+    
+    $("#upload-file").on("drop",function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        console.log("file dropped");
+        var files = e.originalEvent.dataTransfer.files[0];
+        console.log(files);
+        if (files) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#profileImage").attr("src", e.target.result);
+        };
+        
+        reader.readAsDataURL(files);
+      }
+      $("#uploadedImg").removeClass("d-none");
+        
+        
+    });
+
+     @* $("#fileInput").change(function () {
+      var file = this.files[0];
+      if (file) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#profileImage").attr("src", e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+
+      $("#uploadedImg").removeClass("d-none");
+    }); *@
+
+
+</script>
+
+@{
+    <partial name="_ValidationScriptsPartial"></partial>
+} 
+

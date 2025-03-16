@@ -1,0 +1,151 @@
+@using PizzaShop.Entity.ViewModels.UserVM
+@using PizzaShop.Service.Helper
+@{
+    ViewData["Title"] = "My Profile";
+    Layout = "_Layout";
+}
+@model PaginatedList<UserVM>
+
+<section class="main-section flex-grow-1 py-3 px-4">
+
+    <!-- mani section navbar -->
+    <div class="top-navbar d-flex flex-column flex-md-row justify-content-between mb-3">
+
+        <!-- left-navbar -->
+        <div class="navbar-left d-flex">
+            <P class="mb-0 fs-3 fw-bold">Users</P>
+        </div>
+
+        <!-- right navbar -->
+        <div class="navbar-right d-flex  flex-column flex-sm-row" style="gap: 10px;">
+            <div class="position-relative d-flex flex-grow-1">
+                <input type="text" class="form-control" id="searchInput" placeholder="name@example.com">
+                <Button type="submit" class="search-btn" id="searchID"
+                    style="background-color: transparent; border: none;">
+                    <i class="bi bi-search fs-5"></i>
+                </Button>
+            </div>
+
+            <a asp-action="AddUser" asp-controller="User" type="button" class="btn btn-primary"
+                style="font-size: 18px;">
+                <i class="bi bi-plus-lg" style="font-size: 20px;"></i>
+                Add User
+            </a>
+        </div>
+    </div>
+
+    <!-- User list Table -->
+    <div class="card table-responsive-xl" id="user-table">
+        <partial name="_UserPartialView" model="@ViewData["userList"]" />
+        @* PARTIAL VIEW USER LIST *@
+    </div>
+</section>
+
+<!-- ======= Delete modal ======== -->
+<div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="deleteModalLabel">Delete Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex flex-column align-items-center">
+                <i class="bi bi-exclamation-triangle-fill text-warning fs-3"></i>
+                <h5>Are you sure you want to delete this User ?</h5>
+            </div>
+            <form method="get" id="deleteUserForm" asp-controller="User">
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary">Yes</button>
+                    <button type="button" class="btn outline-btn btn-secondary" data-bs-dismiss="modal">No</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<partial name="_Notification"/>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        let pageIndex = 1;
+        let pageSize = 5;
+        var searchString = "";
+        var sorting = "name_asc";
+
+        $("#user-table").on("click", ".bi-trash", function () {
+            var userId = $(this).data("id");
+            console.log(userId);
+            $("#deleteUserForm").attr("action", "DeleteUser/" + userId);
+        });
+
+        $("#user-table").on("click", "#next", function () {
+            PaginationAjax(searchString, sorting, pageIndex + 1, pageSize);
+            pageIndex++;
+        });
+
+        $("#user-table").on("click", "#previous", function () {
+            PaginationAjax(searchString, sorting, pageIndex - 1, pageSize);
+            pageIndex--;
+        });
+
+        $("#user-table").on("click", "#nameAsc", function () {
+            sorting = "name_asc";
+            PaginationAjax(searchString, sorting, pageIndex, pageSize);
+        });
+
+        $("#user-table").on("click", "#nameDesc", function () {
+            sorting = "name_desc";
+            PaginationAjax(searchString, sorting, pageIndex, pageSize);
+        });
+
+        $("#user-table").on("click", "#roleAsc", function () {
+            sorting = "role_asc";
+            PaginationAjax(searchString, sorting, pageIndex, pageSize);
+        });
+
+        $("#user-table").on("click", "#roleDesc", function () {
+            sorting = "role_desc";
+            PaginationAjax(searchString, sorting, pageIndex, pageSize);
+        });
+
+        $("#searchInput").keyup(function () {
+            searchString = $("#searchInput").val().trim() || '';
+            console.log(searchString);
+            PaginationAjax(searchString, sorting, pageIndex, pageSize);
+        });
+
+        $("#user-table").on("change", "#pageSizeSelect", function () {
+            pageSize = $(this).val();
+            pageIndex = 1;
+            PaginationAjax(searchString, sorting, pageIndex, pageSize);
+        });
+
+        function PaginationAjax(searchString, sorting, pageIndex, pageSize) {
+            console.log(pageIndex);
+            if (!pageIndex || pageIndex <= 0) {
+                pageIndex = @((Model?.PageIndex ?? 1));
+            }
+            $.ajax({
+                url: "/User/UserList",
+                data: { 'pageSize': pageSize, 'pageIndex': pageIndex, 'searchString': searchString, 'sorting': sorting },
+                type: "GET",
+                dataType: "html",
+                success: function (data) {
+                    console.log(data)
+                    console.log(pageSize)
+                    $("#user-table").html(data);
+
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert("No Projects Found");
+                    $("#user-table").html('An error has occurred');
+                }
+            });
+        };
+    });
+</script>
+@{
+    <partial name="_ValidationScriptsPartial"></partial>
+}

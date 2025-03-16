@@ -1,0 +1,44 @@
+@using PizzaShop.Entity.ViewModels.MenuVM
+@model List<ItemModifierVM>
+
+@foreach (var modifierGroupItem in Model)
+{
+    <div class="p-3 d-flex flex-column">
+        <div class="d-flex justify-content-between align-item-center mb-1">
+            <h5 class="m-0">@modifierGroupItem.ModifierGroupName</h5>
+            <i class="bi bi-trash3-fill"></i>
+        </div>
+        <div class="d-flex">
+            <div class="form-floating mb-5">
+                <select class="form-select" id="modifier-group-min" aria-label="Select Role">
+                    <option value="">Select Modifier Group</option>
+                    <option value="1">Modifier Group 1</option>
+                    <option value="2">Modifier Group 2</option>
+                    <option value="3">Modifier Group 3</option>
+                    <option value="4">Modifier Group 4</option>
+                    <option value="5">Modifier Group 5</option>
+                </select>
+                <label for="modifier-group-list">Modifier Group*</label>
+            </div>
+
+            <div class="form-floating mb-5">
+                <select class="form-select" id="modifier-group-max" aria-label="Select Role">
+                    <option value="">Select Modifier Group</option>
+                    <option value="1">Modifier Group 1</option>
+                    <option value="2">Modifier Group 2</option>
+                    <option value="3">Modifier Group 3</option>
+                    <option value="4">Modifier Group 4</option>
+                    <option value="5">Modifier Group 5</option>
+                </select>
+                <label for="modifier-group-list">Modifier Group*</label>
+            </div>
+        </div>
+        @foreach(var modifier in modifierGroupItem.Modifier){
+        <div class="d-flex justify-content-between align-item-center mb-1">
+            <h5 class="m-0">@modifier.Name</h5>
+            <h5 class="m-0">@modifier.ItemRate</h5>
+        </div>
+        }
+        
+    </div>
+}

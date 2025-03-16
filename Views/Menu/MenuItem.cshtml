@@ -1,0 +1,661 @@
+@using PizzaShop.Entity.ViewModels.MenuVM
+@* @using PizzaShop.Service.Helper; *@
+@* @model CategoryVM; *@
+@* @model CategoryVM; *@
+@* @model ItemVM *@
+<section class="main-section flex-grow-1 py-3 px-4">
+
+    <div class="top-navbar d-flex justify-content-between mb-3">
+        <div class="navbar-left d-flex">
+            <P class="page-title mb-0 fs-3 fw-bold">Menu</P>
+        </div>
+    </div>
+
+    @* TAB *@
+    <ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
+        <li class="nav-item me-3" role="presentation">
+            <button class="nav-link active fs-5 fw-bold" id="pills-home-tab" data-bs-toggle="pill"
+                data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true"
+                data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Tooltip on right">
+                <span class="me-1">
+                    <i class="bi bi-list-check fs-5"></i>
+                </span>
+                <span>Items</span>
+
+            </button>
+        </li>
+
+        <li class="nav-item me-3" role="presentation">
+            <button class="nav-link fs-5 fw-bold" id="pills-profile-tab" data-bs-toggle="pill"
+                data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                aria-selected="true">
+                <span class="me-1">
+                    <i class="bi bi-ui-checks-grid fs-5"></i>
+                </span>
+                <span>Modifiers</span>
+            </button>
+        </li>
+    </ul>
+
+    @* TAB CONTENT *@
+    <div class="tab-content" id="pills-tabContent" style="height: 100%">
+
+        @* ITEM TAB CONTENT *@
+        <div class="tab-pane fade active show" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
+            tabindex="0">
+            <div class="d-flex">
+                <div class="tab-pane-left offcanvas-lg offcanvas-start" tabindex="-1" id="offcanvasExample"
+                    aria-labelledby="offcanvasExampleLabel">
+                    <div class="row mx-0 py-2" style="gap: 40px;">
+                        <div class="col-12 d-flex justify-content-between">
+                            <h4 class="mb-0" id="group-name">Category</h4>
+                            <button class="add-icon-btn p-0" id="add-category-btn" data-bs-toggle="modal"
+                                data-bs-target="#categoryModel" onclick=getCategoryForm(0)>
+                                <i class="bi bi-plus-lg fs-5 fw-bold"></i>
+                            </button>
+                        </div>
+                        <div class="col-12 px-3" id="category-list">
+                            @* PARTIAL VIEW - CATEGORY LIST *@
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane-right">
+                    <div class="row gy-2 mb-5 m-0">
+                        <div class="col-12 d-flex align-items-center ">
+                            <button class="btn bg-transparent border-0 me-3 d-lg-none" type="button" id="item-menu-btn"
+                                data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+                                aria-controls="offcanvasExample">
+                                <img src="../images/menu-bar-primary.svg" width="25" height="25" alt="">
+                            </button>
+                            <h4 class="mb-0">Items</h4>
+                        </div>
+
+                        <div class="col-12 d-flex justify-content-end ">
+                            <div class="position-relative d-flex me-3" style="width: 300px;">
+                                <input type="text" class="form-control " id="item-search" placeholder="name@example.com"
+                                    style="padding-right: 16%;">
+                                <Button type="submit" class="search-btn " id="item-search-btn"
+                                    style="background-color: transparent; border: none;">
+                                    <i class="bi bi-search fs-5"></i>
+                                </Button>
+                            </div>
+
+                            <button type="button" class="btn trash-btn me-2" id="multi-delete-btn">
+                                <img src="../images/trash.svg" height="20" width="20" alt="">
+                            </button>
+
+                            <button type="button" class="btn btn-primary" id="add-item-btn" data-bs-toggle="modal"
+                                onclick=getItemForm(0) data-bs-target="#itemModel">
+                                <span>
+                                    <i class="bi bi-plus-lg"></i>
+                                </span>
+                                <span>Add Item</span>
+                            </button>
+                        </div>
+
+                        <div class="col-12 table-responsive-xl" id="item-table">
+                            @* PARTIAL VIEW ITEM LIST *@
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* MODIFIER TAB CONTENT *@
+        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+
+            <div class="d-flex">
+                <div class="tab-pane-left offcanvas-lg offcanvas-start" tabindex="-1" id="modifierOffCanvas"
+                    aria-labelledby="modifierOffCanvasLabel">
+                    <div class="row mx-0 py-2" style="gap: 40px;">
+                        <div class="col-12 d-flex justify-content-between">
+                            <h4 class="mb-0 group-name" id="modifier-group-name">ModifierGroup</h4>
+                            <button class="add-icon-btn p-0" id="add-category-btn" data-bs-toggle="modal"
+                                data-bs-target="#modifierGroup" onclick=getModifierGroupForm(0)>
+                                <i class="bi bi-plus-lg fs-5 fw-bold"></i>
+                            </button>
+                        </div>
+                        <div class="col-12 px-3" id="modifier-group-list">
+                            @* PARTIAL VIEW - MODIFIER GROUP LIST *@
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane-right">
+                    <div class="row gy-2 mb-5 m-0">
+                        <div class="col-12 d-flex align-items-center ">
+                            <button class="btn bg-transparent border-0 me-3 d-lg-none" type="button" id="item-menu-btn"
+                                data-bs-toggle="offcanvas" data-bs-target="#modifierOffCanvas"
+                                aria-controls="modifierOffCanvas">
+                                <img src="../images/menu-bar-primary.svg" width="25" height="25" alt="">
+                            </button>
+                            <h4 class="mb-0 list-name">Modifier</h4>
+                        </div>
+
+                        <div class="col-12 d-flex justify-content-end ">
+                            <div class="position-relative d-flex me-3" style="width: 300px;">
+                                <input type="text" class="form-control " id="item-search" placeholder="name@example.com"
+                                    style="padding-right: 16%;">
+                                <Button type="submit" class="search-btn " id="item-search-btn"
+                                    style="background-color: transparent; border: none;">
+                                    <i class="bi bi-search fs-5"></i>
+                                </Button>
+                            </div>
+
+                            <button type="button" class="btn trash-btn me-2" id="multi-delete-btn">
+                                <img src="../images/trash.svg" height="20" width="20" alt="">
+                            </button>
+
+                            <button type="button" class="btn btn-primary" id="add-item-btn" data-bs-toggle="modal"
+                                onclick=getItemForm(0) data-bs-target="#itemModel">
+                                <span>
+                                    <i class="bi bi-plus-lg"></i>
+                                </span>
+                                <span>Add Modifier</span>
+                            </button>
+                        </div>
+
+                        <div class="col-12 table-responsive-xl" id="modifier-table">
+                            @* PARTIAL VIEW MODIFIER LIST *@
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+@* ============ MODALS ============= *@
+
+@* Add Category Modal *@
+<div class="modal fade" id="categoryModel" tabindex="-1" aria-labelledby="categoryModelLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="fs-5" id="categoryModelLabel">Add Category</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="add-category-form">
+                @*PARTIAL VIEW - ADD CATEGORY FORM*@
+            </div>
+        </div>
+    </div>
+</div>
+
+@* MODIFIER GROUP MODAL *@
+
+<div class="modal fade" id="modifierGroup" tabindex="-1" aria-labelledby="modifierGroupLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modifierGroupLabel">Add ModifierGroup</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    onclick=clearSelectedModifier()></button>
+            </div>
+            <div id="add-modifierGroup-form">
+                @*PARTIAL VIEW - ADD ModifierGroup FORM*@
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Add modifer modal for ModifierGroup *@
+<div class="modal fade" id="AddModifier" tabindex="-1" aria-labelledby="AddModifierModelLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="fs-5" id="AddModifierModelLabel">Select Existing Modifier</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    onclick=clearSelectedModifier()></button>
+            </div>
+            <div class="modal-body">
+                <div class="position-relative d-flex mb-3" style="width: 300px;">
+                    <input type="text" class="form-control " id="modifier-search" placeholder="name@example.com"
+                        style="padding-right: 16%;" />
+                    <Button type="submit" class="search-btn " id="item-search-btn"
+                        style="background-color: transparent; border: none;">
+                        <i class="bi bi-search fs-5"></i>
+                    </Button>
+                </div>
+                <div id="add-modifier-list">
+                    @*PARTIAL VIEW - ADD MODIFIER LIST FORM*@
+                </div>
+            </div>
+            <div class="modal-footer d-dlex justify-content-start">
+                <button type="button" class="btn btn-primary" onclick=showModifier()>Add</button>
+                <button type="button" class="btn outline-btn" data-bs-dismiss="modal"
+                    onclick=clearSelectedModifier()>Cancle</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Add Item Modal *@
+<div class="modal fade" id="itemModel" tabindex="-1" aria-labelledby="itemModelLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="fs-5" id="itemModelLabel">Add New Menu Item</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="add-item-form">
+                @*PARTIAL VIEW - ADD ITEM FORM*@
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Delete Category Modal *@
+<div class="modal fade" id="delete-category" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex flex-column align-items-center">
+                <i class="bi bi-exclamation-triangle-fill text-warning fs-3"></i>
+                <h5>Are you sure you want to Delete ?</h5>
+            </div>
+            <form method="get" id="deleteCategoryForm" asp-controller="Menu">
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="submit" class="btn outline-btn btn-primary">Yes</button>
+                    <button type="button" class="btn outline-btn btn-secondary" data-bs-dismiss="modal">No</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@* delete Item Modal *@
+<div class="modal fade" id="delete-item" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex flex-column align-items-center">
+                <i class="bi bi-exclamation-triangle-fill text-warning fs-3"></i>
+                <h5>Are you sure you want to Delete Item?</h5>
+            </div>
+            <form method="get" id="deleteItemForm" asp-controller="Menu">
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="submit" class="btn outline-btn btn-primary">Yes</button>
+                    <button type="button" class="btn outline-btn btn-secondary" data-bs-dismiss="modal">No</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@* DELETE MODIFIER GROUP MODAL*@
+<div class="modal fade" id="delete-modifierGroup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex flex-column align-items-center">
+                <i class="bi bi-exclamation-triangle-fill text-warning fs-3"></i>
+                <h5>Are you sure you want to Delete ModifierGroup ?</h5>
+            </div>
+            <form method="get" id="deleteModifierGroupForm" asp-controller="Menu">
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="submit" class="btn outline-btn btn-primary">Yes</button>
+                    <button type="button" class="btn outline-btn btn-secondary" data-bs-dismiss="modal">No</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var selectedModifier = [];
+        let selectedModifierGroupList = [];
+        var addModifierModel = new bootstrap.Modal(document.getElementById("AddModifier"))
+
+        @* DECLARATON MODIFIER PAGINATION FOR MODIFIER GROUP *@
+                    var pgIndex = 1;
+        var pgSize = 5;
+        var search = "";
+        var modifierGroupId = 0;
+
+        $(document).ready(function () {
+            @* DECLARATION ITEM PAGINATION *@
+                let pageIndex = 1;
+            let pageSize = 5;
+            let searchString = "";
+            let sorting = "name_asc";
+            let categoryId = 27;
+
+            getCategoryList();
+            getModifierGroupList();
+
+            @* PAGINATION FOR ADD EXISTING MODIFIER *@
+                $("#add-modifier-list").on("click", "#nextModifierPg", function () {
+                    pgIndex = $(this).data("index");
+                    getModifierList(modifierGroupId, search, pgIndex + 1, pgSize);
+                });
+            $("#add-modifier-list").on("click", "#previousModifierPg", function () {
+                pgIndex = $(this).data("index");
+                getModifierList(modifierGroupId, search, pgIndex - 1, pgSize);
+            });
+            $("#add-modifier-list").on("change", "#modifierPageSize", function () {
+                pgSize = $(this).val();
+                search = $("#searchInput").val() || '';
+                pgIndex = 1;
+                getModifierList(modifierGroupId, search, pgIndex, pgSize);
+                pgIndex++;
+            });
+            $("#modifier-search").keyup(function () {
+                searchString = $("#modifier-search").val().trim() || '';
+                getModifierList(modifierGroupId, searchString, pgIndex, pgSize);
+            });
+
+            @* PAGINATION FOR ITEM *@
+                $("#item-table").on("click", "#next", function () {
+                    getItemList(categoryId, searchString, sorting, pageIndex + 1, pageSize);
+                    pageIndex++;
+                });
+            $("#item-table").on("click", "#previous", function () {
+                getItemList(categoryId, searchString, sorting, pageIndex - 1, pageSize);
+                pageIndex--;
+            });
+            $("#item-table").on("change", "#itemPageSize", function () {
+                pageSize = $(this).val();
+                searchString = $("#searchInput").val() || '';
+                @* var sorting = $("#sortSelect").val() || ''; *@
+                    pageIndex = 1;
+                getItemList(categoryId, searchString, sorting, pageIndex, pageSize);
+
+            });
+
+            @* CATEGORY EDIT AND DELETE *@
+                $("#category-list").on("click", ".category-item", function () {
+                    categoryId = $(this).data("id");
+                    let pageIndex = 1;
+                    getItemList(categoryId, searchString, sorting, pageIndex, pageSize);
+                });
+            $("#category-list").on("click", ".bi-trash", function () {
+                var categoryId = $(this).data("id");
+                $("#deleteCategoryForm").attr("action", "DeleteCategory/" + categoryId);
+            });
+
+            @* MODIFIER GROUP WISE MODIFIER *@
+                $("#modifier-group-list").on("click", ".modifierGroup-item", function () {
+                    modifierGroupId = $(this).data("id");
+                    let pgIndex = 1;
+                    getModifierList(modifierGroupId, search, pgIndex, pgSize);
+                });
+
+
+            @* DELETE SELECTED ITEM *@
+                $("#multi-delete-btn").on("click", function () {
+                    deleteSelectedItems(categoryId, searchString, sorting, pageIndex, pageSize);
+                });
+
+            @* SELECT MODIFIER GROUP IN ADD ITEM *@
+                $("#add-item-form").on('change', '#item-modifier-group-list', function () {
+                    const selectedId = parseInt($(this).val());
+                    
+                    // Check if the ID is valid and not already in the array
+                    if (selectedId && !selectedModifierGroupList.includes(selectedId)) {
+                        selectedModifierGroupList.push(selectedId);
+                    }
+
+                    console.log(selectedModifierGroupList); // Debugging
+                });
+
+
+
+        });
+
+        @* OPEN ADD EXISTING MODIFIER *@
+            function openAddModifierModal() {
+                addModifierModel.show();
+                getModifierList(0);
+            }
+
+        @* DELETE FUNCTION  *@
+            function deleteSelectedItems(categoryId, searchString, sorting, pageIndex, pageSize) {
+                var selectedIds = JSON.parse(localStorage.getItem('selectedItems')) || [];
+                $.ajax({
+                    url: '/Menu/DeleteItems',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(selectedIds),
+                    success: function (response) {
+                        if (response.success) {
+                            localStorage.removeItem("selectedItems");
+                            getItemList(categoryId, searchString, sorting, pageIndex, pageSize);
+
+                        } else {
+                            alert("An error occurred while deleting the items.");
+                        }
+                    },
+                    error: function (error) {
+                        console.error("Error:", error);
+                        alert("An error occurred while deleting the items.");
+                    }
+                });
+            }
+        function deleteItem(id) {
+            $("#deleteItemForm").attr("action", "DeleteItem/" + id);
+        }
+        function deleteModifierGroup(id) {
+            $("#deleteModifierGroupForm").submit(function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: "/Menu/DeleteModifierGroup",
+                    data: { id },
+                    type: "GET",
+                    dataType: "html",
+                    success: function (response) {
+                        if (response.success) {
+                            getModifierGroupList();
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        alert("No Projects Found");
+                        $("#category-list").html('An error has occurred');
+                    }
+                });
+
+            });
+        }
+
+        @* Get THINGS BY ID *@
+            function getItemForm(id) {
+                if (id != 0) {
+                    $("#itemModelLabel").text("Update Menu Item");
+                }
+                else {
+                    $("#itemModelLabel").text("Add New  Menu Item");
+                }
+                $.ajax({
+                    url: "/Menu/AddItem",
+                    type: "GET",
+                    data: { id },
+                    dataType: "html",
+                    success: function (response) {
+                        $("#add-item-form").html(response);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        alert("No Projects Found");
+                        $("#category-list").html('An error has occurred');
+                    }
+                });
+            };
+        function getCategoryForm(id) {
+            if (id != 0) {
+                $("#categoryModelLabel").text("Update Category");
+            }
+            else {
+                $("#categoryModelLabel").text("Add Category");
+            }
+            $.ajax({
+                url: "/Menu/GetCategoryById",
+                data: { id },
+                type: "GET",
+                dataType: "html",
+                success: function (response) {
+                    $("#add-category-form").html(response);
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert("No Projects Found");
+                    $("#category-list").html('An error has occurred');
+                }
+            });
+        };
+        function getModifierGroupForm(id) {
+            if (id != 0) {
+                $("#modifierGroupLabel").text("Update ModifierGroup");
+            }
+            else {
+                $("#modifierGroupLabel").text("Add ModifierGroup");
+            }
+            $.ajax({
+                url: "/Menu/GetModifierGroupById",
+                data: { id },
+                type: "GET",
+                dataType: "html",
+                success: function (response) {
+                    console.log(response);
+                    $("#add-modifierGroup-form").html(response);
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert("No Projects Found");
+                    $("#category-list").html('An error has occurred');
+                }
+            });
+        };
+
+        @* Get LIST USING PARTIAL VIEW*@
+            function getCategoryList() {
+                $.ajax({
+                    url: "/Menu/GetCategoryList",
+                    type: "GET",
+                    dataType: "html",
+                    success: function (response) {
+                        $("#category-list").html(response);
+                        var firstCategoryId = $(".category-item").first().data("id");
+                        getItemList(firstCategoryId);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        alert("No Projects Found");
+                        $("#category-list").html('An error has occurred');
+                    }
+                });
+            };
+        function getModifierGroupList() {
+            $.ajax({
+                url: "/Menu/GetModifierGroupList",
+                type: "GET",
+                dataType: "html",
+                success: function (response) {
+                    console.log(response.success);
+
+                    if (response.success == false) {
+                        $("#modifier-group-list").html(response.message);
+                    }
+
+                    $("#modifier-group-list").html(response);
+                    var firstModifierGroupId = $(".modifierGroup-item").first().data("id");
+                    getModifierList(firstModifierGroupId);
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert("No Projects Found");
+                    $("#modifier-group-list").html('An error has occurred');
+                }
+            });
+        };
+        function getItemList(id, searchString, sorting, pageIndex, pageSize) {
+            console.log("call")
+            if (pageIndex === 0) {
+                pageIndex = 1;
+            }
+            $.ajax({
+                url: "/Menu/GetItemList",
+                data: { 'pageSize': pageSize, 'pageIndex': pageIndex, 'searchString': searchString, 'sorting': sorting, 'id': id },
+                type: "GET",
+                dataType: "html",
+                success: function (data) {
+                    $("#item-table").html(data);
+                },
+                error: function () {
+                    alert("No Projects Found");
+                    $("#item-table").html('An error has occurred');
+                }
+            });
+        };
+        function getModifierList(id, searchString, pageIndex, pageSize) {
+            if (pageIndex === 0) {
+                pageIndex = 1;
+            }
+            console.log(id);
+            $.ajax({
+                url: "/Menu/GetModifierList",
+                data: { 'pageSize': pageSize, 'pageIndex': pageIndex, 'searchString': searchString, 'id': id },
+                type: "GET",
+                dataType: "html",
+                success: function (data) {
+                    if (id == 0) {
+                        console.log("it is inside modifier-group-list ")
+                        $("#add-modifier-list").html(data);
+                    }
+                    else {
+                        console.log("It is main table")
+                        $("#modifier-table").html(data);
+                    }
+
+                },
+                error: function () {
+                    alert("No Projects Found");
+                    $("#add-modifier-list").html('An error has occurred');
+                }
+            });
+        };
+        function showModifier() {
+            console.log(selectedModifier);
+            $.ajax({
+                url: "/Menu/SelectedList",
+                contentType: "application/json",
+                data: JSON.stringify(selectedModifier),
+                type: "POST",
+                dataType: "html",
+                success: function (data) {
+                    $("#selected-modifier").html(data);
+                    addModifierModel.hide();
+                },
+                error: function () {
+                    alert("No Projects Found");
+                    $("#selected-modifier").html('An error has occurred');
+                }
+            });
+        }
+
+        function clearSelectedModifier() {
+            console.log(selectedModifier);
+            selectedModifier = [];
+            pgIndex = 1;
+            console.log(pgIndex)
+        }
+    </script>
+}

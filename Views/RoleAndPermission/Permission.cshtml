@@ -1,0 +1,118 @@
+@using PizzaShop.Entity.ViewModels.RolePermissionVM;
+@model List<PermissionVM>
+<section class="main-section flex-grow-1 py-3 px-4">
+    <div class="top-navbar d-flex justify-content-between mb-3">
+        <div class="navbar-left d-flex">
+            <P class="mb-0 fs-3 fw-bold">Edit User</P>
+        </div>
+        <div class="navbar-right">
+            <a href="./user.html" type="button" class="btn outline-btn">
+                <span>
+                    <i class="bi bi-chevron-left"></i>
+                </span>
+                <span>Back</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="card p-3">
+        <div class="form-floating mb-3" style="width: 40%;">
+            <input type="text" class="form-control" id="username" placeholder="User Name" value="Account manager"
+                disabled>
+            <label for="username">User Name</label>
+        </div>
+        <form asp-action="PermissionPost" asp-controller="RoleAndPermission" asp-route-roleId="@Model[0].RoleId"> 
+            <div class="table-responsive-xl">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+
+                                </div>
+                            </th>
+                            <th scope="col">
+                                Permission
+                            </th>
+                            <th scope="col">Can View</th>
+                            <th scope="col">Can Add/Edit</th>
+                            <th scope="col">Can Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        
+                        @for (int i=0; i <Model.Count ; i++)
+                        {
+                            <tr>
+                                <td scope="row">
+                                    <div class="form-check">
+                                        <input class="form-check-input checkbox-form" type="checkbox" value=""
+                                            id="flexCheckDefault">
+
+                                    </div>
+                                </td>
+                                <td>
+                                    @Model[i].PermissionName
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" id="permissionId" placeholder="Zip Code" asp-for=@Model[i].Id hidden>
+                                </td>
+                                <td>
+                                    <div class="form-check form-switch text-center">
+                                        <input class="form-check-input" type="checkbox" role="switch"
+                                            asp-for=@Model[i].CanView>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch"
+                                            asp-for=@Model[i].CanEdit>
+                                    </div>
+
+                                </td>
+                                <td>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch"
+                                            asp-for="@Model[i].CanDelete">
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button class="btn btn-primary me-md-2" type="submit">save</button>
+                <button class="btn outline-btn" type="button">Cancle</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        @* getPermission(); *@
+    });
+
+    @* Get permission list from partial view *@
+        @* function getPermission() {
+            $.ajax({
+                url: "/RoleAndPermission/GetPermission",
+                type: "GET",
+                dataType: "html",
+                success: function (response) {
+                    $("#permission-list").html(response);
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert("No Projects Found");
+                    $("#category-list").html('An error has occurred');
+                }
+            });
+        }; *@
+
+
+</script>

@@ -1,0 +1,25 @@
+@using PizzaShop.Entity.ViewModels.MenuVM;
+@model List<CategoryVM>;
+
+<div class="d-flex flex-column flex-shrink-0 p-0 bg-transparent" style="width: 100%; height: 300px; overflow-y: auto;">
+    <ul class="category-list nav nav-pills flex-column mb-auto">
+        @foreach (var category in Model)
+        {
+            <li class="nav-item d-flex align-items-center justify-content-between category-item" data-id=@category.Id>
+                <a href="#" class="nav-link d-flex align-items-center link-dark px-0" aria-current="page">
+                    <span><i class="bi bi-grid-3x2-gap fs-6 me-2"></i></span>
+                    <p class="mb-0 category-title">@category.CategoryName</p>
+                </a>
+                <div id="update-category">
+                    <span>
+                        <i class="bi bi-pen me-3 edit" style="font-weight: bolder; font-size: 1.3rem;" data-bs-toggle="modal" data-bs-target="#categoryModel" onclick=getCategoryForm(@category.Id)></i>
+                </span>
+                <span>
+                    <i class="bi bi-trash delete" data-bs-toggle="modal" data-bs-target="#delete-category" data-id=@category.Id style="font-weight: bolder; font-size: 1.3rem;"></i>
+                </span>
+                </div>
+            </li>
+        }
+    </ul>
+
+</div>

@@ -1,0 +1,121 @@
+@using PizzaShop.Entity.ViewModels.UserVM
+@using PizzaShop.Service.Helper
+
+@model PaginatedList<UserVM>;
+
+<table class="table">
+     @* TABLE HEADER *@
+    <thead>
+        <tr>
+            <th scope="col" style="width: 20%;">
+                <span class="me-1">
+                    Name
+                </span>
+                <span>
+                    <i class="bi bi-arrow-up" id="nameAsc"></i>
+                </span>
+                <span>
+                    <i class="bi bi-arrow-down" id="nameDesc"></i>
+                </span>
+            </th>
+            <th scope="col" style="width: 25%;">Email</th>
+            <th scope="col" style="width: 15%;">Phone</th>
+            <th scope="col" style="width: 20%;">Role
+                <span>
+
+                    <i class="bi bi-arrow-up fw-bold" id="roleAsc"></i>
+
+                </span>
+
+                <span>
+
+                    <i class="bi bi-arrow-down" id="roleDesc"></i>
+                </span>
+            </th>
+            <th scope="col" style="width: 10%;">Status</th>
+            <th scope="col" style="width: 10%;">Action</th>
+        </tr>
+    </thead>
+    @* TABLE BODY *@
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>
+                    <span class="me-1">
+                        @* <img src="/images/Default_pfp.svg.png" height="30" width="30" alt=""> *@
+                        <img id="profileImage" src="@(@user.ProfileImage ?? "/images/Default_pfp.svg.png")" height="30"
+                            width="30" style="border-radius: 50%;">
+                    </span>
+                    <span>
+                        @user.FirstName
+                    </span>
+                </td>
+                <td>@user.Email</td>
+                <td>@user.PhoneNumber</td>
+
+                <td>@user.UserRoleName</td>
+                <td>
+                    @if (user.IsActive.GetValueOrDefault())
+                    {
+                        <span class="badge rounded-pill text-bg-success" style="width: 70px">Active</span>
+                    }
+                    else
+                    {
+                        <span class="badge rounded-pill text-bg-danger" style="width: 70px;">InActive</span>
+                    }
+                </td>
+                <td>
+                    <span>
+                        <a asp-action="EditUser" asp-controller="User" asp-route-id="@user.Id" class="link-dark">
+                            <i class="bi bi-pen me-3"></i>
+                        </a>
+                    </span>
+                    <span>
+                        <i class="bi bi-trash" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id=@user.Id></i>
+                    </span>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div class="row mb-5 m-0">
+    <div class="col-12 d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-center justify-content-sm-end "
+        style="gap: 10px;">
+        <div class="d-flex flex-row align-items-center">
+            <h6 class="mb-0 me-1">Items per page</h5>
+                <select class="form-select w-auto me-2" id="pageSizeSelect" aria-label="Default select example">
+                    <option value="3" selected="@(Model.PageSize == 3 ? "selected" : null)">3</option>
+                    <option value="5" selected="@(Model.PageSize == 5 ? "selected" : null)">5</option>
+                    <option value="10" selected="@(Model.PageSize == 10 ? "selected" : null)">15</option>
+                    <option value="20" selected="@(Model.PageSize == 20 ? "selected" : null)">20</option>
+                    <option value="25" selected="@(Model.PageSize == 25 ? "selected" : null)">25</option>
+                </select>
+        </div>
+        <div class="d-flex flex-row align-items-center">
+            <h6 class="mb-0 me-1">
+                page @(Model.FromCount + 1) - @(Model.ToCount < Model.TotalCount ? Model.ToCount : Model.TotalCount) of @Model.TotalCount
+                </h5>
+                <ul class="pagination justify-content-end mb-0">
+                    @if (Model.TotalPages > 1)
+                    {
+                        <li class="page-item @(Model.HasPreviousPage ? " " : "disabled")">
+                            <a class="page-link" id="previous" aria-label="Previous">
+                                <span aria-hidden="true"><i class="bi bi-caret-left-fill"
+                                        style="color: var(--primary-color);"></i> </span>
+                            </a>
+                        </li>
+
+                        <li class="page-item @(Model.HasNextPage ? " " : "disabled")">
+                            <a class="page-link" id="next" aria-label="Next">
+                                <span aria-hidden="true"> <i class="bi bi-caret-right-fill"
+                                        style="color: var(--primary-color);"> </i> </span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+        </div>
+    </div>
+</div>

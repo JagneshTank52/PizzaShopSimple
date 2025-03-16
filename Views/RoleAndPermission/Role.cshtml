@@ -1,0 +1,66 @@
+@using PizzaShop.Entity.ViewModels.RolePermissionVM;
+
+@{
+  ViewData["Title"] = "Role";
+  Layout = "_Layout";
+}
+@model List<RoleVM>
+
+<section class="main-section flex-grow-1 py-3 px-4">
+
+    <!-- mani section navbar -->
+    <div class="top-navbar d-flex flex-column flex-md-row justify-content-between mb-3">
+        <!-- left-navbar -->
+        <div class="navbar-left d-flex">
+            <P class="mb-0 fs-3 fw-bold">Roles</P>
+        </div>  
+    </div>
+
+    <div class="card container-xxl p-3">
+        <table class="table">
+            <thead>
+                <tr>
+                  <th scope="col">Role</th>
+                  <th scope="col" class="text-end">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var role in Model)
+                {
+                    <tr>
+                        <td>@role.RoleName</td>
+                        <td class="text-end">
+                          <a class="link-dark" asp-action="Permission" asp-controller="RoleAndPermission" asp-route-id=@role.Id>
+                            <i class="bi bi-pen me-3" ></i>
+                          </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            </table>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+</script>
+
+
+
+@* <tr>
+              <td>Account Manager</td>
+              <td class="text-end">
+                <a href="./permisssion.html" class="link-dark">
+                  <i class="bi bi-pen me-3"></i>
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>Chef</td>
+              <td class="text-end">
+                <a href="./permisssion.html" class="link-dark">
+                  <i class="bi bi-pen me-3"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody> *@
