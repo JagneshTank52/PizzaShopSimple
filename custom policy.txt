@@ -1,0 +1,149 @@
+//// View Model 
+
+public class Role
+{
+    public int Id { get; set; }
+    public string Name { get; set; } // Example: "AccountManager"
+    public List<RolePermission> RolePermissions { get; set; }
+}
+
+public class Permission
+{
+    public int Id { get; set; }
+    public string Name { get; set; } // Example: "UserModule", "OrdersModule", "ReportsModule"
+}
+
+public class RolePermission
+{
+    public int RoleId { get; set; }
+    public Role Role { get; set; }
+    public int PermissionId { get; set; }
+    public Permission Permission { get; set; }
+}
+
+
+/// policy handler
+
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+
+public class PermissionRequirement : IAuthorizationRequirement
+{
+    public string Permission { get; }
+
+    public PermissionRequirement(string permission)
+    {
+        Permission = permission;
+    }
+}
+
+public class PermissionHandler : AuthorizationHandler<PermissionRequirement>
+{
+    private readonly ApplicationDbContext _dbContext;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public PermissionHandler(ApplicationDbContext dbContext, IHttpContextAccessor httpContextAccessor)
+    {
+        _dbContext = dbContext;
+        _httpContextAccessor = httpContextAccessor;
+    }
+
+    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
+    {
+        var user = _httpContextAccessor.HttpContext.User;
+        if (user == null) return;
+
+        var roleName = user.FindFirst(ClaimTypes.Role)?.Value; // Get user role
+
+        if (string.IsNullOrEmpty(roleName))
+            return;
+
+        var hasPermission = await _dbContext.RolePermissions
+            .Include(rp => rp.Role)
+            .Include(rp => rp.Permission)
+            .AnyAsync(rp => rp.Role.Name == roleName && rp.Permission.Name == requirement.Permission);
+
+        if (hasPermission)
+        {
+            context.Succeed(requirement);
+        }
+    }
+}
+
+
+/// Register custtom policy
+
+using Microsoft.AspNetCore.Authorization;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<ApplicationDbContext>(); // Ensure DbContext is registered
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IAuthorizationHandler, PermissionHandler>();
+
+builder.Services.AddAuthorization(options =>
+{
+    using (var scope = builder.Services.BuildServiceProvider().CreateScope())
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var permissions = dbContext.Permissions.Select(p => p.Name).ToList();
+
+        foreach (var permission in permissions)
+        {
+            options.AddPolicy(permission, policy => 
+                policy.Requirements.Add(new PermissionRequirement(permission)));
+        }
+    }
+});
+
+var app = builder.Build();
+app.UseAuthorization();
+
+
+/// Add policy to controller
+[Authorize(Policy = "OrdersModule")]
+public class OrdersController : Controller
+{
+    public IActionResult Index()
+    {
+        return View();
+    }
+}
+
+
+/// Hide ui componen 
+
+@inject IAuthorizationService AuthorizationService
+
+@if ((await AuthorizationService.AuthorizeAsync(User, "OrdersModule")).Succeeded)
+{
+    <li id="orders-module">
+        <a href="@Url.Action("Index", "Orders")">Orders</a>
+    </li>
+}
+
+@if ((await AuthorizationService.AuthorizeAsync(User, "ReportsModule")).Succeeded)
+{
+    <li id="reports-module">
+        <a href="@Url.Action("Index", "Reports")">Reports</a>
+    </li>
+}
+
+
+/// Client side validation
+<script>
+    var permissions = @Json.Serialize(await AuthorizationService.AuthorizeAsync(User, new string[] { "OrdersModule", "ReportsModule" }));
+
+    document.addEventListener("DOMContentLoaded", function () {
+        if (!permissions.includes("OrdersModule")) {
+            document.getElementById("orders-module")?.remove();
+        }
+        if (!permissions.includes("ReportsModule")) {
+            document.getElementById("reports-module")?.remove();
+        }
+    });
+</script>

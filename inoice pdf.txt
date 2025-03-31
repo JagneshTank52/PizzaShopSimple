@@ -1,0 +1,55 @@
+Install-Package Razor.Templating.Core
+Install-Package IronPdf
+
+
+using Razor.Templating.Core;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Register Razor Templating Service
+builder.Services.AddRazorTemplating();
+
+var app = builder.Build();
+app.Run();
+
+
+
+<ItemGroup>
+    <PackageReference Include="Razor.Templating.Core" Version="*" />
+    <PackageReference Include="IronPdf" Version="*" />
+</ItemGroup>
+
+
+
+
+// GET - ORDER SUMMARY (VIEW)
+[HttpGet]
+public async Task<IActionResult> OrderSummary(int orderId)
+{
+    OrderSummaryVM model = await _service.GetOrderSummary(orderId);
+    return View(model);
+}
+
+// GET - GENERATE PDF FROM ORDER SUMMARY
+[HttpGet]
+public async Task<IActionResult> DownloadOrderSummary(int orderId)
+{
+    // Fetch Order Data from DB
+    var model = await _service.GetOrderSummary(orderId);
+
+    if (model == null)
+    {
+        return NotFound("Order not found.");
+    }
+
+    // Render Razor view to HTML
+    var htmlContent = await RazorTemplateEngine.RenderAsync("Views/OrderSummary.cshtml", model);
+
+    // Convert HTML to PDF
+    var renderer = new ChromePdfRenderer();
+    var pdfDoc = renderer.RenderHtmlAsPdf(htmlContent);
+    var pdfBytes = pdfDoc.BinaryData;
+
+    // Return the PDF to browser for download
+    return File(pdfBytes, "application/pdf", $"Order_{orderId}_Invoice.pdf");
+}

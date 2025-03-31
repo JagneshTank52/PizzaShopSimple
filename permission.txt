@@ -1,0 +1,107 @@
+ <td>
+                                    <div class="form-check form-switch d-flex justify-content-center ">
+                                        <input class="form-check-input custom-switch" type="checkbox" role="switch"
+                                            asp-for=@Model[i].CanView data-field="CanView" >
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <div class="form-check form-switch d-flex justify-content-center">
+                                        <input class="form-check-input custom-switch" type="checkbox" role="switch"
+                                            asp-for=@Model[i].CanEdit data-field="CanEdit" >
+                                    </div>
+
+                                </td>
+                                <td class="text-center">
+                                    <div class="form-check form-switch justify-content-center d-flex">
+                                        <input class="form-check-input custom-switch" type="checkbox" role="switch"
+                                            asp-for=@Model[i].CanDelete data-field="CanDelete" >
+                                    </div>
+                                </td>
+
+
+
+$("tbody tr").each(function () {
+            var row = $(this);
+            var canViewSwitch = row.find("input.custom-switch[data-field='CanView']");
+            var rowCheckbox = row.find(".permission-checkbox");
+            if (canViewSwitch.prop("checked")) {
+                rowCheckbox.prop("checked", true);
+            } else {
+                rowCheckbox.prop("checked", false);
+            }
+        });
+        // 1) When a row checkbox (leftmost column) is toggled:
+        $(".permission-checkbox").change(function () {
+            var row = $(this).closest('tr');
+            var isChecked = $(this).prop("checked");
+
+            // Select switches using the custom data attribute.
+            var canViewSwitch = row.find("input.custom-switch[data-field='CanView']");
+            var canEditSwitch = row.find("input.custom-switch[data-field='CanEdit']");
+            var canDeleteSwitch = row.find("input.custom-switch[data-field='CanDelete']");
+
+            // If row checkbox is checked => CanView = ON, otherwise OFF everything.
+            canViewSwitch.prop("checked", isChecked);
+            if (!isChecked) {
+                canEditSwitch.prop("checked", false);
+                canDeleteSwitch.prop("checked", false);
+            }
+            updateHeaderCheckbox();
+        });
+        
+        // 2) When any of the switches is toggled:
+        $(".custom-switch").change(function () {
+            var row = $(this).closest('tr');
+            var canViewSwitch = row.find("input.custom-switch[data-field='CanView']");
+            var canEditSwitch = row.find("input.custom-switch[data-field='CanEdit']");
+            var canDeleteSwitch = row.find("input.custom-switch[data-field='CanDelete']");
+            var rowCheckbox = row.find(".permission-checkbox");
+
+            // Check which switch was toggled
+            var field = $(this).data("field");
+
+            if (field === "CanView") {
+                if (!$(this).prop("checked")) {
+                    canEditSwitch.prop("checked", false);
+                    canDeleteSwitch.prop("checked", false);
+                    rowCheckbox.prop("checked", false);
+                } else {
+                    rowCheckbox.prop("checked", true);
+                }
+            } else if (field === "CanEdit" || field === "CanDelete") {
+                // If either is toggled ON, ensure CanView and the row checkbox are ON.
+                if ($(this).prop("checked")) {
+                    canViewSwitch.prop("checked", true);
+                    rowCheckbox.prop("checked", true);
+                }
+            }
+
+            updateHeaderCheckbox();
+        });
+
+        // 3) When the header checkbox is toggled:
+        $(".permission-header").change(function () {
+            var isChecked = $(this).prop("checked");
+
+            // Toggle all row checkboxes
+            $(".permission-checkbox").prop("checked", isChecked);
+            // Toggle CanView for all rows using the data attribute selector
+            $("input.custom-switch[data-field='CanView']").prop("checked", isChecked);
+
+            // If header is unchecked, turn off CanEdit and CanDelete for all rows.
+            if (!isChecked) {
+                $("input.custom-switch[data-field='CanEdit']").prop("checked", false);
+                $("input.custom-switch[data-field='CanDelete']").prop("checked", false);
+            }
+        });
+
+        function updateHeaderCheckbox() {
+            var allChecked = true;
+            $(".permission-checkbox").each(function () {
+                if (!$(this).prop("checked")) {
+                    allChecked = false;
+                    return false; // break out of each loop if one unchecked found
+                }
+            });
+            $(".permission-header").prop("checked", allChecked);
+        }

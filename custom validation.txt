@@ -1,0 +1,316 @@
+//// File validation for clien side
+
+// File: file-validation-adapter.js
+$.validator.addMethod("filevalidation", function (value, element, params) {
+    // If no file is selected, let required attribute handle it.
+    if (element.files.length === 0) {
+        return true;
+    }
+
+    var file = element.files[0];
+    var allowedExtensions = params.allowedextensions.split(",");
+    var maxFileSizeMB = parseInt(params.maxfilesize, 10);
+    var extension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+
+    // Validate extension.
+    if ($.inArray(extension, allowedExtensions) === -1) {
+        return false;
+    }
+
+    // Validate file size (in bytes)
+    var maxFileSizeBytes = maxFileSizeMB * 1024 * 1024;
+    if (file.size > maxFileSizeBytes) {
+        return false;
+    }
+
+    return true;
+});
+
+$.validator.unobtrusive.adapters.add("filevalidation", 
+    ["allowedextensions", "maxfilesize"], 
+    function (options) {
+        options.rules["filevalidation"] = {
+            allowedextensions: options.params.allowedextensions,
+            maxfilesize: options.params.maxfilesize
+        };
+        options.messages["filevalidation"] = options.message;
+});
+
+
+//// file validation
+
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.IO;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.Collections.Generic;
+
+namespace PizzaShop.Entity.Validations
+{
+    /// <summary>
+    /// Validates both file extension and maximum file size.
+    /// Client-side attributes are added for jQuery Unobtrusive Validation.
+    /// </summary>
+    public class FileValidationAttribute : ValidationAttribute, IClientModelValidator
+    {
+        private readonly string[] _allowedExtensions;
+        private readonly int _maxFileSizeInMB;
+
+        public FileValidationAttribute(string[] allowedExtensions, int maxFileSizeInMB)
+        {
+            _allowedExtensions = allowedExtensions;
+            _maxFileSizeInMB = maxFileSizeInMB;
+            ErrorMessage = $"Allowed file extensions are: {string.Join(", ", _allowedExtensions)} and maximum allowed file size is {_maxFileSizeInMB} MB.";
+        }
+
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            if (value is IFormFile file)
+            {
+                // Validate file extension
+                var extension = Path.GetExtension(file.FileName);
+                if (!_allowedExtensions.Contains(extension.ToLower()))
+                {
+                    return new ValidationResult($"The file extension '{extension}' is not allowed! Allowed extensions: {string.Join(", ", _allowedExtensions)}");
+                }
+
+                // Validate file size (in bytes)
+                var maxFileSizeInBytes = _maxFileSizeInMB * 1024 * 1024;
+                if (file.Length > maxFileSizeInBytes)
+                {
+                    return new ValidationResult($"Maximum allowed file size is {_maxFileSizeInMB} MB.");
+                }
+            }
+
+            return ValidationResult.Success;
+        }
+
+        // For client-side validation
+        public void AddValidation(ClientModelValidationContext context)
+        {
+            MergeAttribute(context.Attributes, "data-val", "true");
+            MergeAttribute(context.Attributes, "data-val-filevalidation", ErrorMessage);
+            MergeAttribute(context.Attributes, "data-val-filevalidation-allowedextensions", string.Join(",", _allowedExtensions));
+            MergeAttribute(context.Attributes, "data-val-filevalidation-maxfilesize", _maxFileSizeInMB.ToString());
+        }
+
+        private bool MergeAttribute(IDictionary<string, string> attributes, string key, string value)
+        {
+            if (attributes.ContainsKey(key))
+                return false;
+            attributes.Add(key, value);
+            return true;
+        }
+    }
+}
+
+//// stong password
+
+using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
+
+namespace PizzaShop.Entity.Validations
+{
+    /// <summary>
+    /// Requires password to have at least:
+    ///  - 1 uppercase letter
+    ///  - 1 lowercase letter
+    ///  - 1 digit
+    ///  - 1 special character
+    ///  - length between minLen and maxLen
+    /// </summary>
+    public class StrongPasswordAttribute : ValidationAttribute
+    {
+        private readonly int _minLen;
+        private readonly int _maxLen;
+
+        public StrongPasswordAttribute(int minLen = 8, int maxLen = 20)
+        {
+            _minLen = minLen;
+            _maxLen = maxLen;
+            ErrorMessage = $"Password must be between {_minLen} and {_maxLen} characters and contain uppercase, lowercase, digit, and special character.";
+        }
+
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            var password = value as string;
+            if (string.IsNullOrWhiteSpace(password)) 
+                return new ValidationResult(ErrorMessage);
+
+            if (password.Length < _minLen || password.Length > _maxLen)
+                return new ValidationResult(ErrorMessage);
+
+            // Regex for at least 1 uppercase, 1 lowercase, 1 digit, 1 special char
+            var pattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*\W).+$";
+            if (!Regex.IsMatch(password, pattern))
+            {
+                return new ValidationResult(ErrorMessage);
+            }
+
+            return ValidationResult.Success;
+        }
+    }
+}
+
+
+//// Alpha Only
+
+using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
+
+namespace PizzaShop.Entity.Validations
+{
+    public class AlphaOnlyAttribute : ValidationAttribute
+    {
+        public AlphaOnlyAttribute()
+        {
+            ErrorMessage = "Only alphabetic characters are allowed.";
+        }
+
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            var strValue = value as string;
+            if (string.IsNullOrWhiteSpace(strValue)) 
+                return ValidationResult.Success; // Let [Required] handle empties
+
+            if (!Regex.IsMatch(strValue, @"^[a-zA-Z\s]+$"))
+            {
+                return new ValidationResult(ErrorMessage);
+            }
+
+            return ValidationResult.Success;
+        }
+    }
+}
+
+
+//// alpha numeric
+
+using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
+
+namespace PizzaShop.Entity.Validations
+{
+    public class AlphaNumericAttribute : ValidationAttribute
+    {
+        public AlphaNumericAttribute()
+        {
+            ErrorMessage = "Username can only contain letters, digits, and optional underscores.";
+        }
+
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            var strValue = value as string;
+            if (string.IsNullOrWhiteSpace(strValue)) 
+                return ValidationResult.Success; // Let [Required] handle empties
+
+            if (!Regex.IsMatch(strValue, @"^[a-zA-Z0-9_]+$"))
+            {
+                return new ValidationResult(ErrorMessage);
+            }
+
+            return ValidationResult.Success;
+        }
+    }
+}
+
+
+/// for indian 6 digit zip code
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using PizzaShop.Entity.Validations;
+
+namespace PizzaShop.Entity.ViewModels.UserVM
+{
+    public class UserVM
+    {
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "First Name is required.")]
+        [StringLength(50, ErrorMessage = "First Name cannot exceed 50 characters.")]
+        [AlphaOnly(ErrorMessage = "First Name can only contain letters.")]
+        public string? FirstName { get; set; }
+
+        [StringLength(50, ErrorMessage = "Last Name cannot exceed 50 characters.")]
+        [AlphaOnly(ErrorMessage = "Last Name can only contain letters.")]
+        public string? LastName { get; set; }
+
+        [Required(ErrorMessage = "User Name is required.")]
+        [StringLength(50, ErrorMessage = "User Name cannot exceed 50 characters.")]
+        [AlphaNumeric(ErrorMessage = "User Name can only contain letters, digits, and underscores.")]
+        public string? UserName { get; set; }
+
+        [Required(ErrorMessage = "Email is required.")]
+        [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Please enter a valid email address.")]
+        public string? Email { get; set; }
+
+        // Strong password: 8-20 chars, must contain uppercase, lowercase, digit, special char.
+        [Required(ErrorMessage = "Password is required.")]
+        [StrongPassword(8, 20)]
+        public string? Password { get; set; }
+
+        public string? ProfileImage { get; set; }
+
+        // Combined file validation: Only .jpg, .jpeg, .png allowed; max 2 MB.
+        [FileValidation(new string[] { ".jpg", ".jpeg", ".png" }, 2)]
+        public IFormFile? ProfileImageFile { get; set; }
+
+        [Required(ErrorMessage = "Phone Number is required.")]
+        // Example regex for international phone numbers (adjust as needed)
+        [RegularExpression(@"^\+?[1-9]\d{1,14}$", ErrorMessage = "Invalid phone number format.")]
+        public string? PhoneNumber { get; set; }
+
+        [Required(ErrorMessage = "Please select a country.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Invalid country selection.")]
+        public int CountryId { get; set; }
+
+        [Required(ErrorMessage = "Please select a state.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Invalid state selection.")]
+        public int StateId { get; set; }
+
+        [Required(ErrorMessage = "Please select a city.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Invalid city selection.")]
+        public int CityId { get; set; }
+
+        [Required(ErrorMessage = "Address is required.")]
+        [StringLength(200, ErrorMessage = "Address cannot exceed 200 characters.")]
+        public string? Address { get; set; }
+
+        public bool? IsFirstTime { get; set; }
+
+        [Required(ErrorMessage = "Zip Code is required.")]
+        // Indian PIN code: 6 digits only.
+        [RegularExpression(@"^\d{6}$", ErrorMessage = "Invalid PIN code. It should be 6 digits.")]
+        public string ZipCode { get; set; } = null!;
+
+        [Required(ErrorMessage = "User Role is required.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Invalid User Role selection.")]
+        public int UserRoleId { get; set; }
+
+        public string? UserRoleName { get; set; }
+
+        public bool IsDeleated { get; set; }
+
+        public DateTime? CreatedAt { get; set; }
+
+        public int? CreatedBy { get; set; }
+
+        public DateTime? ModifiedAt { get; set; }
+
+        public int? ModifiedBy { get; set; }
+
+        public bool? IsActive { get; set; } = false;
+
+        public List<SelectListItem> CountryList { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> StateList { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> CityList { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> RoleList { get; set; } = new List<SelectListItem>();
+    }
+}
+
