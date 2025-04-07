@@ -2,58 +2,309 @@
     ViewData["Title"] = "Home Page";
     Layout = "_OrderAppLayout";
 }
+
 <section class="main-section flex-grow-1 py-3 px-4">
-    <!-- PAGE TITLE -->
-    <div class="top-navbar d-flex justify-content-between mb-3">
+
+    <!--  PAGE TITLE  -->
+    <div class="top-navbar d-flex justify-content-between align-items-center mb-3">
         <div class="navbar-left d-flex">
-            <p class="page-title fs-2 fw-bold">Category</p>
+            <p class="page-title fs-2 fw-bold">Table View</p>
         </div>
-        <div class="search-bar">
-            <input type="text" class="form-control" placeholder="Search">
+        <div>
+             <div class="d-flex align-items-center ms-3">
+                <i class="bi bi-circle-fill text-muted me-2"></i> Available
+                <i class="bi bi-circle-fill text-success ms-4 me-2"></i> Selected
+                <i class="bi bi-circle-fill text-primary ms-4 me-2"></i> Assigned
+                <i class="bi bi-circle-fill text-info ms-4 me-2"></i> Running
+            </div>
         </div>
     </div>
 
-    <!-- CATEGORY LIST -->
-    <div class="d-flex">
-        <div class="category-list me-3">
-            <ul class="list-group">
-                <li class="list-group-item">Favorite Items</li>
-                <li class="list-group-item">All</li>
-                <li class="list-group-item">Burger</li>
-                <li class="list-group-item">Desserts</li>
-                <li class="list-group-item active">Pizza</li>
-                <li class="list-group-item">Dips and Sauces</li>
-                <li class="list-group-item">Salads</li>
-                <li class="list-group-item">Sides and Appetizers</li>
-                <li class="list-group-item">Pasta</li>
-                <li class="list-group-item">Sandwich</li>
-            </ul>
-        </div>
+    <div class="container-fluid px-0">
 
-        <!-- ITEM LIST -->
-        <div class="item-list flex-grow-1">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="path/to/margherita.jpg" class="card-img-top" alt="Margherita">
-                        <div class="card-body">
-                            <h5 class="card-title">Margherita</h5>
-                            <p class="card-text">₹120</p>
-                            <span class="badge bg-success">Vegetarian</span>
+    <div class="accordion" id="tableAccordion" >
+
+        <!-- Ground Floor -->
+        <div class="accordion-item mb-3">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button d-flex justify-content-between align-items-center collapsed px-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                    <div class="icon-circle me-3">
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                    <span class="me-auto section-name">Ground Floor</span>
+                    <span class="d-flex align-items-center">
+                        <i class="bi bi-circle-fill text-success ms-4 me-2" style="font-size: 0.6rem;"></i><span>1</span>
+                        <i class="bi bi-circle-fill text-primary ms-4 me-2" style="font-size: 0.6rem;"></i><span>1</span>
+                        <i class="bi bi-circle-fill text-info ms-4 me-2" style="font-size: 0.6rem;"></i><span>1</span>
+                    </span>
+                    
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#tableAccordion">
+                <div class="accordion-body">
+                    <div class="d-flex flex-wrap justify-content-start gap-3">
+                        <div class="table-card d-flex flex-column justify-content-center align-items-center">
+                            <div class="d-flex w-100 align-items-center justify-content-between">
+                              <div class="table-name">T2</div>
+                              <div>Rs. 309.40</div>
+                            </div>
+                            <div class="d-flex flex-grow-1 w-100 align-items-center justify-content-between">
+                              <div class="d-flex flex-column">
+                                <div><i class="bi bi-people"></i></div>
+                                <div>6</div>
+                              </div>
+                              <div class="d-flex flex-column">
+                                <div><i class="bi bi-stopwatch"></i></div>
+                                <div>24 days 5 hours<br>33 min 1 sec</div>
+                              </div>
+                            </div>
+                    
+                        </div>
+                        <div class="table-card d-flex flex-column justify-content-center align-items-center">
+                            <div class="d-flex w-100 align-items-center justify-content-between">
+                                <div class="table-name">T4</div>
+                                <div>Rs. 0.00</div>
+                            </div>
+                            <div class="d-flex flex-grow-1 w-100 align-items-center justify-content-between">
+                                <div class="d-flex flex-column">
+                                    <div><i class="bi bi-people"></i></div>
+                                    <div>10</div>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <div><i class="bi bi-stopwatch"></i></div>
+                                    <div>38 min 49 sec</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-card d-flex flex-column justify-content-center align-items-center">
+                            <div class="d-flex w-100 align-items-center justify-content-between">
+                                <div class="table-name">T3</div>
+                                <div>Rs. 0.00</div>
+                            </div>
+                            <div class="d-flex flex-grow-1 w-100 align-items-center justify-content-between">
+                                <div class="d-flex flex-column">
+                                    <div><i class="bi bi-people"></i></div>
+                                    <div>5</div>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <div><i class="bi bi-stopwatch"></i></div>
+                                    <div>0 min</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-card d-flex flex-column justify-content-center align-items-center">
+                            <div class="d-flex w-100 align-items-center justify-content-between">
+                                <div class="table-name">T1</div>
+                                <div>Rs. 0.00</div>
+                            </div>
+                            <div class="d-flex flex-grow-1 w-100 align-items-center justify-content-between">
+                                <div class="d-flex flex-column">
+                                    <div><i class="bi bi-people"></i></div>
+                                    <div>11</div>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <div><i class="bi bi-stopwatch"></i></div>
+                                    <div>0 min</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-card d-flex flex-column justify-content-center align-items-center">
+                            <div class="d-flex w-100 align-items-center justify-content-between">
+                                <div class="table-name">T5</div>
+                                <div>Rs. 0.00</div>
+                            </div>
+                            <div class="d-flex flex-grow-1 w-100 align-items-center justify-content-between">
+                                <div class="d-flex flex-column">
+                                    <div><i class="bi bi-people"></i></div>
+                                    <div>5</div>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <div><i class="bi bi-stopwatch"></i></div>
+                                    <div>0 min</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="path/to/capsicum.jpg" class="card-img-top" alt="Capsicum">
-                        <div class="card-body">
-                            <h5 class="card-title">Capsicum</h5>
-                            <p class="card-text">₹800</p>
-                            <span class="badge bg-warning">Vegan</span>
+                    <div class="d-flex justify-content-end mt-3">
+                        <div>
+                            <button class="btn btn-primary btn-sm" data-bs-toggle="offcanvas" data-bs-target="#customerAssignmentOffcanvas" aria-controls="waitingTokenOffcanvas">Assign</button>
+                            <button class="btn btn-outline-primary btn-sm">+ Waiting Token</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- First Floor -->
+        <div class="accordion-item mb-3">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button d-flex justify-content-between align-items-center collapsed px-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <div class="icon-circle me-3">
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                    <span class="me-auto section-name">First Floor</span>
+                    <span class="d-flex align-items-center">
+                        <i class="bi bi-circle-fill text-success ms-4 me-2" style="font-size: 0.6rem;"></i><span>1</span>
+                        <i class="bi bi-circle-fill text-primary ms-4 me-2" style="font-size: 0.6rem;"></i><span>1</span>
+                        <i class="bi bi-circle-fill text-info ms-4 me-2" style="font-size: 0.6rem;"></i><span>1</span>
+                    </span>
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#tableAccordion">
+                <div class="accordion-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <i class="bi bi-circle-fill text-success ms-4 me-2" style="font-size: 0.6rem;"></i><span>1</span>
+                            <i class="bi bi-circle-fill text-primary ms-4 me-2" style="font-size: 0.6rem;"></i><span>1</span>
+                            <i class="bi bi-circle-fill text-info ms-4 me-2" style="font-size: 0.6rem;"></i><span>1</span>
+                        </div>
+                        <button class="btn btn-outline-primary btn-sm">+ Waiting Token</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Third Floor -->
+        <div class="accordion-item mb-3">
+            <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button d-flex justify-content-between align-items-center collapsed px-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    <div class="icon-circle me-3">
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                    <span class="me-auto section-name">Third Floor</span>
+                    <span class="d-flex align-items-center">
+                        <i class="bi bi-circle-fill text-success ms-4 me-2" style="font-size: 0.6rem;"></i><span>1</span>
+                        <i class="bi bi-circle-fill text-primary ms-4 me-2" style="font-size: 0.6rem;"></i><span>1</span>
+                        <i class="bi bi-circle-fill text-info ms-4 me-2" style="font-size: 0.6rem;"></i><span>1</span>
+                    </span>
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#tableAccordion">
+                <div class="accordion-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <i class="bi bi-circle-fill text-success ms-4 me-2" style="font-size: 0.6rem;"></i><span>1</span>
+                            <i class="bi bi-circle-fill text-primary ms-4 me-2" style="font-size: 0.6rem;"></i><span>1</span>
+                            <i class="bi bi-circle-fill text-info ms-4 me-2" style="font-size: 0.6rem;"></i><span>1</span>
+                        </div>
+                        <button class="btn btn-outline-primary btn-sm">+ Waiting Token</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- A.C. Hall -->
+        <div class="accordion-item mb-3">
+            <h2 class="accordion-header" id="headingFour">
+                <button class="accordion-button d-flex justify-content-between align-items-center collapsed px-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    <div class="icon-circle me-3">
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                    <span class="me-auto section-name">A.C. Hall</span>
+                    <span class="d-flex align-items-center">
+                        <i class="bi bi-circle-fill text-success ms-4 me-2" style="font-size: 0.6rem;"></i><span>1</span>
+                        <i class="bi bi-circle-fill text-primary ms-4 me-2" style="font-size: 0.6rem;"></i><span>1</span>
+                        <i class="bi bi-circle-fill text-info ms-4 me-2" style="font-size: 0.6rem;"></i><span>1</span>
+                    </span>
+                </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#tableAccordion">
+                <div class="accordion-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <i class="bi bi-circle-fill text-success ms-4 me-2" style="font-size: 0.6rem;"></i><span>1</span>
+                            <i class="bi bi-circle-fill text-primary ms-4 me-2" style="font-size: 0.6rem;"></i><span>1</span>
+                            <i class="bi bi-circle-fill text-info ms-4 me-2" style="font-size: 0.6rem;"></i><span>1</span>
+                        </div>
+                        <button class="btn btn-outline-primary btn-sm">+ Waiting Token</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
+</div>
+
 </section>
+
+
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="customerAssignmentOffcanvas" aria-labelledby="customerAssignmentLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="customerAssignmentLabel">Waiting List</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <!-- Waiting List -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>No. of Persons</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="radio" name="waitingListSelect" checked></td>
+                    <td>#109</td>
+                    <td>Sarah</td>
+                    <td>5</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Customer Details -->
+        <h6 class="text-primary fw-bold mt-4">Customer Details</h6>
+        <form id="customerForm">
+            <div class="mb-3">
+                <input type="email" class="form-control" id="email" placeholder="Email*" required>
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="name" placeholder="Name*" required>
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="mobile" placeholder="Mobile Number*" required>
+            </div>
+            <div class="mb-3">
+                <input type="number" class="form-control" id="persons" placeholder="No. of Person(s)*" required>
+            </div>
+            <div class="mb-3">
+                <select class="form-select" id="section" required>
+                    <option selected disabled>Section*</option>
+                    <option value="Ground Floor">Ground Floor</option>
+                    <option value="First Floor">First Floor</option>
+                    <option value="Third Floor">Third Floor</option>
+                    <option value="A.C. Hall">A.C. Hall</option>
+                </select>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Assign</button>
+                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="offcanvas">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var accordionButtons = document.querySelectorAll('.accordion-button');
+
+        accordionButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var iconCircle = this.querySelector('.icon-circle');
+                                var icon = this.querySelector('.icon-circle i');
+                if (this.classList.contains('collapsed')) {
+                   icon.classList.remove('bi-chevron-down');
+                    icon.classList.add('bi-chevron-right');
+                    iconCircle.classList.remove('open');
+                } else {
+                   icon.classList.remove('bi-chevron-right');
+                    icon.classList.add('bi-chevron-down');
+                    iconCircle.classList.add('open');
+                }
+            });
+        });
+    });
+</script>
