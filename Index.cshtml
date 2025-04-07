@@ -1,0 +1,59 @@
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_OrderAppLayout";
+}
+<section class="main-section flex-grow-1 py-3 px-4">
+    <!-- PAGE TITLE -->
+    <div class="top-navbar d-flex justify-content-between mb-3">
+        <div class="navbar-left d-flex">
+            <p class="page-title fs-2 fw-bold">Category</p>
+        </div>
+        <div class="search-bar">
+            <input type="text" class="form-control" placeholder="Search">
+        </div>
+    </div>
+
+    <!-- CATEGORY LIST -->
+    <div class="d-flex">
+        <div class="category-list me-3">
+            <ul class="list-group">
+                <li class="list-group-item">Favorite Items</li>
+                <li class="list-group-item">All</li>
+                <li class="list-group-item">Burger</li>
+                <li class="list-group-item">Desserts</li>
+                <li class="list-group-item active">Pizza</li>
+                <li class="list-group-item">Dips and Sauces</li>
+                <li class="list-group-item">Salads</li>
+                <li class="list-group-item">Sides and Appetizers</li>
+                <li class="list-group-item">Pasta</li>
+                <li class="list-group-item">Sandwich</li>
+            </ul>
+        </div>
+
+        <!-- ITEM LIST -->
+        <div class="item-list flex-grow-1">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="path/to/margherita.jpg" class="card-img-top" alt="Margherita">
+                        <div class="card-body">
+                            <h5 class="card-title">Margherita</h5>
+                            <p class="card-text">₹120</p>
+                            <span class="badge bg-success">Vegetarian</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="path/to/capsicum.jpg" class="card-img-top" alt="Capsicum">
+                        <div class="card-body">
+                            <h5 class="card-title">Capsicum</h5>
+                            <p class="card-text">₹800</p>
+                            <span class="badge bg-warning">Vegan</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

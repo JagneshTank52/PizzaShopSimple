@@ -1,0 +1,811 @@
+/* ====== Variables ====== */
+:root {
+    --primary-color: #0066a7;
+    --secondary-color: #FFFFFF;
+    --login-bg-color: #d8eff7;
+    --bg-color: #F2F2F2;
+    --secondary-bg-color: #F7F7F7;
+}
+
+
+/* ====== Default ====== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,html {
+    background-color: var(--bg-color);
+    height: 100% !important;
+}
+
+a {
+    text-decoration: none !important;
+    color: var(--primary-color);
+}
+
+.table {
+    vertical-align: middle !important;
+}
+
+/* ====== Button releated ====== */
+
+
+
+/* make sure when you are using login page then width should be 100% */
+.btn {
+    background-color: var(--primary-color) !important;
+    border-radius: 3px !important;
+    border-color: var(--primary-color) !important;
+}
+
+.page-title {
+    color: var(--primary-color);
+    margin-bottom: 0px;
+}
+
+.page-title-btn {
+    font-size: 18px;
+    font-weight: 600;
+    gap: 10px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+}
+
+.sub-title-btn {
+    font-size: 16px;
+    font-weight: 600;
+    gap: 10px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-title-btn-icon {
+    font-size: 20px;
+}
+
+.filter {
+    width: 30% !important;
+}
+
+.sub-filter {
+    width: 22% !important;
+}
+
+
+
+#item-menu-btn {
+    background-color: transparent !important;
+}
+
+/* icon btn */
+.add-icon-btn {
+    border: 2px solid var(--primary-color);
+    background-color: transparent;
+    width: 35px;
+    height: 35px;
+    color: var(--primary-color);
+}
+
+.delete-btn,
+.edit-btn {
+    -bs-btn-padding-x: 0;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.trash-btn {
+    background-color: var(--secondary-color) !important;
+    --bs-btn-padding-x: 0.50rem !important;
+    --bs-btn-padding-y: 0.175rem !important;
+}
+
+.trash-btn.bi-trash {
+    color: var(--primary-color);
+}
+
+.outline-btn {
+    background-color: transparent !important;
+    color: var(--primary-color) !important;
+}
+
+.outline-btn:hover {
+    background-color: var(--primary-color) !important;
+    color: var(--secondary-color) !important;
+}
+
+/* User Profile */
+.profile .dropdown-toggle::after {
+    display: none !important;
+
+}
+
+/* .profile ul li:hover{
+    background-color: var(--secondary-color) !important;
+    color: var(--primary-color);
+} */
+/* ======= Catergoty ======= */
+.category-item {
+    width: 98%;
+    border-radius: 3px;
+}
+
+.category-item li:hover {
+    background-color: var(--secondary-color);
+}
+
+.high-light {
+    color: var(--primary-color);
+}
+
+.selected{
+    background-color: #39A7ED;
+}
+#update-category {
+    display: none;
+}
+
+.edit,
+.delete {
+    font-size: 1.1rem;
+}
+
+.edit:hover {
+    color: var(--primary-color);
+    /* font-size: 1.3rem; */
+    cursor: pointer;
+}
+
+.delete:hover {
+    color: red;
+    /* font-size: 1.3rem; */
+    cursor: pointer;
+}
+
+.category-item li:hover #update-category {
+    display: block;
+}
+
+.category-list {
+    height: 90%;
+}
+
+
+/* My profile Header */
+.my-profile-bg {
+    height: 55px;
+    /* background-color: gold; */
+    background-image: url("../Images/profile_div_bg.jpg");
+    background-size: cover;
+    /* background-repeat: no-repeat; */
+}
+
+.my-profile-header {
+    position: relative;
+    top: -30px;
+}
+
+/* ====== Switchs ====== */
+/* .form-switch .form-check-input{
+    width: 3rem !important;
+  
+}  */
+
+.category-title {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+
+/* .form-check-input {
+    
+    height: 1.5rem !important;
+    margin-top: .25em;
+    vertical-align: top; 
+} */
+
+.form-check-input:checked {
+    background-color: var(--primary-color) !important;
+    /* border-color: #0d6efd; */
+}
+
+/* ====== Menu Page navigation ====== */
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    color: var(--primary-color) !important;
+    background-color: transparent !important;
+    border-radius: 0;
+    border-bottom: 2px solid var(--primary-color) !important;
+}
+
+.nav-link {
+    color: var(--bs-heading-color) !important;
+}
+
+#pills-tab {
+    background-color: var(--secondary-color);
+}
+
+.bi-plus-square {
+    color: var(--primary-color);
+}
+
+/* ====== Floating Label ====== */
+
+/* .form-floating>.form-control-plaintext~label, .form-floating>.form-control:focus~label, .form-floating>.form-control:not(:placeholder-shown)~label, .form-floating>.form-select~label {
+    color: rgba(var(--bs-body-color-rgb),.65);
+    transform: scale(.85) translateY(-1.7rem) translateX(.15rem) !important;
+}
+.form-floating>.form-select,
+.form-floating>.form-control:not(:placeholder-shown)
+ {
+    padding-top: .625rem !important;
+    padding-bottom: .625rem;
+} */
+
+.form-control:disabled {
+    background-color: var(--bg-color) !important;
+    opacity: 1;
+}
+
+.card {
+    min-height: 180px !important;
+    background-color: #f8f9fa !important;
+}
+
+/* ====== Sidebar and main-container toggle ====== */
+
+.main-container {
+    position: relative;
+    width: 100%;
+
+}
+
+.sidebar {
+    width: 300px;
+    position: fixed;
+    height: 100%;
+    /* not working because of bg-color of offcanvas above 992 is tranperent */
+    background-color: var(--secondary-color) !important;
+
+}
+
+.sidebar ul {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    padding-left: 0.5rem;
+}
+
+.sidebar ul li {
+    position: relative;
+    width: 100%;
+    list-style: none;
+}
+
+.sidebar ul li:hover {
+    color: var(--primary-color);
+    background-color: var(--bg-color);
+}
+
+/* .sidebar ul li:active
+{
+    color:var(--secondary-color);
+    background-color: var(--primary-color);
+} */
+.sidebar ul li.active {
+    color: var(--primary-color);
+    background-color: var(--bg-color);
+}
+
+
+.sidebar ul li:nth-child(1) {
+    pointer-events: none;
+    height: 64px;
+    margin-bottom: 2rem;
+}
+
+.sidebar ul li:nth-child(1) .title {
+    color: var(--primary-color);
+}
+
+.sidebar ul li a {
+    position: relative;
+    width: 100%;
+    display: flex;
+}
+
+.sidebar ul li a .icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+    height: 50px;
+    text-align: center;
+}
+
+
+.sidebar ul li a .title {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    height: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    /* here give grey type color */
+    /* color: red; */
+    text-align: start;
+    white-space: nowrap;
+}
+
+.main {
+    position: absolute;
+    width: calc(100% - 300px);
+    left: 300px;
+    /* if not working well then do it to 100vh */
+    min-height: 100%;
+    height: 100%;
+    /* transition: 0.1s; */
+}
+
+
+.topbar {
+    top: 0;
+    padding: 1rem;
+    width: 100%;
+    height: 64px;
+    display: flex;
+    z-index: 1000 !important;
+    position: sticky;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    background-color: var(--primary-color);
+}
+
+
+.sidebar-btn {
+    visibility: hidden;
+}
+
+
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    color: var(--primary-color) !important;
+    background-color: transparent !important;
+    border-bottom: 2px solid var(--primary-color) !important;
+}
+
+.nav-pills .nav-link {
+    border-radius: 0 !important;
+    /* put here font color */
+    color: black !important;
+}
+
+
+/* .tab-pane {
+    min-height: 400px;
+} */
+
+.display-none {
+    display: none;
+}
+
+.tab-pane .offcanvas-lg {
+    background-color: var(--secondary-bg-color) !important;
+}
+
+.tab-pane-left {
+    width: 300px;
+    height: auto;
+    border-right: 2px solid var(--primary-color);
+}
+
+.tab-pane-right {
+    width: calc(100% - 300px);
+    background-color: var(--secondary-color);
+
+}
+
+#pills-tabContent {
+    background-color: var(--secondary-color);
+}
+
+/* .category-option .bi-pen,
+.category-option .bi-trash {
+    display: none;
+} */
+
+/* Custom Switch */
+/* style="width: 3.5rem; height: 2rem;" */
+.custom-switch {
+    width: 3rem !important;
+    height: 1.5rem;
+}
+
+
+@media (max-width: 991px) {
+    .main {
+        width: 100%;
+        left: 0;
+    }
+
+    .sidebar-btn {
+        visibility: visible;
+    }
+
+    .tab-pane-right {
+        width: 100%;
+        left: 0;
+    }
+}
+
+/* ====== Search Bar ====== */
+
+.search {
+    /* align-self: center; */
+    position: relative;
+    width: 250px;
+    margin: 2px 10px;
+}
+
+.search label {
+    position: absolute;
+    width: 100%;
+}
+
+.search label input {
+    width: 100%;
+    height: 40px;
+    padding: 5px 35px 5px 10px;
+}
+
+.search label i {
+    padding-left: 1rem;
+    position: absolute;
+    top: 15%;
+    right: 5%;
+
+}
+
+.search-btn {
+    position: absolute;
+    top: 16%;
+    right: 6%;
+
+}
+
+@media screen and (max-width: 767px) {
+    .search-btn {
+        right: 3%;
+    }
+
+    .sub-filter {
+        width: 100% !important;
+    }
+}
+
+
+.bi-camera {
+    position: absolute;
+    top: 55%;
+    left: 4%;
+}
+
+.group-name,
+.list-name {
+    color: var(--primary-color);
+}
+
+
+
+
+.search-md .bi-search {
+    position: absolute;
+    top: 50%;
+    left: 95%;
+    transform: translate(-50%, -50%);
+}
+
+.navbar-right .form-control,
+.search-md .form-control {
+    display: block;
+    position: relative;
+    width: 100%;
+    padding: .375rem 3rem 0.375rem 0.4rem;
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.7;
+    color: var(--bs-body-color);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+
+
+.navbar-left p {
+    color: var(--primary-color);
+}
+
+/* ====== login Page ====== */
+
+.login-banner {
+    flex: 1;
+    overflow: hidden;
+}
+
+.login-banner img {
+    width: 100%;
+    height: 100%;
+}
+
+.login-section {
+    flex: 1;
+    background-color: var(--login-bg-color);
+}
+
+.login-container {
+    width: 70%;
+    padding: 1rem;
+}
+
+.brand-name {
+    color: var(--primary-color) !important;
+}
+
+.form-control.is-invalid,
+.was-validated .form-control:invalid {
+    background-image: none !important;
+}
+
+.login-icons {
+    position: absolute;
+    top: 20%;
+    right: 3%;
+    color: black;
+}
+
+.icon {
+    font-size: 25px;
+}
+
+.change-password-container {
+    width: 500px;
+
+}
+
+
+/* ======= ORDER APP ======= */
+
+.order-app-topbar {
+    top: 0;
+    padding: 1rem;
+    width: 100%;
+    height: 64px;
+    display: flex;
+    z-index: 1000 !important;
+    position: sticky;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    background-color: var(--primary-color);
+}
+
+/* order app btn */
+#order-app-btn {
+    height: 40px;
+    width: 40px;
+    font-size: 2rem;
+    color: var(--secondary-color);
+}
+
+#order-app-logo{
+    background-color: var(--secondary-color);
+    width: 50px;
+    height: 45px;
+}
+
+.order-app-title{
+    color: var(--secondary-color);
+}
+
+.order-app-item {
+    border: 1px solid var(--bg-color);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    min-width: 80px;
+    /* width: 60px; */
+}
+
+.order-app-item .nav-link {
+    color: white !important;
+}
+
+.ticket{
+    border: 3px dotted #CAC6C5;
+}
+
+.ticket-body{
+    background-color: var(--secondary-color);
+}
+.ticket-id {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.ticket-header{
+    background-color: var(--secondary-bg-color);
+}
+
+/* .order-app-main .navbar {
+    background-color: #0066a7;
+} */
+
+/* ======= MEDIA QUERY ======= */
+
+@media screen and (max-width: 575px) {
+    .login-container {
+        width: 90%;
+    }
+
+    .change-password-container {
+        width: 300px;
+    }
+
+    .filter,
+    .sub-filter {
+        width: 100% !important;
+    }
+
+}
+
+
+@media (max-width : 991px) {
+    .login {
+        display: block;
+    }
+
+
+    .login-banner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0.2;
+        height: 100vh;
+    }
+
+    .login-section {
+        align-items: center;
+        position: relative;
+        top: 0;
+        left: 0;
+        background-color: transparent;
+        height: 100vh;
+        opacity: 0.95;
+        /* /* z-index: 100 !important; */
+
+    }
+}
+
+/* ====== Search Bar ====== */
+
+.accordion-button:not(.collapsed) {
+    background-color: transparent;
+    color: inherit;
+    box-shadow: none;
+}
+
+.accordion-button::after {
+    /* order: -1;
+    margin-right: 20px;
+    margin-left: 0; */
+    display: none;
+}
+
+.accordion-button i {
+    color: var(--primary-color);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* @media (min-width: 768px) and (max-width: 991px) {
+    .sidebar {
+        width: 25%;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .sidebar {
+        width: 300px;
+    }
+} */
+
+.icon-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid grey;
+}
+.icon-circle.open {
+    border: 2px solid var(--primary-color);
+}
+
+.icon-circle i {
+    font-size: 16px;
+    font-weight: bold;
+    color: gray;
+}
+
+.icon-circle.open i {
+    color: var(--primary-color);
+}
+
+.table-card {
+    background-color: #F2F2F2;
+    text-align: center;
+    height: 130px;
+    width: 250px;
+    padding: 0.7rem;
+}
+.table-card .fw-bold {
+    margin-bottom: 0.5rem;
+}
+.table-card a {
+    text-decoration: none;
+}
+.bi-people{
+    font-size: 20px;
+}
+.bi-stopwatch{
+    font-size: 20px;
+}
+.table-name{
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+.section-name{
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.search-bar {
+    width: 300px;
+}
+
+.badge {
+    margin-top: 10px;
+}
