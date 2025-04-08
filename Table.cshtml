@@ -1,0 +1,188 @@
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_OrderAppLayout";
+}
+
+<section class="main-section flex-grow-1 py-3 px-4">
+
+    <!--  PAGE TITLE  -->
+    <div class="top-navbar d-flex justify-content-between align-items-center mb-3">
+        <div class="navbar-left d-flex">
+            <p class="page-title fs-2 fw-bold">Table View</p>
+        </div>
+        <div>
+            <div class="d-flex align-items-center ms-3">
+                <i class="bi bi-circle-fill text-muted me-2"></i> Available
+                <i class="bi bi-circle-fill text-success ms-4 me-2"></i> Selected
+                <i class="bi bi-circle-fill text-primary ms-4 me-2"></i> Assigned
+                <i class="bi bi-circle-fill text-info ms-4 me-2"></i> Running
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid px-0">
+
+        <div class="accordion" id="tableAccordion">
+            @* PARTIAL VIEW - SECTION VIEW LIST *@
+        </div>
+    </div>
+
+</section>
+
+
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="customerAssignmentOffcanvas"
+    aria-labelledby="customerAssignmentLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="customerAssignmentLabel">Waiting List</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <!-- Waiting List -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>No. of Persons</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="radio" name="waitingListSelect" checked></td>
+                    <td>#109</td>
+                    <td>Sarah</td>
+                    <td>5</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Customer Details -->
+        <h6 class="text-primary fw-bold mt-4">Customer Details</h6>
+        <form id="customerForm">
+            <div class="mb-3">
+                <input type="email" class="form-control" id="email" placeholder="Email*" required>
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="name" placeholder="Name*" required>
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="mobile" placeholder="Mobile Number*" required>
+            </div>
+            <div class="mb-3">
+                <input type="number" class="form-control" id="persons" placeholder="No. of Person(s)*" required>
+            </div>
+            <div class="mb-3">
+                <select class="form-select" id="section" required>
+                    <option selected disabled>Section*</option>
+                    <option value="Ground Floor">Ground Floor</option>
+                    <option value="First Floor">First Floor</option>
+                    <option value="Third Floor">Third Floor</option>
+                    <option value="A.C. Hall">A.C. Hall</option>
+                </select>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Assign</button>
+                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="offcanvas">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@* WATING TOKEN MODAL*@
+<div class="modal fade" id="wating-token-modal" tabindex="-1" aria-labelledby="watingTokenModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="fs-5" id="watingTokenModalLabel">Wating Token Details</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="wating-token-form">
+                @*PARTIAL VIEW - WATING TOKEN*@
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            getSectionList();
+            // $('#tableAccordion').on('click', '.accordion-button', function () {
+            //     var $button = $(this);
+            //     var $iconCircle = $button.find('.icon-circle');
+            //     var $icon = $button.find('.icon-circle i');
+            //     if ($button.attr('aria-expanded') === 'true') {
+            //         $icon.removeClass('bi-chevron-right').addClass('bi-chevron-down');
+            //         $iconCircle.addClass('open');
+            //     } else {
+            //         $icon.removeClass('bi-chevron-down').addClass('bi-chevron-right');
+            //         $iconCircle.removeClass('open');
+            //     }
+            // });
+            $('#tableAccordion').on('shown.bs.collapse', '.accordion-collapse', function () {
+                var $button = $(this).prev().find('.accordion-button');
+                var $iconCircle = $button.find('.icon-circle');
+                var $icon = $button.find('.icon-circle i');
+                $icon.removeClass('bi-chevron-right').addClass('bi-chevron-down');
+                $iconCircle.addClass('open');
+            });
+
+            $('#tableAccordion').on('hidden.bs.collapse', '.accordion-collapse', function () {
+                var $button = $(this).prev().find('.accordion-button');
+                var $iconCircle = $button.find('.icon-circle');
+                var $icon = $button.find('.icon-circle i');
+                $icon.removeClass('bi-chevron-down').addClass('bi-chevron-right');
+                $iconCircle.removeClass('open');
+            });
+        });
+
+        @* GET WATING TOKEN *@
+        function getWatingToken(sectionId) {
+            @* if (id != 0) {
+                $("#taxAddlLabel").text("Edit Tax");
+            }
+            else {
+                $("#taxAddlLabel").text("Add New Tax");
+            } *@
+            $.ajax({
+                url: "/OrderAppTable/GetWatingToken",
+                data: { sectionId :sectionId },
+                type: "GET",
+                dataType: "html",
+                success: function (response) {
+                    $("#wating-token-form").html(response);
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert("No Projects Found");
+                    $("#wating-token-form").html('An error has occurred');
+                }
+            });
+        };
+
+        @* GET SECTION LIST *@
+            function getSectionList() {
+                $.ajax({
+                    url: "/OrderAppTable/GetSectionList",
+                    type: "GET",
+                    dataType: "html",
+                    success: function (response) {
+                        $("#tableAccordion").html(response);
+
+                        @* $(".item-ul a span").first().addClass("high-light");
+                    $(".item-ul a p").first().addClass("high-light");
+                    sectionId = $(".section-item").first().data("id");
+                    GetTableList(sectionId); *@
+                                },
+                    error: function (error) {
+                        console.log(error);
+                        alert("No Projects Found");
+                        $("#section-list").html('An error has occurred');
+                    }
+                });
+            }
+    </script>
+}

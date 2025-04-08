@@ -15,7 +15,8 @@
     box-sizing: border-box;
 }
 
-body,html {
+body,
+html {
     background-color: var(--bg-color);
     height: 100% !important;
 }
@@ -141,9 +142,10 @@ a {
     color: var(--primary-color);
 }
 
-.selected{
+.selected-module {
     background-color: #39A7ED;
 }
+
 #update-category {
     display: none;
 }
@@ -348,6 +350,95 @@ a {
     white-space: nowrap;
 }
 
+.sidebar-btn {
+    visibility: hidden;
+}
+
+/* ORDER APP MENU SIDEBAR */
+
+.menu-sidebar {
+    width: 250px;
+    padding-top: 0.75rem;
+    /* position: absolute;
+    left: 0;
+    top: 0; */
+    /* margin-top: 64px; */
+    /* height: 100%; */
+    /* not working because of bg-color of offcanvas above 992 is tranperent */
+    background-color: var(--secondary-color) !important;
+}
+
+.menu-sidebar ul {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    padding-left: 0.5rem;
+}
+
+.menu-sidebar ul li {
+    position: relative;
+    width: 100%;
+    list-style: none;
+    /* background-color: #f0f9ff; */
+} 
+
+.menu-sidebar ul li:hover {
+    background-color: #ebf1f5;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.menu-sidebar ul li:active
+{
+    color:var(--secondary-color);
+    background-color: var(--primary-color);
+}
+
+.menu-sidebar ul li.active {
+    color: var(--primary-color);
+    background-color: var(--bg-color);
+}
+
+
+.menu-sidebar ul li:nth-child(1) {
+    pointer-events: none;
+    height: 20px;
+    margin-bottom: 2rem;
+}
+
+.menu-sidebar ul li:nth-child(1) .title {
+    color: black;
+}
+
+
+.menu-sidebar ul li a {
+    position: relative;
+    width: 100%;
+    display: flex;
+}
+
+.menu-sidebar ul li a .title {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    height: 40px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    /* here give grey type color */
+    /* color: red; */
+    text-align: start;
+    white-space: nowrap;
+} 
+
+.menu-sidebar-btn {
+    visibility: hidden;
+}
+
 .main {
     position: absolute;
     width: calc(100% - 300px);
@@ -355,6 +446,7 @@ a {
     /* if not working well then do it to 100vh */
     min-height: 100%;
     height: 100%;
+    /* top: 64px; */
     /* transition: 0.1s; */
 }
 
@@ -374,9 +466,7 @@ a {
 }
 
 
-.sidebar-btn {
-    visibility: hidden;
-}
+
 
 
 
@@ -442,6 +532,9 @@ a {
     }
 
     .sidebar-btn {
+        visibility: visible;
+    }
+    .menu-sidebar-btn {
         visibility: visible;
     }
 
@@ -616,13 +709,13 @@ a {
     color: var(--secondary-color);
 }
 
-#order-app-logo{
+#order-app-logo {
     background-color: var(--secondary-color);
     width: 50px;
     height: 45px;
 }
 
-.order-app-title{
+.order-app-title {
     color: var(--secondary-color);
 }
 
@@ -641,19 +734,20 @@ a {
     color: white !important;
 }
 
-.ticket{
+.ticket {
     border: 3px dotted #CAC6C5;
 }
 
-.ticket-body{
+.ticket-body {
     background-color: var(--secondary-color);
 }
+
 .ticket-id {
     color: var(--primary-color);
     font-size: 1.1rem;
 }
 
-.ticket-header{
+.ticket-header {
     background-color: var(--secondary-bg-color);
 }
 
@@ -707,25 +801,6 @@ a {
     }
 }
 
-/* ====== Search Bar ====== */
-
-.accordion-button:not(.collapsed) {
-    background-color: transparent;
-    color: inherit;
-    box-shadow: none;
-}
-
-.accordion-button::after {
-    /* order: -1;
-    margin-right: 20px;
-    margin-left: 0; */
-    display: none;
-}
-
-.accordion-button i {
-    color: var(--primary-color);
-}
-
 
 
 
@@ -749,6 +824,24 @@ a {
     }
 } */
 
+.accordion-button:not(.collapsed) {
+    background-color: transparent;
+    color: inherit;
+    box-shadow: none;
+}
+
+.accordion-button::after {
+    /* order: -1;
+    margin-right: 20px;
+    margin-left: 0; */
+    display: none;
+}
+
+.accordion-button i {
+    color: var(--primary-color);
+}
+
+
 .icon-circle {
     display: flex;
     align-items: center;
@@ -758,6 +851,7 @@ a {
     border-radius: 50%;
     border: 2px solid grey;
 }
+
 .icon-circle.open {
     border: 2px solid var(--primary-color);
 }
@@ -773,39 +867,197 @@ a {
 }
 
 .table-card {
-    background-color: #F2F2F2;
+    background-color: #FAFAFA;
     text-align: center;
     height: 130px;
     width: 250px;
+    border-radius: 4px;
     padding: 0.7rem;
 }
+
+.table-card.assigned {
+    background-color: #F2FAEC;
+    border: 2px solid #c3ed9f;
+}
+
+.table-card.running {
+    background-color: #E0F2FF;
+    border: 2px solid #a5d5f8;
+}
+
+.table-card.selected {
+    border: 2px solid #92d162;
+}
+
+.table-card.available {
+    background-color: #FAFAFA;
+    border: 2px solid #FAFAFA;
+}
+
 .table-card .fw-bold {
     margin-bottom: 0.5rem;
 }
+
 .table-card a {
     text-decoration: none;
 }
-.bi-people{
+
+.bi-people {
     font-size: 20px;
 }
-.bi-stopwatch{
+
+.bi-stopwatch {
     font-size: 20px;
 }
-.table-name{
+
+.table-name {
     font-size: 20px;
     font-weight: 700;
-    color: var(--primary-color);
+    color: #6E6D6B;
 }
-.section-name{
+.table-name.assigned {
+    color: #6FA347;
+}
+
+.table-name.running {
+    color: #3780DA;
+}
+
+/* .table-name.selected {
+    color: #6E6D6B;
+} */
+
+/* .table-name.available {
+    color: #6E6D6B;
+} */
+
+.section-name {
     font-size: 22px;
     font-weight: 600;
     color: var(--primary-color);
 }
 
-.search-bar {
-    width: 300px;
+/* Card */
+
+.menu-card {
+    width: 250px;
+    height: 80px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    margin: 10px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
 
-.badge {
-    margin-top: 10px;
+.card-inner {
+    display: flex;
+    height: 100%;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.card-image-container {
+    height: 100%;
+    width: 35%;
+    position: relative;
+}
+
+.card-image {
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+    border-radius: 12px 0 0 12px;
+    box-shadow: 4px 0 6px -2px rgba(0,0,0,0.15);
+}
+
+.card-content {
+    padding: 10px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.corner-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 24px;
+    height: 24px;
+    z-index: 10;
+}
+
+.vegetarian-corner {
+    background-color: #009245;
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+.heart-icon {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.filled-heart {
+    color: #FFD700;
+}
+
+.unfilled-heart {
+    color: #6c757d;
+}
+
+
+/* order menu*/
+
+.card {
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.table td, .table th {
+    vertical-align: middle;
+}
+.chevron-icon {
+    color: #888;
+    font-size: 14px;
+}
+.addon-item {
+    padding-left: 20px;
+    color: #666;
+}
+.quantity-input {
+    width: 40px;
+    text-align: center;
+    border: 1px solid #dee2e6;
+}
+.btn-quantity {
+    padding: 0px 8px;
+    font-size: 14px;
+    background: #fff;
+    border: 1px solid #dee2e6;
+}
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+.total-row {
+    font-weight: bold;
+    border-top: 1px solid #dee2e6;
+    padding-top: 8px;
+    margin-top: 8px;
+}
+.form-check-input:checked {
+    background-color: #0d6efd;
+}
+.action-buttons .btn {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.card-body {
+    max-height: 250px; 
+    overflow-y: auto;
 }
