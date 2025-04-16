@@ -1,0 +1,253 @@
+@using PizzaShop.Entity.ViewModels.MenuVM
+@using PizzaShop.Service.Helper
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+@{
+    var canEdit = await AuthorizationService.AuthorizeAsync(User, "MenuCanEdit");
+    var canDelete = await AuthorizationService.AuthorizeAsync(User, "MenuCanDelete");
+}
+@model PaginatedList<ModifierListVM>
+
+
+@if(Model.TotalCount == 0){
+   <div class="d-flex align-items-center justify-content-center fs-5 m-auto fw-semibold mt-3">
+    No Data Found
+   </div>
+}
+else{
+    var dynamicHeader = Model[0].isGetById? "modifier-header-main" : "modifier-header" ;
+    var dynamicCheckBox = Model[0].isGetById? "modifier-checkbox-main" : "modifier-checkbox" ;
+
+    <table class="table">
+    <thead>
+        <tr>
+            @if(!canDelete.Succeeded && !Model[0].isGetById){
+            <th scope="col">
+                <div class="form-check" style="width: 5%;">
+                    <input class="form-check-input @dynamicHeader" type="checkbox" value="" id="check">
+                </div>
+            </th>
+            }
+            @if(canDelete.Succeeded){
+            <th scope="col">
+                <div class="form-check" style="width: 2%;">
+                    <input class="form-check-input @dynamicHeader" type="checkbox" value="" id="check">
+                </div>
+            </th>
+            }
+            <th scope="col" style="width:35%">
+                Name
+            </th>
+            
+            <th scope="col" class="text-center" style="width: 20%;">Rate</th>
+            <th scope="col" class="text-center" style="width: 20%;">Quantity</th>
+            @* <th scope="col">Unit</th> *@
+
+            @if(Model[0].isGetById){
+                @if(canDelete.Succeeded || canEdit.Succeeded){
+                    <th scope="col" class="text-center" style="width: 20%;">Action</th>
+                } 
+            }
+        </tr>
+    </thead>
+    <tbody id="table">
+
+        @foreach (var modifier in Model)
+        {
+            <tr style="line-height: 2rem;">
+                @if(!canDelete.Succeeded && !Model[0].isGetById){
+                    <td scope="row" style="width: 100px;">
+                        <div class="form-check">
+                            <input class="form-check-input @dynamicCheckBox" type="checkbox" value="" id="chekbox"
+                                data-id=@modifier.Id data-name="@modifier.Name">
+                        </div>
+                    </td>
+                }
+                @if(canDelete.Succeeded){
+                    <td scope="row" style="width: 100px;">
+                        <div class="form-check">
+                            <input class="form-check-input @dynamicCheckBox" type="checkbox" value="" id="chekbox"
+                                data-id=@modifier.Id data-name="@modifier.Name">
+                        </div>
+                    </td>  
+                }
+                <td>
+                        @modifier.Name
+                </td>
+                <td class="text-center">
+                    @modifier.Rate
+                </td>
+                <td class="text-center">
+                    @modifier.Quantity
+                </td>
+
+                @if(modifier.isGetById)
+                {
+                    @if(canDelete.Succeeded || canEdit.Succeeded){
+                        <td class="text-center">
+                            @if(canEdit.Succeeded){
+                                <span>
+                                    <i class="bi bi-pen me-3 edit" data-bs-toggle="modal" data-bs-target="#add-modifier" onclick=getModifierForm(@modifier.Id)></i>
+                                </span>
+                            }
+
+                            @if(canDelete.Succeeded){
+                                <span>
+                                    <i class="bi bi-trash delete" data-bs-toggle="modal" data-bs-target="#delete-modifier" onclick=AddSelectedModifier(@modifier.Id)></i>
+                                </span>
+                            }
+                        </td>
+                    }
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="col-12 d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-center justify-content-sm-end "
+    style="gap: 10px;">
+    <div class="d-flex flex-row align-items-center">
+        <h6 class="mb-0 me-1">Items per page</h6>
+            <select class="form-select w-auto me-2" id="modifier-page-size" aria-label="Default select example">
+                <option value="3" selected="@(Model.PageSize == 3 ? "selected" : null)">3</option>
+                <option value="5" selected="@(Model.PageSize == 5 ? "selected" : null)">5</option>
+                <option value="10" selected="@(Model.PageSize == 10 ? "selected" : null)">15</option>
+                <option value="20" selected="@(Model.PageSize == 20 ? "selected" : null)">20</option>
+                <option value="25" selected="@(Model.PageSize == 25 ? "selected" : null)">25</option>
+            </select>
+    </div>
+    <div class="d-flex flex-row align-items-center">
+        <h6 class="mb-0 me-1"> page @(Model.FromCount + 1) - @(Model.ToCount < Model.TotalCount ? Model.ToCount : Model.TotalCount) of @Model.TotalCount</h6>
+        <ul class="pagination justify-content-end mb-0">
+            @if (Model.TotalPages > 1)
+            {
+                <li class="page-item @(Model.PageIndex > 1 ? " " : "disabled")">
+                    <a class="page-link" id="previous-modifier-pg" aria-label="Previous" data-index="@(Model.PageIndex - 1)">
+                        <span aria-hidden="true"><i class="bi bi-caret-left-fill" style="color: var(--primary-color);"></i>
+                        </span>
+                    </a>
+                </li>
+
+                <li class="page-item @(Model.PageIndex < Model.TotalPages ? " " : "disabled")">
+                    <a class="page-link" id="next-modifier-pg" aria-label="Next" data-index="@(Model.PageIndex + 1)">
+                        <span aria-hidden="true"> <i class="bi bi-caret-right-fill" style="color: var(--primary-color);">
+                            </i> </span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+}
+
+
+<script>
+    restoreCheckbox();
+    restoreMainCheckbox();
+
+    console.log(selectedModifier);
+    console.log(selectedMainModifier);
+
+    @* single item selected for existing modifier*@
+    $(".modifier-checkbox").on("click",function(){
+    const id = $(this).data('id');
+    const name = $(this).data('name');
+    if ($(this).prop("checked")) {
+        if (!selectedModifier.includes(id)) {
+            selectedModifier.push({id:id, Name: name});
+        }
+    } else {
+        selectedModifier = selectedModifier.filter(item => item.id !== id);
+    }
+    restoreCheckbox();
+    console.log(selectedModifier);
+    });
+
+    @* single item selected for main modifier*@
+    $(".modifier-checkbox-main").on("click",function(){
+    const id = $(this).data('id');
+    if ($(this).prop("checked")) {
+        if (!selectedMainModifier.includes(id)) {
+            selectedMainModifier.push(id);
+        }
+    } else {
+        selectedMainModifier = selectedMainModifier.filter(item => item !== id);
+    }
+    restoreMainCheckbox();
+    console.log(selectedMainModifier);
+    });
+
+    @* Check header wise check all check box for existing modifier*@
+    $(".modifier-header").change(function() {
+        var isChecked = $(this).prop("checked");
+        $(".modifier-checkbox").prop("checked", isChecked);
+
+        $(".modifier-checkbox").each(function(){
+            const id = $(this).data('id');
+            const name = $(this).data('name');
+            if (isChecked && !selectedModifier.includes(id)) {
+                selectedModifier.push({id:id, Name: name});
+            }
+            else if(!isChecked){
+                selectedModifier = selectedModifier.filter(item => item.id !== id);
+            }
+        });
+    });
+    @* Check header wise check all check box for main table *@
+    $(".modifier-header-main").change(function() {
+        var isChecked = $(this).prop("checked");
+        $(".modifier-checkbox-main").prop("checked", isChecked);
+
+        $(".modifier-checkbox-main").each(function(){
+            const id = $(this).data('id');
+
+            if (isChecked && !selectedMainModifier.includes(id)) {
+                selectedMainModifier.push(id);
+            }
+            else if(!isChecked){
+                selectedMainModifier = selectedMainModifier.filter(item => item !== id);
+            }
+        });
+        console.log(selectedMainModifier);
+    });
+
+
+    @* Restore Check box *@
+    function restoreCheckbox(){
+        let isAllChecked = true;
+        $(".modifier-checkbox").each(function(){
+        const id = $(this).data('id');
+        const name = $(this).data('name');
+        
+        if (selectedModifier.some(item => item.id === id)){
+            $(this).prop('checked', true);
+            }
+            else {
+                isAllChecked = false;
+                console.log(isAllChecked)
+            }
+        });
+
+        $(".modifier-header").prop('checked', isAllChecked);
+    };
+
+    @* restore main check box *@
+    function restoreMainCheckbox(){
+        var isAllChecked = true
+
+        $(".modifier-checkbox-main").each(function(){
+            const id = $(this).data('id');
+
+            if (selectedMainModifier.includes(id)){
+                $(this).prop('checked', true);
+            }
+            else {
+                isAllChecked = false;
+            }   
+        });
+
+         $(".modifier-header-main").prop('checked', isAllChecked);
+    }
+
+</script>

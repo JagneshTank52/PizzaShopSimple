@@ -1,0 +1,227 @@
+@using PizzaShop.Entity.ViewModels.MenuVM
+@using PizzaShop.Service.Helper
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+@{
+    var canEdit = await AuthorizationService.AuthorizeAsync(User, "MenuCanEdit");
+    var canDelete = await AuthorizationService.AuthorizeAsync(User, "MenuCanDelete");
+}
+@model NewPaginatedList<ItemListVM>
+
+
+@* else { *@
+    <table class="table">
+    <thead>
+    <tr>
+        @if(canDelete.Succeeded){
+            <th scope="col" style="width: 5%;">
+                <div class="form-check">
+                    <input class="form-check-input item-header" type="checkbox" value=""
+                        id="headerChek">
+                </div>
+            </th>
+        }
+        <th scope="col" style="width: 25%;">
+            Name
+        </th>
+        <th scope="col" style="width: 10%">Item Type</th>
+        <th scope="col" style="width: 15%;">Rate</th>
+        <th scope="col" style="width: 15%;">Quantity</th>
+        <th scope="col" style="width: 15%">Avaliablity</th>
+        @if(canDelete.Succeeded || canEdit.Succeeded){
+            <th scope="col" style="width: 15%;">Action </th>
+        }
+    </tr>
+    </thead>
+    <tbody id="table">
+        @if(Model.TotalCount == 0){
+                   @foreach(var item in Model.Items)
+        {
+            <tr>
+                @if(canDelete.Succeeded){
+                    <td scope="row" style="width: 100px;">
+                        <div class="form-check">
+                            <input class="form-check-input item-checkbox" type="checkbox" value=""
+                                id="chekbox" data-id=@item.ItemId>
+                        </div>
+                    </td>
+                }
+                <td>
+                    <span class="me-1">
+                        <img id="profileImage" src="@(item.ProfileImage ?? "/images/dining-menu.png")"
+                                height="50" width="50" style="border-radius: 50%;">
+                        @* <img src="../images/dining-menu.png" height="40" width="40" alt=""> *@
+                    </span>
+                    <span>
+                        @item.ItemName
+                    </span>
+                </td>
+                <td> 
+                    <img src= @(
+                        item.ItemTypeId switch {
+                        1 => "../images/veg-icon.svg",
+                        2 => "../images/non-veg-icon.svg",
+                        3 => "../images/vegan-icon.svg",
+                        _ => "../images/veg-icon.svg"
+                    })
+                    height="20" width="20" alt="">
+                 
+                </td>
+                <td>
+                   @item.ItemRate
+                </td>
+                <td>
+                    @item.ItemQuantity
+                </td>
+                <td>
+                    <div class="form-check form-switch item-check ">
+                        <input class="form-check-input custom-switch" type="checkbox" role="switch" asp-for=@item.IsAvaiable
+                            id="flexSwitchCheckDefault">
+                    </div>
+                </td>
+                @if(canDelete.Succeeded || canEdit.Succeeded){
+                                    <td>
+                    @if(canEdit.Succeeded){
+                        <span>
+                            <i class="bi bi-pen me-3 edit" data-bs-toggle="modal" data-bs-target="#add-item" onclick=getItemForm(@item.ItemId)></i>
+                        </span>
+                    }
+                    @if(canDelete.Succeeded){
+                        <span>
+                            <i class="bi bi-trash delete" data-bs-toggle="modal" ata-bs-target="#delete-item" onclick=deleteItem(@item.ItemId)></i>
+                        </span>
+                    }
+                </td>
+                }
+            </tr>
+        }
+        }
+        else{
+            <tr>
+                <td colspan="7" class="text-center" style="padding: 20px; background-color: #F7F7F7;">
+                    <div style="font-size: 1.3em; font-weight: bold; color: #555;">
+                       No Data Available
+                    </div>
+                </td>
+            </tr>
+        }  
+
+    </tbody>
+</table>
+
+<div class="col-12 d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-center justify-content-sm-end "
+                        style="gap: 10px;">
+    <div class="d-flex flex-row align-items-center">
+        <h6 class="mb-0 me-1">Items per page</h6>
+             <select class="form-select w-auto me-2" id="item-page-size"  aria-label="Default select example">
+                    <option value="3" selected="@(Model.pageInfo.PageSize == 3 ? "selected" : null)">3</option>
+                    <option value="5" selected="@(Model.pageInfo.PageSize == 5 ? "selected" : null)">5</option>
+                    <option value="10" selected="@(Model.pageInfo.PageSize == 10 ? "selected" : null)">10</option>
+                    <option value="20" selected="@(Model.pageInfo.PageSize == 15 ? "selected" : null)">15</option>
+                    <option value="25" selected="@(Model.pageInfo.PageSize == 25 ? "selected" : null)">25</option>
+                </select>
+    </div>
+    <div class="d-flex flex-row align-items-center">
+       <h6 class="mb-0 me-1">page @(Model.FromCount + 1) - @(Model.ToCount < Model.TotalCount ? Model.ToCount : Model.TotalCount) of @Model.TotalCount
+                </h6>
+        <ul class="pagination justify-content-end mb-0">
+            @if (Model.TotalPages > 1)
+            {
+                    <li class="page-item @(Model.pageInfo.PageIndex > 1 ? " " : "disabled")">
+                        <a class="page-link" aria-label="Previous" data-index="@(Model.pageInfo.PageIndex -1)">
+                            <span aria-hidden="true"><i class="bi bi-caret-left-fill" style="color: var(--primary-color);"></i> </span>
+                        </a>
+                    </li>
+            
+                <li class="page-item @(Model.pageInfo.PageIndex < Model.TotalPages? " " : "disabled")">
+                    <a class="page-link"aria-label="Next" data-index="@(Model.pageInfo.PageIndex + 1)">
+                        <span aria-hidden="true"> <i class="bi bi-caret-right-fill" style="color: var(--primary-color);">  </i> </span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+@* }  *@
+
+
+<script>
+    $(document).ready(function () {
+        restoreCheckbox();
+    });
+
+    @* PREVENT CLICK EVENT ON SWITCH *@
+    $(".item-check").on("click", function (e) {
+        e.preventDefault();
+    }) 
+
+    @* single item selected *@
+    $(".item-checkbox").on("click",function(){
+    const id = $(this).data('id');
+    if ($(this).prop("checked")) {
+        if (!selectedItem.includes(id)) {
+            selectedItem.push(id);
+        }
+    } else {
+        selectedItem = selectedItem.filter(item => item !== id);
+    }
+    restoreCheckbox();
+    });
+    
+    @* Check header wise check all check box for existing modifier*@
+    $(".item-header").change(function() {
+        var isChecked = $(this).prop("checked");
+
+        $(".item-checkbox").prop("checked", isChecked);
+
+        $(".item-checkbox").each(function(){
+            const id = $(this).data('id');
+
+            if (isChecked && !selectedItem.includes(id)) {
+                selectedItem.push(id);
+            }
+            else if(!isChecked){
+                selectedItem = selectedItem.filter(item => item !== id);
+            }
+        });
+
+        console.log(selectedItem)
+    });   
+
+    @* Restore Check box *@
+    function restoreCheckbox(){
+        let isAllChecked = true;
+        console.log(isAllChecked)
+        $(".item-checkbox").each(function(){
+        const id = $(this).data('id');
+
+        
+        if (selectedItem.includes(id)){
+            $(this).prop('checked', true);
+            }
+            else {
+                isAllChecked = false;
+            }
+
+        $(".item-header").prop('checked', isAllChecked);
+    
+    });
+    }
+
+    function cleanList(){
+        console.log("hello how Are you ")
+        $(".item-checkbox").each(function(){
+            const id = $(this).data('id');
+
+            if (!selectedItem.includes(id)){
+                console.log("inside");
+                $(this).prop('checked',false);
+            }
+            restoreCheckbox()
+        })
+    }
+    
+
+</script>

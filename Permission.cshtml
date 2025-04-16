@@ -1,0 +1,233 @@
+@using PizzaShop.Entity.ViewModels.RolePermissionVM;
+@model List<PermissionVM>
+<section class="main-section flex-grow-1 py-3 px-4">
+    <div class="top-navbar d-flex justify-content-between mb-3">
+        <div class="navbar-left d-flex">
+            <P class="page-title fs-2 fw-bold">Permission</P>
+        </div>
+        <div class="navbar-right">
+            <a type="button" class="page-title-btn btn outline-btn d-flex" asp-Controller="RoleAndPermission"
+                asp-action="Role">
+                <span> <i class="bi bi-chevron-left page-title-btn-icon"></i></span>
+                <span>Back</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="card p-3">
+        <div class="form-floating mb-3" style="width: 40%;">
+            <input type="text" class="form-control" id="role-name" asp-for="@Model[0].RoleName" disabled>
+            <label for="role-name">Role</label>
+        </div>
+        <form asp-action="PermissionPost" asp-controller="RoleAndPermission" asp-route-roleId="@Model[0].RoleId">
+            <div class="table-responsive-xl">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width: 5%;">
+                                <div class="form-check">
+                                    <input class="form-check-input permission-header" type="checkbox">
+                                </div>
+                            </th>
+                            <th scope="col" style="width:35%">
+                                Permission
+                            </th>
+                            <th scope="col" class="text-center" style="width: 20%;">Can View</th>
+                            <th scope="col" class="text-center" style="width: 20%;">Can Add/Edit</th>
+                            <th scope="col" class="text-center" style="width: 20%;">Can Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            bool isPreventToggle = Model[i].RoleId == 1 && Model[i].Id == 2;
+
+                            <tr style="line-height: 2rem;" data-role-id="@Model[i].RoleId" data-permission-id="@Model[i].Id">
+                                <td scope="row">
+                                    <div class="form-check">
+                                        <input class="form-check-input permission-checkbox" type="checkbox">
+                                    </div>
+                                </td>
+                                <td>
+                                    @Model[i].PermissionName
+                                    <input type="text" class="form-control" id="permissionId" placeholder="Zip Code"
+                                        asp-for=@Model[i].Id hidden>
+                                </td>
+                                <td>
+                                    <div class="form-check form-switch d-flex justify-content-center ">
+                                        <input
+                                            class="form-check-input custom-switch @(isPreventToggle ? "prevent-toggle" : "")"
+                                            type="checkbox" role="switch" asp-for=@Model[i].CanView data-field="CanView"
+                                            data-disabled="@(isPreventToggle.ToString().ToLower())">
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <div class="form-check form-switch d-flex justify-content-center">
+                                        <input
+                                            class="form-check-input custom-switch @(isPreventToggle ? "prevent-toggle" : "")"
+                                            type="checkbox" role="switch" asp-for=@Model[i].CanEdit data-field="CanEdit"
+                                            data-disabled="@(isPreventToggle.ToString().ToLower())">
+                                    </div>
+
+                                </td>
+                                <td class="text-center">
+                                    <div class="form-check form-switch justify-content-center d-flex">
+                                        <input
+                                            class="form-check-input custom-switch @(isPreventToggle ? "prevent-toggle" : "")"
+                                            type="checkbox" role="switch" asp-for="@Model[i].CanDelete"
+                                            data-field="CanDelete" data-disabled="@(isPreventToggle.ToString().ToLower())">
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button class="btn btn-primary me-md-2" type="submit">save</button>
+                <button class="btn outline-btn" type="button" onclick="goBack()">Cancle</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+@* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            $('.prevent-toggle').each(function () {
+                if ($(this).data('disabled') === true) {
+                    $(this).on('click', function (e) {
+                        e.preventDefault(); // Stop the toggle
+                    });
+                }
+            });
+
+            $("tbody tr").each(function () {
+                var row = $(this);
+                var canViewSwitch = row.find("input.custom-switch[data-field='CanView']");
+                var rowCheckbox = row.find(".permission-checkbox");
+                if (canViewSwitch.prop("checked")) {
+                    rowCheckbox.prop("checked", true);
+                } else {
+                    rowCheckbox.prop("checked", false);
+                }
+            });
+
+
+
+            // 1) When a row checkbox (leftmost column) is toggled:
+            $(".permission-checkbox").change(function () {
+                var row = $(this).closest('tr');
+                var isChecked = $(this).prop("checked");
+
+                // Select switches using the custom data attribute.
+                var canViewSwitch = row.find("input.custom-switch[data-field='CanView']");
+                var canEditSwitch = row.find("input.custom-switch[data-field='CanEdit']");
+                var canDeleteSwitch = row.find("input.custom-switch[data-field='CanDelete']");
+
+                // If row checkbox is checked => CanView = ON, otherwise OFF everything.
+                canViewSwitch.prop("checked", isChecked);
+                if (!isChecked) {
+                    canEditSwitch.prop("checked", false);
+                    canDeleteSwitch.prop("checked", false);
+                }
+                updateHeaderCheckbox();
+            });
+
+            // 2) When any of the switches is toggled:
+            $(".custom-switch").change(function () {
+                var row = $(this).closest('tr');
+                var canViewSwitch = row.find("input.custom-switch[data-field='CanView']");
+                var canEditSwitch = row.find("input.custom-switch[data-field='CanEdit']");
+                var canDeleteSwitch = row.find("input.custom-switch[data-field='CanDelete']");
+                var rowCheckbox = row.find(".permission-checkbox");
+
+                // Check which switch was toggled
+                var field = $(this).data("field");
+
+                if (field === "CanView") {
+                    if (!$(this).prop("checked")) {
+                        canEditSwitch.prop("checked", false);
+                        canDeleteSwitch.prop("checked", false);
+                        rowCheckbox.prop("checked", false);
+                    } else {
+                        rowCheckbox.prop("checked", true);
+                    }
+                } else if (field === "CanEdit" || field === "CanDelete") {
+                    // If either is toggled ON, ensure CanView and the row checkbox are ON.
+                    if ($(this).prop("checked")) {
+                        canViewSwitch.prop("checked", true);
+                        rowCheckbox.prop("checked", true);
+                    }
+                }
+
+                updateHeaderCheckbox();
+            });
+
+
+            // 3) When the header checkbox is toggled:
+            $('.permission-header').change(function () {
+                var isChecked = $(this).prop('checked');
+
+                // Only toggle checkboxes that are not prevented
+                $('.permission-checkbox').each(function () {
+                    var row = $(this).closest('tr');
+                    var roleId = row.data('role-id');
+                    var permissionId = row.data('permission-id');
+                    var isPreventToggle = roleId == 1 && permissionId == 2;
+                    if (!isPreventToggle) {
+                        $(this).prop('checked', isChecked);
+                        row.find('input.custom-switch[data-field="CanView"]').prop('checked', isChecked);
+
+                        // If header is unchecked, turn off CanEdit and CanDelete for all non-prevented rows.
+                        if (!isChecked) {
+                            row.find('input.custom-switch[data-field="CanEdit"]').prop('checked', false);
+                            row.find('input.custom-switch[data-field="CanDelete"]').prop('checked', false);
+                        }
+                    }
+                });
+            });
+
+            // 4) for update everything time When page-title reload
+            function updateHeaderCheckbox() {
+                var allChecked = true;
+                $('.permission-checkbox').each(function () {
+                    var row = $(this).closest('tr');
+                    var roleId = row.data('role-id');
+                    var permissionId = row.data('permission-id');
+                    var isPreventToggle = roleId == 1 && permissionId == 2;
+                    if (!isPreventToggle && !$(this).prop('checked')) {
+                        allChecked = false;
+                        return false;
+                    }
+                });
+                $('.permission-header').prop('checked', allChecked);
+            }
+
+            // Call updateHeaderCheckbox on page load
+            updateHeaderCheckbox();
+
+            // Prevent checkbox click for rows that should not be toggled
+            $('.permission-checkbox').each(function () {
+                var row = $(this).closest('tr');
+                var roleId = row.data('role-id');
+                var permissionId = row.data('permission-id');
+                var isPreventToggle = roleId == 1 && permissionId == 2;
+                if (isPreventToggle) {
+                    $(this).on('click', function (e) {
+                        e.preventDefault();
+                    });
+                }
+            });
+        });
+
+        // Toggle go back
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+}
