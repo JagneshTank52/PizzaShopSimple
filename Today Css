@@ -1,0 +1,7 @@
+.heart-icon {
+    color: gray; /* Default color */
+}
+
+.heart-icon.filled-heart {
+    color: red; /* Color when marked as favorite */
+}
