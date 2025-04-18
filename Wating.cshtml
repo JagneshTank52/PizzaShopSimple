@@ -1,0 +1,249 @@
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_OrderAppLayout";
+}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+<section class="main-section flex-grow-1 py-3 px-4">
+    <!--  PAGE TITLE  -->
+    <div class="top-navbar d-flex align-items-center justify-content-between mb-3">
+        <div class="navbar-left d-flex">
+            <P class="page-title fs-2 fw-bold">Wating List</P>
+        </div>
+        <button type="button" class="btn outline-btn text-nowrap m-3" data-bs-toggle="modal"
+            data-bs-target="#wating-token-modal" onclick=getWatingToken()>+ Waiting Token</button>
+
+    </div>
+
+    <div class="d-flex align-items-center mb-4" id="category-tab">
+        <i id="prevBtn" class="bi bi-chevron-compact-left fs-3 me-2"></i>
+        <div id="nav-section-list" class="flex-grow-1">
+            @* PARTIAL VIEW - CATEGORY LIST *@
+        </div>
+        <i id="nextBtn" class="bi bi-chevron-compact-right fs-3 ms-2"></i>
+    </div>
+
+    <!-- Customer List Table -->
+    <div class="card table-responsive-xl" id="wating-list">
+        @* PARTIAL VIEW CUSTOMER LIST *@ 
+    </div>
+
+</section>
+
+@* WATING TOKEN MODAL*@
+<div class="modal fade" id="wating-token-modal" tabindex="-1" aria-labelledby="watingTokenModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="fs-5" id="watingTokenModalLabel">Wating Token Details</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="wating-token-form">
+                @*PARTIAL VIEW - WATING TOKEN*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="assign-table" tabindex="-1" aria-labelledby="assignTableModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="assignTableModalLabel">Assign Table</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="assignTableForm">
+                    <div class="mb-3">
+                        <label for="section" class="form-label">Section* <span class="text-danger">(Required)</span></label>
+                        <select id="section" name="section" class="form-select" required>
+                            <option value="">Select Section</option>
+                            <option value="1">Section 1</option>
+                            <option value="2">Section 2</option>
+                        </select>
+                    </div>
+                    <!-- <div class="mb-3">
+                        <label for="table" class="form-label">Table* <span class="text-danger">(Required)</span></label>
+                        <select id="table" name="table" class="form-select" multiple required>
+                            <option value="1">Table 1</option>
+                            <option value="2">Table 2</option>
+                        </select>
+                    </div> -->
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="submitAssignTable()">Assign</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Global Declration
+        var pageState = {
+            GruoupId: 0,
+            PageIndex: 1,
+            PageSize: 5,
+            SearchString: "",
+            Status: 0,
+            FromTime: 0,
+            FromDate: "",
+            ToDate: "",
+            Sorting: "wating_id",
+            SortOrder: "asc"
+        };
+
+        // CATEGORY LIST SCROLL VARIABLE
+        var currentPage = 0;
+        var itemsPerPage = calculateItemsPerPage();
+        var $categoryItems;
+
+        var addWatingToken = new bootstrap.Modal(document.getElementById("wating-token-modal"));
+        var assignTableModal = new bootstrap.Modal(document.getElementById("assign-table"));
+        
+        $(document).ready(function () {
+            getSectionAsTab();
+
+            // SECTION LIST PAGINATION
+            $('#nextBtn').click(function () {
+                if ((currentPage + 1) * itemsPerPage < $categoryItems.length) {
+                    currentPage++;
+                    showPage(currentPage);
+                }
+            });
+            $('#prevBtn').click(function () {
+                if (currentPage > 0) {
+                    currentPage--;
+                    showPage(currentPage);
+                }
+            });
+
+            // Recalculate items per page on window resize and reset pagination
+            $(window).resize(function () {
+                console.log("page resize");
+                itemsPerPage = calculateItemsPerPage();
+                console.log(itemsPerPage)
+                currentPage = 0; // Reset to first page on resize
+                showPage(currentPage);
+            });
+
+
+
+        });
+
+        // SHOW CATEGORY PER PAGE
+        function showPage(page) {
+            console.log("page show" + page)
+            // Hide all category items first
+            $categoryItems.hide();
+            console.log($categoryItems)
+
+            // Calculate the start and end index
+            var start = page * itemsPerPage;
+            var end = start + itemsPerPage;
+
+            // Show only the category items for the current page
+            $categoryItems.slice(start, end).show();
+
+            $('#prevBtn').css('display', page === 0 ? 'none' : 'block');
+            $('#nextBtn').css('display', end >= $categoryItems.length ? 'none' : 'block');
+        }
+
+        // CACULATE CATEGORY PER PAGE
+        function calculateItemsPerPage() {
+            var width = $(window).width();
+            switch (true) {
+                case (width < 576):
+                    return 2;  // Very small screens (e.g., mobile)
+                case (width < 768):
+                    return 3;  // Small/medium screens
+                case (width < 1024):
+                    return 4;  // Larger screens
+                case (width < 1200):
+                    return 6;
+                case (width < 1400):
+                    return 7;
+                case (width < 1600):
+                    return 9// Larger screens
+                default:
+                    return 10;  // Default for wider screens
+            }
+        }
+
+        // GET SECTION TAB
+        function getSectionAsTab() {
+            $.ajax({
+                url: "/OrderAppWating/GetSectionTab",
+                type: "GET",
+                dataType: "html",
+                success: function (response) {
+                    $("#nav-section-list").html(response);
+                    getWatingList();
+                    $categoryItems = $('.category-tab-item');
+                    showPage(currentPage);
+                    @* getOrderTicket(0, itemStatus, pageIndex); *@
+                                                                },
+                error: function (error) {
+                    console.log(error);
+                    alert("No Projects Found");
+                    $("#category-list").html('An error has occurred');
+                }
+            });
+        };
+
+        // Get Wating Token
+        function getWatingToken() {
+            $.ajax({
+                url: "/OrderAppWating/GetWatingToken",
+                type: "GET",
+                dataType: "html",
+                success: function (response) {
+                    $("#wating-token-form").html(response);
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert("No Projects Found");
+                    $("#wating-token-form").html('An error has occurred');
+                }
+            });
+        };
+        // Load Wating List
+        function getWatingList() {
+            $.ajax({
+                url: "/OrderAppWating/GetWatingList",
+                contentType: "application/json",
+                data: pageState,
+                type: "GET",
+                dataType: "html",
+                success: function (data) {
+                    $("#wating-list").html(data);
+                },
+                error: function () {
+                    $("#wating-list").html('No data found');
+                }
+            });
+        }
+
+            //     function loadAssignTableModal() {
+            // $.ajax({
+            //     url: '/OrderAppWating/GetAssignTable', // Adjust the URL to your controller action
+            //     type: 'GET',
+            //     success: function (response) {
+            //         $('#assignTableContent').html(response);
+            //     },
+            //     error: function () {
+            //         alert('Failed to load modal content.');
+            //     }
+            // });
+        function submitAssignTable() {
+            // Implement form submission logic here
+            alert('Table assigned successfully!');
+        }
+    </script>
+}

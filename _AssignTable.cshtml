@@ -1,0 +1,38 @@
+@model YourNamespace.AssignTableViewModel
+
+
+
+    <form id="assignTableForm">
+        <div class="mb-3">
+            <label for="section" class="form-label">Section* <span class="text-danger">(Required)</span></label>
+            <select id="section" name="section" class="form-select" required>
+                <option value="">Select Section</option>
+                @foreach (var section in Model.SectionList)
+                {
+                    <option value="@section.Value">@section.Text</option>
+                }
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="table" class="form-label">Table* <span class="text-danger">(Required)</span></label>
+            <select id="table" name="table" class="form-select" required>
+                <option value="">Select Table</option>
+                @foreach (var table in Model.TableList)
+                {
+                    <option value="@table.Value">@table.Text</option>
+                }
+            </select>
+        </div>
+    </form>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" onclick="submitAssignTable()">Assign</button>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+</div>
+
+<script>
+function submitAssignTable() {
+    // Implement form submission logic here
+    alert('Table assigned successfully!');
+}
+</script>

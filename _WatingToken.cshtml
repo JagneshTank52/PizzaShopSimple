@@ -1,0 +1,125 @@
+@using PizzaShop.Entity.ViewModels.OrderAppVM;
+@model WatingTokenVM;
+
+<form id="watingForm">
+    @* MODAL BODY *@
+    <div class="modal-body">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="wating-id" placeholder="Wating Id" asp-for="WatingId" hidden>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="wating-email" placeholder="Email" asp-for="Email">
+            <span asp-validation-for="Email" class="text-danger"></span>
+            <label for="wating-email" class="col-form-label">Email*</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="wating-name" placeholder="Wating Name" asp-for="Name">
+            <span asp-validation-for="Name" class="text-danger"></span>
+            <label for="wating-name" class="col-form-label">Name*</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="wating-phone" placeholder="Mobile Number" asp-for="PhoneNumber">
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            <label for="wating-phone" class="col-form-label">Mobile Number*</label>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <div class="form-floating mb-3">
+
+                    <input type="text" class="form-control" id="wating-person" placeholder="No of Persion"
+                        asp-for="TotalPerson">
+                    <span asp-validation-for="TotalPerson" class="text-danger"></span>
+                    <label for="tax-amount">No of Persion(s)*</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="section" aria-label="Select Section" asp-for="SectionId"
+                        asp-items="Model.SectionList">
+                        <option value="">
+                            Select Section
+                        </option>
+                    </select>
+                    <label for="section">Section*</label>
+                    <span asp-validation-for="SectionId" class="text-danger" id="category-validation"></span>
+                </div>
+                <input type="text" asp-for="SectionId" hidden readonly>
+            </div>
+        </div>
+    </div>
+    @* MODAL FOOTER *@
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+
+        <button type="reset" class="btn outline-btn" data-bs-dismiss="modal">Cancle</button>
+    </div>
+</form>
+
+
+<script>
+
+    $(document).ready(function () {
+        // Post - get customer data
+        $("#watingForm").on("submit", function (e) {
+            e.preventDefault();
+            var defaultUrl = "/OrderAppWating/CreateWatingToken";
+            $.ajax({
+                url: defaultUrl,
+                type: "POST",
+                data: $(this).serialize(),
+                success: function (response) {
+                    console.log(response);
+                    if (response.success) {
+                        var message = response.msg
+                        addWatingToken.hide();
+                        toastr.success(message);
+                        getWatingList();
+                    }
+                    else {
+                        $("#wating-token-form").html(response);
+                    }
+                },
+                error: function () {
+                    alert("An error occurred while saving the Tax.");
+                }
+            });
+        });
+
+        // GET - Customer data by email 
+        $('#wating-email').on('blur', function () {
+
+            var email = $(this).val();
+
+            // Check if the email is empty, if yes, return and do nothing
+            if (!email) {
+                return; // Do nothing if email is empty
+            }
+
+            $.ajax({
+                url: "/OrderAppWating/GetCustomerByEmail",
+                contentType: "application/json",
+                data: { email: email },
+                type: "GET",
+                dataType:"json",
+                success: function (response) {
+                    console.log(response.success);
+                    console.log(response.data);
+                    if (response.success) {
+                        $('#wating-name').val(response.data.name).prop('readonly', true);
+                         $('#wating-email').prop('readonly',true);
+                        $('#wating-phone').val(response.data.phoneNumber);
+                    }
+                },
+                error: function () {
+                    $("#wating-list").html('No data found');
+                }
+            });
+        });
+    });
+
+
+</script>
+
+@{
+    <partial name="_ValidationScriptsPartial"></partial>
+}
