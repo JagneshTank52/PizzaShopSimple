@@ -1,0 +1,22 @@
+@using PizzaShop.Entity.ViewModels.OrderAppVM;
+@model List<MenuItemVm>;
+
+@foreach (var item in Model)
+{
+    <div class="menu-card" data-bs-toggle="modal" data-bs-target="#add-modifier-modal" onclick=getItemWiseModifier(@item.ItemId)>
+        <div class="corner-icon @item.FoodTypeName.ToLower()-corner"></div>
+        <div class="card-inner">
+            <div class="card-image-container">
+                <img src=@item.ItemImage alt="Capsicum" class="card-image">
+            </div>
+            <div class="card-content">
+                <h5 class="mb-1 fw-bold">@item.ItemName</h5>
+                <p class="mb-0 text-secondary">₹ @item.ItemPrice</p>
+            </div>
+        </div>
+        <div class="heart-icon filled-heart" data-item-id="@item.ItemId" onclick="toggleFavorite(event, this)">
+            <i class="bi bi-heart"></i>
+        </div>
+    </div>
+}
+

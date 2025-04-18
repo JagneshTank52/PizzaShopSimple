@@ -1,0 +1,54 @@
+@using PizzaShop.Entity.ViewModels.OrderVM;
+@model List<OrderItemVM>;
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-body p-3">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <button class="btn btn-link text-dark p-0 text-decoration-none" type="button" data-bs-toggle="collapse" data-bs-target="#itemDetails@item.ItemId" aria-expanded="true">
+                            <i class="bi bi-chevron-down me-2"></i>@item.Name
+                        </button>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="quantity-control me-3">
+                            <button>-</button>
+                            <span class="mx-2">@item.Quantity</span>
+                            <button>+</button>
+                        </div>
+                        <div class="me-3">₹@item.ItemPrice</div>
+                        <button class="btn btn-sm text-danger" onclick="deleteItem(@item.ItemId)" style="background: none; border: none;">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="collapse show" id="itemDetails@item.ItemId">
+                    <ul class="list-unstyled mt-3 ms-4">
+                        @if (item.ItemModifier != null && item.ItemModifier.Any())
+                        {
+                            foreach (var modifier in item.ItemModifier)
+                            {
+                                <li class="d-flex justify-content-between">
+                                    <div>• @modifier.Name</div>
+                                    <div>₹@modifier.ItemRate</div>
+                                </li>
+                            }
+                            <li class="d-flex justify-content-end mt-2">
+                                <div>₹@item.ItemModifier.Sum(m => m.ItemRate * m.Quantity)</div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="text-center p-4 text-secondary">
+        No items in order
+    </div>
+}

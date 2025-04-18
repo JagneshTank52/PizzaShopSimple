@@ -1,0 +1,205 @@
+@using PizzaShop.Entity.ViewModels.OrderAppVM;
+@model OrderMenuVM;
+
+<div class="card order-card">
+    <!-- Header Section -->
+    <div class="card-header order-card-header bg-white py-3">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-building me-2"></i>
+                <div>
+                    <div class="fw-bold">@Model.SectionName</div>
+                    <div class="text-muted small">Table:
+                        @foreach (var table in Model.TableList)
+                        {
+                            @table
+                        }
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-outline-secondary btn-sm mx-1"><i class="bi bi-envelope"></i></button>
+                <button class="btn btn-outline-secondary btn-sm mx-1"><i class="bi bi-person"></i></button>
+                <button class="btn btn-outline-secondary btn-sm mx-1"><i class="bi bi-printer"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Items Table -->
+
+    <div class="card-body order-card-body p-3">
+        <div class="d-flex justify-content-between mb-3">
+            <div>Item</div>
+            <div>Quantity</div>
+            <div>Amount</div>
+        </div>
+        <div id="order-item-list" data-id="@Model.OrderId">
+            <!-- Order items will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Order Summary Section -->
+    <div class="card-footer order-card-footer bg-white">
+        <div class="row">
+            <!-- Cost Summary -->
+            <div class="col-md-12 offset-md-6 m-0">
+                <div class="summary-row">
+                    <span>SubTotal</span>
+                    <span>₹1780.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>CGST</span>
+                    <span>₹213.60</span>
+                </div>
+                <div class="summary-row">
+                    <span>SGST</span>
+                    <span>₹25.60</span>
+                </div>
+                <div class="summary-row">
+                    <span>Other</span>
+                    <span>₹99.00</span>
+                </div>
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="sgstCheck">
+                        <label class="form-check-label" for="sgstCheck">SGST</label>
+                    </div>
+                </div>
+                <div class="summary-row total-row">
+                    <span>Total</span>
+                    <span>₹2118.20</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Method Section -->
+        <div class="mt-3">
+            <div class="text-muted mb-2">Payment Method</div>
+            <div class="d-flex">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="paymentMethod" id="cashPayment" checked>
+                    <label class="form-check-label" for="cashPayment">Cash</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="paymentMethod" id="cardPayment">
+                    <label class="form-check-label" for="cardPayment">Card</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="paymentMethod" id="upiPayment">
+                    <label class="form-check-label" for="upiPayment">UPI</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="row mt-4 action-buttons">
+            <div class="col-md-3 col-6">
+                <button class="btn btn-primary">Save</button>
+            </div>
+            <div class="col-md-3 col-6">
+                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#qrCodeModal">Complete</button>
+            </div>
+            <div class="col-md-3 col-6">
+                <button class="btn btn-outline-primary">Generate Invoice</button>
+            </div>
+            <div class="col-md-3 col-6">
+                <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#customerReviewModal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Customer Review Modal -->
+<div class="modal fade" id="customerReviewModal" tabindex="-1" aria-labelledby="customerReviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customerReviewModalLabel">Customer Review</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label>Food</label>
+                    <div class="star-rating">
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label>Service</label>
+                    <div class="star-rating">
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label>Ambience</label>
+                    <div class="star-rating">
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="comment" class="form-label">Comment</label>
+                    <textarea class="form-control" id="comment" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- QR Code Modal -->
+<div class="modal fade" id="qrCodeModal" tabindex="-1" aria-labelledby="qrCodeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="qrCodeModalLabel">Menu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="path/to/qr-code.png" alt="QR Code" class="img-fluid" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Done</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var orderId = $("#order-item-list").data("id");
+    $(document).ready(function () {
+        getOrderItemList(orderId);
+    });
+
+    function getOrderItemList(orderId) {
+        console.log("function call")
+            $.ajax({
+                url: "/OrderAppMenu/GetOrderItemList",
+                type: "GET",
+                data: { orderId: orderId },
+                dataType: "html",
+                success: function (response) {
+                    $("#order-item-list").html(response);
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert("No Projects Found");
+                    $("#order-item-list").html('An error has occurred');
+                }
+            });
+        }
+</script>
