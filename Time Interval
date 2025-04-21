@@ -1,0 +1,22 @@
+                <span id="time-@ticket.id">
+                    <i class="bi bi-stopwatch"></i>
+                    @ticket.time
+                </span>
+<script>
+    $(document).ready(function () {
+        totalOrder = @Model.totalOrder;
+
+        // Function to update the time every second
+        function updateTime() {
+            $('.ticket').each(function() {
+                var ticketId = $(this).find('span[id^="time-"]').attr('id').split('-')[1];
+                var currentTime = new Date();
+                var formattedTime = currentTime.toLocaleTimeString(); // Format the time as needed
+                $(this).find('#time-' + ticketId).text(formattedTime);
+            });
+        }
+
+        // Update the time every second
+        setInterval(updateTime, 1000);
+    });
+</script>
