@@ -1,0 +1,272 @@
+Name
+
+Leave empty
+Robert'); DROP TABLE menu_items;--
+<img src="x" onerror="alert('XSS')"/>
+1,000+ character string: "AAAAA..." (repeated)
+Only whitespace characters: "   "
+Control characters: "Item\u0000Name" (null byte injection)
+Pure emoji string: "🍔🍕🍦🍗🍜🍣"
+HTML tags without scripts: "<h1>Burger</h1>"
+All special characters: "!@#$%^&*()_+{}:|<>?~"
+Leading/trailing spaces: "  Burger  "
+
+
+Rate
+
+Negative value: "-500"
+Non-numeric text: "Six thousand"
+Mixed alphanumeric: "6000usd"
+Extremely large value: "999999999999999999999"
+Multiple decimal points: "60.00.00"
+Mathematical expression: "6000+500"
+Special characters: "$6,000"
+Scientific notation: "6e3"
+Whitespace in number: "6 000"
+Unicode digits: "６０００" (full-width)
+
+
+Quantity
+
+Zero: "0"
+Negative value: "-10"
+Decimal/fraction: "10.5"
+Non-numeric text: "Three hundred"
+Extremely large value: "9999999999999"
+Special characters: "300+"
+Unit included: "300pcs"
+Mathematical expression: "300*2"
+Empty string: ""
+Only whitespace: "   "
+
+Tax Percentage
+
+Negative value: "-18"
+Extremely high value: "1000"
+Non-numeric text: "Eighteen percent"
+Multiple decimal points: "18.5.5"
+Include percentage sign: "18%"
+Mathematical expression: "10+8"
+Empty string: ""
+Special characters: "18$"
+Very long decimal: "18.000000000000001"
+Whitespace in number: "1 8"
+
+
+Short Code
+
+Leave empty
+Duplicate code used elsewhere in the system
+Extremely long code (100+ characters)
+Special characters: "BURG@#!"
+HTML injection: "<b>BRG</b>"
+Spaces in code: "BRG 01"
+System reserved words: "NULL", "TRUE", "DELETE"
+Control characters: "BRG\n01"
+Starting with number: "1BRG"
+Unicode characters: "БУРГЕР" (Cyrillic)
+
+
+Image Upload
+
+File with incorrect extension: rename .exe to .jpg
+Empty file (0 bytes)
+Extremely large file (100MB+)
+Malformed image file (corrupt header)
+SVG with embedded JavaScript: <svg onload="alert('XSS')">
+Text file renamed to .jpg
+Image with malicious EXIF data
+JPEG with PHP code in comment section
+File with multiple extensions: image.jpg.php
+Path traversal attempt: "../../../etc/passwd.jpg"
+
+using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Http;
+
+public class ItemViewModel
+{
+    [Required(ErrorMessage = "Name Required.")]
+    [StringLength(50, MinimumLength = 2, ErrorMessage = "Name must be between 2 and 50 characters")]
+    [RegularExpression(@"^[a-zA-Z0-9_ ]+$", ErrorMessage = "Item Name should only contain alphabetic and numeric characters")]
+    [NoHtmlOrScriptTags(ErrorMessage = "HTML or script content is not allowed")]
+    [NoSqlInjection(ErrorMessage = "Invalid characters detected")]
+    [TrimmedStringRequired(ErrorMessage = "Name cannot be only whitespace")]
+    public string? ItemName { get; set; }
+
+    [Required(ErrorMessage = "Please enter item rate.")]
+    [Range(0.01, 50000, ErrorMessage = "Rate must be between 0.01 and 50000")]
+    [RegularExpression(@"^\d+(\.\d{1,2})?$", ErrorMessage = "Rate must be a valid number with up to 2 decimal places")]
+    public decimal ItemRate { get; set; }
+
+    [Required(ErrorMessage = "Please enter quantity.")]
+    [Range(1, 200, ErrorMessage = "Quantity must be between 1 and 200")]
+    [WholeNumber(ErrorMessage = "Quantity must be a whole number")]
+    public int ItemQuantity { get; set; }
+
+    [Range(0, 100, ErrorMessage = "Percentage must be between 0 and 100")]
+    [RegularExpression(@"^\d+(\.\d{1,2})?$", ErrorMessage = "Tax percentage must be a valid number with up to 2 decimal places")]
+    public decimal? TaxPercentage { get; set; }
+
+    [Required(ErrorMessage = "Short code is required")]
+    [StringLength(5, MinimumLength = 1, ErrorMessage = "Short code must be between 1 and 5 characters")]
+    [RegularExpression(@"^[a-zA-Z][a-zA-Z0-9]*$", ErrorMessage = "Short code must start with a letter and contain only letters and numbers")]
+    [ReservedWordCheck(ErrorMessage = "This code is reserved and cannot be used")]
+    public string? ShortCode { get; set; }
+
+    [FileValidation(AllowedExtensions = new string[] { ".jpg", ".jpeg", ".png", ".jfif" }, MaxSizeInMB = 5)]
+    public IFormFile? ProfileImageFile { get; set; }
+}
+
+// Custom attribute for validating no HTML or script tags
+public class NoHtmlOrScriptTagsAttribute : ValidationAttribute
+{
+    public override bool IsValid(object? value)
+    {
+        if (value == null) return true;
+        
+        string input = value.ToString()!;
+        
+        // Check for HTML tags, script tags, or common XSS patterns
+        var htmlPattern = @"<[^>]*>";
+        var scriptPattern = @"on\w+\s*=|javascript:|alert\s*\(|eval\s*\(|document\.|window\.";
+        
+        if (Regex.IsMatch(input, htmlPattern) || Regex.IsMatch(input, scriptPattern, RegexOptions.IgnoreCase))
+            return false;
+            
+        return true;
+    }
+}
+
+// Custom attribute for validating no SQL injection attempts
+public class NoSqlInjectionAttribute : ValidationAttribute
+{
+    public override bool IsValid(object? value)
+    {
+        if (value == null) return true;
+        
+        string input = value.ToString()!;
+        
+        // Check for common SQL injection patterns
+        var sqlPattern = @"((;)|(--)|(/\*)|(\*/)|(\')|(=)|(%27)|(select)|(union)|(insert)|(update)|(delete)|(drop)|(alter)|(exec)|(declare)|(cast)|(script))";
+        
+        if (Regex.IsMatch(input, sqlPattern, RegexOptions.IgnoreCase))
+            return false;
+            
+        return true;
+    }
+}
+
+// Custom attribute to ensure string is not just whitespace
+public class TrimmedStringRequiredAttribute : ValidationAttribute
+{
+    public override bool IsValid(object? value)
+    {
+        if (value == null) return false;
+        
+        string input = value.ToString()!;
+        
+        // Check for control characters
+        if (input.Any(c => char.IsControl(c)))
+            return false;
+            
+        // Check if string is just whitespace
+        return !string.IsNullOrWhiteSpace(input);
+    }
+}
+
+// Custom attribute to ensure number is a whole number
+public class WholeNumberAttribute : ValidationAttribute
+{
+    public override bool IsValid(object? value)
+    {
+        if (value == null) return true;
+        
+        // Try to parse as int
+        if (int.TryParse(value.ToString(), out _))
+            return true;
+            
+        return false;
+    }
+}
+
+// Custom attribute to check for reserved words
+public class ReservedWordCheckAttribute : ValidationAttribute
+{
+    private readonly string[] _reservedWords = { "NULL", "TRUE", "FALSE", "DELETE", "INSERT", "UPDATE", "SELECT", "DROP", "ALTER", "EXEC" };
+    
+    public override bool IsValid(object? value)
+    {
+        if (value == null) return true;
+        
+        string input = value.ToString()!.ToUpper();
+        
+        // Check if input is a reserved word
+        return !_reservedWords.Contains(input);
+    }
+}
+
+// Enhanced file validation attribute
+public class FileValidationAttribute : ValidationAttribute
+{
+    public string[] AllowedExtensions { get; set; } = Array.Empty<string>();
+    public int MaxSizeInMB { get; set; } = 5; // Default 5MB
+
+    public FileValidationAttribute() { }
+    
+    public FileValidationAttribute(string[] allowedExtensions)
+    {
+        AllowedExtensions = allowedExtensions;
+    }
+    
+    public override bool IsValid(object? value)
+    {
+        IFormFile? file = value as IFormFile;
+        
+        if (file == null)
+            return true; // File is optional
+            
+        // Check if file is empty
+        if (file.Length == 0)
+            return false;
+            
+        // Check file size
+        if (file.Length > MaxSizeInMB * 1024 * 1024)
+            return false;
+            
+        // Get file extension
+        var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+        
+        // Check if extension is allowed
+        if (!AllowedExtensions.Contains(extension))
+            return false;
+            
+        // Basic check for valid image file (could be enhanced with more thorough validation)
+        try
+        {
+            // Read first few bytes to verify file signature
+            using var stream = file.OpenReadStream();
+            byte[] buffer = new byte[8];
+            stream.Read(buffer, 0, buffer.Length);
+            
+            // Check for common image signatures
+            if (extension == ".jpg" || extension == ".jpeg")
+            {
+                if (buffer[0] != 0xFF || buffer[1] != 0xD8)
+                    return false;
+            }
+            else if (extension == ".png")
+            {
+                if (buffer[0] != 0x89 || buffer[1] != 0x50 || buffer[2] != 0x4E || buffer[3] != 0x47)
+                    return false;
+            }
+            
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+}
+
