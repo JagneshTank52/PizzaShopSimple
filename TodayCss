@@ -1,0 +1,72 @@
+
+.card {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out;
+}
+
+/* .card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); 
+    transform: scale(1.05); 
+    border: 1px solid #ddd;
+} */
+
+.unique-search-container{
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.unique-search-container:hover{
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.unique-search-input{
+    transition: border-color 0.2s ease-in-out;
+}
+
+.unique-search-input:focus{
+    border-color: var(--primary-color);
+}
+
+.unique-search-input:focus {
+    outline: none; /* Removes the default outline */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);/* Removes the default box-shadow */
+}
+
+.unique-btn {
+    transition: transform 0.2s ease-in-out;
+}
+
+.unique-btn:focus {
+    outline: none; /* Removes the default outline */
+    box-shadow: none; /* Removes any default box-shadow */
+    transform: scale(1.05);
+}
+
+.unique-btn:hover {
+    transform: scale(1.05);
+
+}
+
+.menu-tab{
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out;
+}
+
+.menu-item-tab, .menu-modifier-tab {
+    transition: background-color 0.2s ease-in-out;
+}
+
+.menu-item-tab:hover, .menu-modifier-tab:hover {
+    background-color: var(--secondary-bg-color);
+}
+
+/* KOT MODULE CSS */
+#category-tab {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out;
+    background-color: var(--secondary-color) !important;
+
+}
+
+.category-tab-item:hover {
+    background-color: var(--secondary-bg-color);
+}
