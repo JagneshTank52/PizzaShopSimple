@@ -10,7 +10,7 @@
         var collapseId = "collapse" + itemUniqueId;
         var modifierTotalAmount = item.ItemModifier.Sum(s => s.ItemRate);
 
-        <tr id="order-item-@itemUniqueId-tr" data-order-item-id="@item.OrderItemId" data-item-id="@itemUniqueId" data-original-quantity="@item.Quantity">
+        <tr id="order-item-@itemUniqueId-tr" data-order-item-id="@item.Id" data-item-id="@itemUniqueId" data-original-quantity="@item.Quantity">
             <td>
                 <div class="accordion" id="givedynamicId">
                     <div class="accordion-item added-item">
@@ -28,7 +28,7 @@
                             <div class="accordion-body">
                                 @foreach (var modifier in item.ItemModifier)
                                 {
-                                    <div class="d-flex flex-row justify-content-between w-75 modifier" data-id="@modifier.Id">
+                                    <div class="d-flex flex-row justify-content-between w-75 modifier" data-modifier-id=@modifier.Id>
                                         <div>
                                             <span class="me-2">•</span>
                                             <span>@modifier.Name</span>
@@ -38,12 +38,9 @@
                                         </div>
                                     </div>
                                 }
-                                <!-- Text area for item instructions -->
-                                <textarea class="form-control mt-2" id="instruction-@itemUniqueId" rows="2" placeholder="Enter item instructions here..." asp-for=@item.ItemInstruction></textarea>
                             </div>
                         </div>
                     </div>
-                </div>
             </td>
             <td>
                 <div class="input-group input-group-sm d-flex" style="width: 100px;">

@@ -48,12 +48,11 @@
 
     <!-- Order Summary Section -->
     <div class="card-footer order-card-footer bg-white">
-        <div>
-            <!-- Cost Summary -->
-            <div class="col-md-12 offset-md-6 m-0" id="order-tax-list">
+        <!-- Cost Summary -->
+        <div class="col-md-12 offset-md-6 m-0" id="order-tax-list">
 
-            </div>
         </div>
+
 
         <!-- Payment Method Section -->
         <div class="mt-3">
@@ -108,25 +107,6 @@
     </div>
 </div>
 
-<!-- Item Instruction Modal -->
-<div class="modal fade" id="item-instruction-modal" tabindex="-1" aria-labelledby="itemInstructionModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="itemInstructionModalLabel">Item Instruction</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <textarea id="item-instruction" class="form-control" rows="3" placeholder="Enter item instructions here..."></textarea>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="saveInstructionButton">Save</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
 <script>
     var orderId = $("#order-item-list").data("id");
@@ -136,9 +116,10 @@
 
     $(document).ready(function () {
 
-        if(orderId){
+        if (orderId) {
             console.log("hello")
             getOrderItem();
+            getOrderTaxList(orderId);
         }
 
         // EVENT TO GET CUSTOMER DETAILS
@@ -157,13 +138,13 @@
             var dynamicId = $(this).data("id");
             var inputField = $(`#quantity-${dynamicId}`);
             var currentValue = parseInt(inputField.val());
-            var originalQuantity = parseInt($(`#order-item-${dynamicId}-tr`).data("original-quantity")); // Get original quantity
+            var originalQuantity = parseInt($(`#order-item-${dynamicId}-tr`).data("original-quantity"));
+            console.log(`item id: ${dynamicId} and quantity : ${originalQuantity}`);
 
             if (currentValue > 1) {
                 inputField.val(currentValue - 1);
-                updateTotals(dynamicId, currentValue - 1);
-                
-                // Check if the new quantity is different from the original
+                updateTotals(dynamicId, currentValue - 1)
+
                 if (currentValue - 1 !== originalQuantity) {
                     // Only add the modified class if it doesn't already exist
                     if (!$(`#order-item-${dynamicId}-tr`).hasClass('modified')) {
@@ -175,21 +156,24 @@
                 }
             }
         });
+        
         $('#order-item-list').on("click", ".increment-btn", function () {
             var maxValue = $(this).data("max");
             var dynamicId = $(this).data("id");
             var inputField = $(`#quantity-${dynamicId}`);
             var currentValue = parseInt(inputField.val());
-            var originalQuantity = parseInt($(`#order-item-${dynamicId}-tr`).data("original-quantity")); // Get original quantity
+            var originalQuantity = parseInt($(`#order-item-${dynamicId}-tr`).data("original-quantity"));
+            console.log(`item id: ${dynamicId} and quantity : ${originalQuantity}`);
 
             if (currentValue < maxValue) {
                 inputField.val(currentValue + 1);
-                updateTotals(dynamicId, currentValue + 1);
-                
+                updateTotals(dynamicId, currentValue + 1)
+
                 // Check if the new quantity is different from the original
                 if (currentValue + 1 !== originalQuantity) {
                     // Only add the modified class if it doesn't already exist
                     if (!$(`#order-item-${dynamicId}-tr`).hasClass('modified')) {
+                        console.log("hi")
                         $(`#order-item-${dynamicId}-tr`).addClass('modified');
                     }
                 } else {
@@ -197,11 +181,13 @@
                     $(`#order-item-${dynamicId}-tr`).removeClass('modified');
                 }
             } else {
-                toastr.error("Max limit reached");
+                toastr.error("Max limit reach")
             }
         });
 
+        //EVENT ON SAVE ITEM
         $('#saveOrderButton').on('click', function () {
+            debugger
             // Initialize arrays for old and new items
             let oldItems = [];
             let newItems = [];
@@ -210,18 +196,23 @@
             $('#order-item-list tr').each(function () {
                 const orderItemId = $(this).data('order-item-id'); // Get OrderItemId
                 const quantity = $(this).find('input[type="text"]').val(); // Get the quantity input value
-                const itemId = $(this).data('item-id'); // Get ItemId
+                const item = $(this).data('item-id'); // Get ItemId
                 const modifiers = []; // Initialize an array for modifiers
-                const instruction = $(this).find(`textarea[id^='instruction-']`).val(); // Get the instruction from the text area
-
+                @* const instruction = $(this).find(`textarea[id^='instruction-']`).val(); // Get the instruction from the text area *@
+                debugger    
                 // Check if the order item has an OrderItemId
                 if (orderItemId) {
-                    // Old item
-                    oldItems.push({
-                        orderItemId: orderItemId,
-                        quantity: quantity,
-                        instruction: instruction // Include the instruction
-                    });
+                    // Check if the row has the 'modified' class
+                    if ($(this).hasClass('modified')) {
+                        // Old item
+                        oldItems.push({
+                            ItemId: orderItemId,
+                            Quantity: quantity,
+                            ModifierList: [],
+                            Instruction: ""
+                            @* instruction: instruction // Include the instruction *@
+                        });
+                    }
                 } else {
                     // New item
                     // Loop through modifiers if they exist
@@ -231,10 +222,10 @@
                     });
 
                     newItems.push({
-                        itemId: itemId,
-                        quantity: quantity,
-                        modifierList: modifiers,
-                        instruction: instruction // Include the instruction for new items
+                        ItemId: itemId,
+                        Quantity: quantity,
+                        ModifierList: modifiers,
+                        Instruction: "" // Include the instruction for new items
                     });
                 }
             });
@@ -246,6 +237,7 @@
                 orderId: $("#order-item-list").data("id") // Get the order ID from the data attribute
             };
 
+            console.log(dataToSend);
             // AJAX call to save the order
             $.ajax({
                 url: "/OrderAppMenu/SaveOrder", // Adjust the URL to your save endpoint
@@ -253,10 +245,9 @@
                 contentType: "application/json",
                 data: JSON.stringify(dataToSend),
                 success: function (response) {
-                    // Handle success response
                     if (response.success) {
-                        alert("Order saved successfully!");
-                        // Optionally, refresh the order item list or redirect
+                        alert("Order saved successfully!"); 
+                        getOrderTaxList(orderId);   
                     } else {
                         alert("Error saving order: " + response.message);
                     }
@@ -267,42 +258,39 @@
             });
         });
 
-        $('#order-item-list').on("click", "tr", function () {
-            var dynamicId = $(this).data('item-id'); // Get ItemId
-            var instructionField = $(`#instruction-${dynamicId}`); // Get the corresponding text area
-            var instructionValue = instructionField.val(); // Get the current instruction value
-
-            // Populate the modal with the current instruction
-            $("#item-instruction").val(instructionValue);
-
-            // Show the modal
-            $('#item-instruction-modal').modal('show');
-
-            // Store the dynamicId in a data attribute for later use
-            $('#saveInstructionButton').data('item-id', dynamicId);
-        });
-
-        $('#saveInstructionButton').on('click', function () {
-            var instruction = $("#item-instruction").val();
-            var dynamicId = $(this).data('item-id'); // Get the ItemId from the button's data attribute
-
-            // Update the corresponding text area in the order item list
-            $(`#instruction-${dynamicId}`).val(instruction);
-
-            // Close the modal
-            $('#item-instruction-modal').modal('hide');
-        });
-
     });
+
 
     function updateTotals(dynamicId, quantity) {
 
+        // Get the item total rate and modifier rate
         const itemTotalRate = parseFloat($(`#item-rate-${dynamicId}`).data("rate"));
-        $(`#item-rate-${dynamicId}`).text(`${(itemTotalRate * quantity).toFixed(2)}`);
-
         const modifierRate = parseFloat($(`#modifier-rate-${dynamicId}`).data("rate"));
-        $(`#modifier-rate-${dynamicId}`).text(`${(modifierRate * quantity).toFixed(2)}`);
+
+        // Update item total rate
+        const newItemTotal = (itemTotalRate * quantity).toFixed(2);
+        $(`#item-rate-${dynamicId}`).text(newItemTotal);
+
+        // Update modifier rate
+        const newModifierTotal = (modifierRate * quantity).toFixed(2);
+        $(`#modifier-rate-${dynamicId}`).text(newModifierTotal);
+
+        // Calculate new subtotal
+        let subtotal = 0;
+        $('#order-item-list tr').each(function () {
+            const itemId = $(this).data('item-id');
+            const itemRate = parseFloat($(`#item-rate-${itemId}`).text());
+            const modifierRate = parseFloat($(`#modifier-rate-${itemId}`).text());
+            subtotal += itemRate + modifierRate;
+        });
+
+        // Update subtotal display
+        $('#subtotal-display').text(`₹${subtotal.toFixed(2)}`);
+
+        // Update tax list based on new subtotal
+        recalculateTaxes(subtotal);
     }
+
 
     function addItemToOrder() {
         $.ajax({
@@ -315,7 +303,6 @@
             }),
             type: "POST",
             success: function (response, status, xhr) {
-                debugger
                 var contentType = xhr.getResponseHeader("Content-Type");
 
                 if (contentType && contentType.indexOf("application/json") !== -1) {
@@ -342,9 +329,7 @@
             data: { orderId: orderId },
             type: "GET",
             success: function (response, status, xhr) {
-                debugger
-                var contentType = xhr.getResponseHeader("Content-Type");
-
+                var contentType = xhr.getResponseHeader("Content-Type")
                 if (contentType && contentType.indexOf("application/json") !== -1) {
                     if (!response.success) {
                         alert(response.msg || "Something went wrong");
@@ -368,14 +353,24 @@
             type: "GET",
             data: { orderId: orderId },
             dataType: "html",
-            success: function (response) {
-                $("#order-item-list").html(response);
+            success: function (response, status, xhr) {
+                var contentType = xhr.getResponseHeader("Content-Type");
 
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    if (!response.success) {
+                        alert(response.msg || "Something went wrong");
+                    }
+                } else {
+                    $("#order-tax-list").html(response);
+                    addModifierModal.hide();
+                    @* getTaxOnOrder(orderId); *@
+                        @* getOrderItemList(orderId); *@
+                    }
             },
             error: function (error) {
                 console.log(error);
                 alert("No Projects Found");
-                $("#order-item-list").html('An error has occurred');
+                $("#order-tax-list").html('An error has occurred');
             }
         });
     }

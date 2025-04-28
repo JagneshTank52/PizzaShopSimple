@@ -1,17 +1,17 @@
+@using PizzaShop.Entity.ViewModels.OrderAppVM
 @model OrderTaxVM
 
 <div class="summary-row">
     <span>SubTotal</span>
-    <span>₹@Model.SubAmount.ToString("F2")</span>
+    <span id="subtotal-display">₹@Model.SubTotal.ToString("F2")</span>
 </div>
 
 @foreach (var tax in Model.DefaultTaxList)
 {
-    <div class="summary-row">
-           <span>SGST</span>
-        <span>₹25.60</span>
+    <div class="summary-row tax-row" data-tax-id="@tax.TaxId" data-tax-rate="@tax.TaxAmount" data-tax-type="@tax.isPercenteage">
+        <span>@tax.TaxName</span>
+        <span class="tax-amount">₹@tax.ActualAmount.ToString("F2")</span>
     </div>
-</div>
 }
 
 @foreach (var tax in Model.OptionalTaxList)
@@ -21,12 +21,38 @@
             <input class="form-check-input" type="checkbox" id="optionalTaxCheck_@tax.TaxId">
             <label class="form-check-label" for="optionalTaxCheck_@tax.TaxId">@tax.TaxName</label>
         </div>
-        <span>@tax.TaxName</span>
-
     </div>
 }
 
 <div class="summary-row total-row">
     <span>Total</span>
-    <span>₹@Model.TotalAmount.ToString("F2")</span>
+    <span id="total-display">₹@Model.TotalAmount.ToString("F2")</span>
 </div>
+
+    <script>
+        function recalculateTaxes(subtotal) {
+            let totalTaxAmount = 0;
+
+            // Loop through each tax row to recalculate the tax amounts
+            $('.tax-row').each(function () {
+                const taxRate = parseFloat($(this).data('tax-rate'));
+                const isPercentage = String($(this).data('tax-type')).toLowerCase() === 'true';
+
+
+                let taxAmount;
+                if (isPercentage) {
+                    taxAmount = (taxRate / 100) * subtotal; // Calculate percentage tax
+                } else {
+                    taxAmount = taxRate; // Fixed amount tax
+                }
+
+                // Update the tax amount in the UI
+                $(this).find('.tax-amount').text(`₹${taxAmount.toFixed(2)}`);
+                totalTaxAmount += taxAmount; // Add to total tax amount
+            });
+
+            // Update the total display
+            const totalAmount = subtotal + totalTaxAmount;
+            $('#total-display').text(`₹${totalAmount.toFixed(2)}`);
+        }
+    </script>
