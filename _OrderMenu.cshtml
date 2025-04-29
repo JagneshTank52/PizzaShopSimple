@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div>
-                <button class="btn outline-btn btn-sm mx-1 fs-5 px-2"><i class="bi bi-qr-code-scan"></i></button>
+                <button class="btn outline-btn btn-sm mx-1 fs-5 px-2" data-bs-toggle="modal" data-bs-target="#qr-code-modal"><i class="bi bi-qr-code-scan"></i></button>
                 <button class="btn outline-btn btn-sm mx-1 fs-5 px-2" id="customer-detail-btn" data-bs-toggle="modal"
                     data-bs-target="#customer-detail-modal"><i class="bi bi-person-lines-fill"></i></button>
                 <button class="btn outline-btn btn-sm mx-1 fs-5 px-2"><i class="bi bi-chat-left-text"></i></button>
@@ -79,7 +79,7 @@
                 <button class="btn btn-primary" id="saveOrderButton">Save</button>
             </div>
             <div class="col-md-3 col-6">
-                <button class="btn btn-outline-primary">Complete</button>
+                <button class="btn btn-outline-primary" id="completeOrderButton">Complete</button>
             </div>
             <div class="col-md-3 col-6">
                 <button class="btn btn-outline-primary">Generate Invoice</button>
@@ -107,10 +107,68 @@
     </div>
 </div>
 
+<!-- ITEM INSTRUCTION MODAL -->
+<div class="modal fade" id="item-instruction-modal" tabindex="-1" aria-labelledby="itemInstructionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="fs-5" id="itemInstructionModalLabel">Special Instruction</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" id="instruction-text-modal" rows="3" placeholder="Enter your instruction here..."></textarea>
+                <input type="hidden" id="item-id-modal" /> <!-- Hidden input for itemId -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="saveInstructionButton">Save</button>
+                <button type="button" class="btn outline-btn" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- QR CODE SCANNER MODAL -->
+<div class="modal fade" id="qr-code-modal" tabindex="-1" aria-labelledby="qrCodeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="fs-5" id="qrCodeModalLabel">Menu</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="path/to/your/qr-code.png" alt="QR Code" id="qr-code-image" style="width: 100%; height: auto;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Done</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- COMPLETE CONFIRMATION MODAL -->
+<div class="modal fade" id="complete-confirmation-modal" tabindex="-1" aria-labelledby="completeConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="fs-5" id="completeConfirmationModalLabel">Complete Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to complete the order?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="confirmCompleteButton">YES</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
 <script>
     var orderId = $("#order-item-list").data("id");
     var table;
+    var optionalTaxList =[];
 
     var customerDetailsModel = new bootstrap.Modal(document.getElementById("customer-detail-modal"));
 
@@ -126,7 +184,8 @@
         $('#customer-detail-btn').on("click", function () { getCustomerDetail() });
 
         // EVENT TO CANCLE Item FROM ORDER
-        $('#order-item-list').on("click", ".cancle-item-btn", function () {
+        $('#order-item-list').on("click", ".cancle-item-btn", function (event) {
+            event.stopPropagation();
             var uniqueId = $(this).data("id");
             var element = $(`#order-item-${uniqueId}-tr`);
             console.log("reesffsd")
@@ -134,7 +193,8 @@
         })
 
         // EVENT TO INCREMENT OR DECEREMENT ITEM QUANTITY FROM ORDER OrderAppMenu
-        $('#order-item-list').on("click", ".decrement-btn", function () {
+        $('#order-item-list').on("click", ".decrement-btn", function (event) {
+            event.stopPropagation();
             var dynamicId = $(this).data("id");
             var inputField = $(`#quantity-${dynamicId}`);
             var currentValue = parseInt(inputField.val());
@@ -156,8 +216,9 @@
                 }
             }
         });
-        
-        $('#order-item-list').on("click", ".increment-btn", function () {
+
+        $('#order-item-list').on("click", ".increment-btn", function (event) {
+            event.stopPropagation();
             var maxValue = $(this).data("max");
             var dynamicId = $(this).data("id");
             var inputField = $(`#quantity-${dynamicId}`);
@@ -185,6 +246,48 @@
             }
         });
 
+        $('#order-item-list').on("click", "tr", function (event) {
+            // Prevent the event from bubbling up if necessary
+            event.stopPropagation();
+
+            const itemId = $(this).data("item-id");
+            const instructionTextArea = $(`#instruction-text-${itemId}`);
+
+            // Check if the textarea exists
+            if (instructionTextArea.length) {
+                const instruction = instructionTextArea.val();
+                
+                // Set the instruction in the modal's textarea
+                $('#instruction-text-modal').val(instruction);
+                
+                // Set the hidden input value to the itemId
+                $('#item-id-modal').val(itemId);
+                
+                // Show the modal
+                $('#item-instruction-modal').modal('show');
+            } else {
+                console.log(`Textarea for item ${itemId} does not exist.`);
+            }
+        });
+
+            // EVENT ON SAVE BUTTON IN MODAL
+        $('#saveInstructionButton').on('click', function () {
+            const instructionValue = $('#instruction-text-modal').val();
+            const itemId = $('#item-id-modal').val(); // Get the itemId from the hidden input
+
+            // Set the value to the corresponding textarea in the table
+            $(`#instruction-text-${itemId}`).val(instructionValue);
+
+                // Optionally, add the modified class if it doesn't already exist
+            const row = $(`#order-item-${itemId}-tr`);
+            if (!row.hasClass('modified')) {
+                row.addClass('modified');
+            }
+            
+            // Optionally, close the modal
+            $('#item-instruction-modal').modal('hide');
+        });
+
         //EVENT ON SAVE ITEM
         $('#saveOrderButton').on('click', function () {
             debugger
@@ -194,23 +297,23 @@
 
             // Loop through each order item in the list
             $('#order-item-list tr').each(function () {
+                debugger
                 const orderItemId = $(this).data('order-item-id'); // Get OrderItemId
                 const quantity = $(this).find('input[type="text"]').val(); // Get the quantity input value
                 const item = $(this).data('item-id'); // Get ItemId
                 const modifiers = []; // Initialize an array for modifiers
-                @* const instruction = $(this).find(`textarea[id^='instruction-']`).val(); // Get the instruction from the text area *@
-                debugger    
+                const instruction = $(`#instruction-text-${item}`).val(); // Get the instruction from the textarea
+
                 // Check if the order item has an OrderItemId
                 if (orderItemId) {
-                    // Check if the row has the 'modified' class
+                    // Old item
                     if ($(this).hasClass('modified')) {
                         // Old item
                         oldItems.push({
                             ItemId: orderItemId,
                             Quantity: quantity,
                             ModifierList: [],
-                            Instruction: ""
-                            @* instruction: instruction // Include the instruction *@
+                            Instruction: instruction // Include the instruction
                         });
                     }
                 } else {
@@ -222,10 +325,10 @@
                     });
 
                     newItems.push({
-                        ItemId: itemId,
+                        ItemId: item,
                         Quantity: quantity,
                         ModifierList: modifiers,
-                        Instruction: "" // Include the instruction for new items
+                        Instruction: instruction // Include the instruction for new items
                     });
                 }
             });
@@ -234,7 +337,8 @@
             const dataToSend = {
                 oldItems: oldItems,
                 newItems: newItems,
-                orderId: $("#order-item-list").data("id") // Get the order ID from the data attribute
+                taxList: optionalTaxList,
+                orderId: $("#order-item-list").data("id"), // Get the order ID from the data attribute
             };
 
             console.log(dataToSend);
@@ -246,8 +350,8 @@
                 data: JSON.stringify(dataToSend),
                 success: function (response) {
                     if (response.success) {
-                        alert("Order saved successfully!"); 
-                        getOrderTaxList(orderId);   
+                        toastr.success("Order saved successfully!");
+                        getOrderTaxList(orderId);
                     } else {
                         alert("Error saving order: " + response.message);
                     }
@@ -258,11 +362,17 @@
             });
         });
 
+        // EVENT ON COMPLETE BUTTON
+        $('#completeOrderButton').on('click', function () {
+            // Open the confirmation modal
+            $('#complete-confirmation-modal').modal('show');
+        });
+
     });
 
 
     function updateTotals(dynamicId, quantity) {
-
+        debugger
         // Get the item total rate and modifier rate
         const itemTotalRate = parseFloat($(`#item-rate-${dynamicId}`).data("rate"));
         const modifierRate = parseFloat($(`#modifier-rate-${dynamicId}`).data("rate"));
@@ -289,8 +399,8 @@
 
         // Update tax list based on new subtotal
         recalculateTaxes(subtotal);
-    }
 
+    }
 
     function addItemToOrder() {
         $.ajax({
@@ -392,5 +502,7 @@
             }
         });
     }
+
+
 
 </script>

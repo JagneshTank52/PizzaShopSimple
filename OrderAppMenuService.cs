@@ -19,7 +19,7 @@ public class OrderAppMenuService : IOrderAppMenuService
 
 
 
-    public OrderAppMenuService(IOrderItemRepository orderItemRepository,IGenericRepository<OrderModifier> orderModifierRepository,IModifierRepository modifierRepository,IItemRepository itemRepository,ITaxesAndFeesRepository taxRepository, IGenericRepository<OrdersTax> orderTax, IOrderRepository orderRepository)
+    public OrderAppMenuService(IOrderItemRepository orderItemRepository, IGenericRepository<OrderModifier> orderModifierRepository, IModifierRepository modifierRepository, IItemRepository itemRepository, ITaxesAndFeesRepository taxRepository, IGenericRepository<OrdersTax> orderTax, IOrderRepository orderRepository)
     {
         _orderItemRepository = orderItemRepository;
         _taxRepository = taxRepository;
@@ -29,6 +29,7 @@ public class OrderAppMenuService : IOrderAppMenuService
         _itemRepository = itemRepository;
         _modifierRepository = modifierRepository;
     }
+
 
     // SAVE ITEM TO ORDER
     public async Task<(bool status, string message)> AddItemToOrder(OrderRequestVM orderVm, int createrId)
@@ -40,6 +41,7 @@ public class OrderAppMenuService : IOrderAppMenuService
             OrderItem? item = await _orderItemRepository.GetByIdAsync(existItem.ItemId);
 
             item.Quantity = existItem.Quantity;
+            item.ItemInstruction = existItem.Instruction;
 
             _orderItemRepository.Update(item);
         }
@@ -73,7 +75,7 @@ public class OrderAppMenuService : IOrderAppMenuService
 
             foreach (var modifier in newItem.ModifierList)
             {
-                 
+
                 Modifier? existingModifier = await _modifierRepository.GetByIdAsync(modifier);
                 OrderModifier itemModifier = new OrderModifier
                 {
@@ -106,29 +108,101 @@ public class OrderAppMenuService : IOrderAppMenuService
             return (false, "Item not Added");
         }
 
-        bool isTaxCalculated = await CountOrderTax(orderVm.orderId);
+        bool isTaxCalculated = false;
+
+        if (order != null)
+        {
+            isTaxCalculated = await CountOrderTax(order, orderVm.taxList);
+        }
 
         if (!isTaxCalculated)
         {
             return (false, "Tax not calculated");
         }
 
+        int count = _orderItemRepository.GetAll(f => f.Id == order.Id && !f.IsItemReady).Count();
+
+        if(count != 0){
+            order.StatusId = 7; // In Progress
+            _orderRepository.Update(order);
+            bool isOrderUpdated = await _orderRepository.SaveAsync();
+
+            if(!isOrderUpdated){
+                return(false, "order is not updated");
+            }
+        }
+        
         return (true, "Item Added");
     }
 
     // COUNT ORDER TAX
-    public async Task<bool> CountOrderTax(int orderId)
+    public async Task<bool> CountOrderTax(Order order, List<int> optionalTaxList)
     {
-        Order? order = await _orderRepository.GetByIdAsync(orderId);
         decimal subTotal = 0;
         decimal taxAmount = 0;
         decimal totalAmount = 0;
 
-        subTotal += _orderItemRepository.GetAll(w => w.OrderId == orderId && !w.IsDeleated).Sum(s => s.TotalAmount + s.ModifiersPrice);
+        subTotal += _orderItemRepository.GetAll(w => w.OrderId == order.Id && !w.IsDeleated).Sum(s => s.TotalAmount + s.ModifiersPrice);
 
         // Check if there are already taxes for this order
-        var existingTaxes =  _orderTaxRepository.GetAll(t => t.OrderId == orderId);
-        List<TaxAndFee> defaultTax = _taxRepository.GetAll(g => !g.IsDeleated && g.IsDefault && (g.IsEnabled ?? true)).ToList();
+        var existingTaxes = _orderTaxRepository.GetAll(t => t.OrderId == order.Id && !t.IsDeleted).ToList();
+
+        List<TaxAndFee> allTax = _taxRepository.GetAll(g => !g.IsDeleated && (g.IsEnabled ?? true)).ToList();
+
+
+        List<TaxAndFee> defaultTax = allTax.Where(w => w.IsDefault).ToList();
+        List<TaxAndFee> appliedOptionalTaxList = allTax.Where(w => !w.IsDefault && optionalTaxList.Contains(w.Id)).ToList();
+        List<TaxAndFee> notAppliedOptionalTaxList = allTax.Where(w => !w.IsDefault && !optionalTaxList.Contains(w.Id)).ToList();
+
+        foreach (var appliedOptionalTax in appliedOptionalTaxList)
+        {
+            // Check if the appliedOptionalTax ID exists in existingTaxes
+            var tax = existingTaxes.FirstOrDefault(t => t.TaxId == appliedOptionalTax.Id);
+
+            if (tax != null)
+            {
+                tax.TaxAmount = appliedOptionalTax.TaxType == 1
+                    ? appliedOptionalTax.TaxAmount / 100 * subTotal
+                    : appliedOptionalTax.TaxAmount;
+                _orderTaxRepository.Update(tax);
+                tax.IsDeleted = false;  // Update the tax in the database
+                taxAmount += tax.TaxAmount;
+            }
+            else
+            {
+                // The tax doesn't exist in existingTaxes, so you can add it
+                OrdersTax newTaxOnOrder = new OrdersTax
+                {
+                    OrderId = order.Id,
+                    TaxId = appliedOptionalTax.Id,
+                    IsDeleted = false,
+                    TaxAmount = appliedOptionalTax.TaxType == 1
+                        ? appliedOptionalTax.TaxAmount / 100 * subTotal
+                        : appliedOptionalTax.TaxAmount,
+                };
+
+                taxAmount += newTaxOnOrder.TaxAmount;
+                bool isUnique = _orderTaxRepository.Add(newTaxOnOrder);
+                bool isAdded = await _orderTaxRepository.SaveAsync();
+
+                if (!isAdded)
+                {
+                    return false;
+                }
+            }
+
+        }
+
+        foreach (var notAppliedOptionalTax in notAppliedOptionalTaxList)
+        {
+            var tax = existingTaxes.FirstOrDefault(t => t.TaxId == notAppliedOptionalTax.Id);
+
+            if (tax != null)
+            {
+                tax.IsDeleted = true;
+                _orderTaxRepository.Update(tax);  // Update the tax in the database
+            }
+        }
 
         if (existingTaxes.Any())
         {
@@ -151,7 +225,7 @@ public class OrderAppMenuService : IOrderAppMenuService
             {
                 OrdersTax taxeOnOrder = new OrdersTax
                 {
-                    OrderId = orderId,
+                    OrderId = order.Id,
                     TaxId = ordertax.Id,
                     TaxAmount = ordertax.TaxType == 1 ? ordertax.TaxAmount / 100 * subTotal : ordertax.TaxAmount,
                 };
@@ -165,6 +239,8 @@ public class OrderAppMenuService : IOrderAppMenuService
                 }
             }
         }
+
+
 
         totalAmount += subTotal + taxAmount;
         order.TotalAmount = totalAmount;
@@ -202,7 +278,7 @@ public class OrderAppMenuService : IOrderAppMenuService
                 TaxId = s.Id,
                 TaxName = s.Name,
                 TaxAmount = s.TaxAmount,
-                isPercenteage = s.TaxType == 1 ? true :false,
+                isPercenteage = s.TaxType == 1 ? true : false,
             }).ToList();
             // Get optional taxes
         }
@@ -210,24 +286,34 @@ public class OrderAppMenuService : IOrderAppMenuService
         {
             // If it's an existing order, filter default taxes based on existing order tax
             // defaultTax = _orderTaxRepository.GetAll(t => t.OrderId == orderId && !t.IsDeleated, i => i.Tax).select(s => new TaxVM
-            var orderTaxist = _orderTaxRepository.GetAll(filter: t => t.OrderId == orderId,orderBy: o => o.Id,include: i => i.Include(a => a.Tax));
-            defaultTax = orderTaxist.Select(s => new TaxVM
+            var orderTaxies = _orderTaxRepository.GetAll(filter: t => t.OrderId == orderId && t.Tax!.IsDefault, orderBy: o => o.Id, include: i => i.Include(a => a.Tax));
+
+            defaultTax = orderTaxies.Select(s => new TaxVM
             {
                 TaxId = s.Id,
                 TaxName = s.Tax.Name,
                 ActualAmount = s.TaxAmount,
                 TaxAmount = s.Tax.TaxAmount,
-                isPercenteage = s.Tax.TaxType == 1 ? true :false,
+                isPercenteage = s.Tax.TaxType == 1 ? true : false,
             }).ToList();
         }
+
+        var appliedOptionalTax = _orderTaxRepository.GetAll(filter: t => t.OrderId == orderId && !t.Tax!.IsDefault, orderBy: o => o.Id, include: i => i.Include(a => a.Tax));
 
         optionalTax = _taxRepository.GetAll(g => !g.IsDeleated && !g.IsDefault && (g.IsEnabled ?? true)).Select(s => new TaxVM
         {
             TaxId = s.Id,
             TaxName = s.Name,
             TaxAmount = s.TaxAmount,
-            isPercenteage = s.TaxType == 1 ? true :false,
+            ActualAmount = 0,
+            isPercenteage = s.TaxType == 1 ? true : false,
         }).ToList();
+
+        foreach (var tax in appliedOptionalTax)
+        {
+            var appliedTax = optionalTax.FirstOrDefault(f => f.TaxId == tax.TaxId);
+            appliedTax.ActualAmount = tax.TaxAmount;
+        }
 
         // Calculate subTotal and totalAmount from the order
         Order? order = await _orderRepository.GetByIdAsync(orderId);

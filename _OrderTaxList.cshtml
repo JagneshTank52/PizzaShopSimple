@@ -8,9 +8,10 @@
 
 @foreach (var tax in Model.DefaultTaxList)
 {
-    <div class="summary-row tax-row" data-tax-id="@tax.TaxId" data-tax-rate="@tax.TaxAmount" data-tax-type="@tax.isPercenteage">
+    <div class="summary-row tax-row" data-tax-id="@tax.TaxId" data-tax-rate="@tax.TaxAmount"
+        data-tax-type="@tax.isPercenteage">
         <span>@tax.TaxName</span>
-        <span class="tax-amount">₹@tax.ActualAmount.ToString("F2")</span>
+        <span class="tax-amount">₹@tax.ActualAmount</span>
     </div>
 }
 
@@ -18,41 +19,114 @@
 {
     <div class="summary-row">
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="optionalTaxCheck_@tax.TaxId">
-            <label class="form-check-label" for="optionalTaxCheck_@tax.TaxId">@tax.TaxName</label>
+            <input class="form-check-input" type="checkbox" id="optionalTaxCheck-@tax.TaxId" data-tax-id="@tax.TaxId"
+                data-tax-rate="@tax.TaxAmount" data-tax-type="@tax.isPercenteage" data-tax-amount="@tax.ActualAmount">
+            <label class="form-check-label" for="optionalTaxCheck-@tax.TaxId">@tax.TaxName</label>
+        </div>
+        <div>
+            <span id="optional-tax-amount-@tax.TaxId" style="display: none;" class="tax-amount">@tax.ActualAmount</span>
         </div>
     </div>
 }
 
-<div class="summary-row total-row">
+<div class="summary-row">
     <span>Total</span>
     <span id="total-display">₹@Model.TotalAmount.ToString("F2")</span>
 </div>
 
-    <script>
-        function recalculateTaxes(subtotal) {
-            let totalTaxAmount = 0;
+<script>
+    $(document).ready(function () {
+        $('.form-check-input').each(function () {
+            debugger
+            // Get the taxId for the current checkbox
+            var taxId = $(this).data('tax-id');
 
-            // Loop through each tax row to recalculate the tax amounts
-            $('.tax-row').each(function () {
-                const taxRate = parseFloat($(this).data('tax-rate'));
-                const isPercentage = String($(this).data('tax-type')).toLowerCase() === 'true';
+            // Get the actual amount for the current taxId
+            var actualAmount = $(this).data('tax-amount');
+
+            // If actualAmount is not 0, check the checkbox and show the tax amount
+            if (actualAmount !== 0) {
+                $(this).prop('checked', true);
+                if (!optionalTaxList.includes(taxId)) {
+                    optionalTaxList.push(taxId);
+                }  // Check the checkbox
+                $('#optional-tax-amount-' + taxId).show();  // Show the tax amount
+            } else {
+                $(this).prop('checked', false);
+                optionalTaxList = optionalTaxList.filter(item => item !== taxId);
+                // Uncheck the checkbox
+                $('#optional-tax-amount-' + taxId).hide();  // Hide the tax amount
+            }
+
+            console.log(optionalTaxList)
+        });
+
+        // Toggle tax amount visibility when checkbox is clicked
+        $('input[type="checkbox"]').on('change', function () {
+            var taxId = $(this).attr('id').split('-')[1]; // Extract taxId from checkbox id
+            var taxAmountElement = $('#optional-tax-amount-' + taxId);
+            var subTotal = parseFloat($('#subtotal-display').text().replace('₹', '').trim());
+            console.log(subTotal);
+            let totalAmount = parseFloat($('#total-display').text().replace('₹', '').trim());;
+
+            const taxRate = parseFloat($(this).data('tax-rate'));
+            const isPercentage = String($(this).data('tax-type')).toLowerCase() === 'true';
 
 
-                let taxAmount;
-                if (isPercentage) {
-                    taxAmount = (taxRate / 100) * subtotal; // Calculate percentage tax
-                } else {
-                    taxAmount = taxRate; // Fixed amount tax
+            let taxAmount;
+            if (isPercentage) {
+                taxAmount = (taxRate / 100) * subTotal; // Calculate percentage tax
+            } else {
+                taxAmount = taxRate; // Fixed amount tax
+            }
+
+            if ($(this).prop('checked')) {
+
+                // Add the taxId to the optionalTaxList if it's not already there
+                if (!optionalTaxList.includes(taxId)) {
+                    optionalTaxList.push(taxId);
                 }
 
-                // Update the tax amount in the UI
-                $(this).find('.tax-amount').text(`₹${taxAmount.toFixed(2)}`);
-                totalTaxAmount += taxAmount; // Add to total tax amount
-            });
+                console.log(optionalTaxList);
+                totalAmount += taxAmount;
+                taxAmountElement.text(`₹${taxAmount.toFixed(2)}`)
+                $('#total-display').text(`₹${totalAmount.toFixed(2)}`);
+                taxAmountElement.show();
+            } else {
+                // Remove the taxId from the optionalTaxList using filter
+                optionalTaxList = optionalTaxList.filter(item => item !== taxId);
+                console.log(optionalTaxList);
 
-            // Update the total display
-            const totalAmount = subtotal + totalTaxAmount;
-            $('#total-display').text(`₹${totalAmount.toFixed(2)}`);
-        }
-    </script>
+                totalAmount -= taxAmount;
+                $('#total-display').text(`₹${totalAmount.toFixed(2)}`);
+                taxAmountElement.hide();
+            }
+        });
+    });
+
+    function recalculateTaxes(subtotal) {
+        let totalTaxAmount = 0;
+
+        // Loop through each tax row to recalculate the tax amounts
+        $('.tax-row').each(function () {
+            const taxRate = parseFloat($(this).data('tax-rate'));
+            const isPercentage = String($(this).data('tax-type')).toLowerCase() === 'true';
+
+
+            let taxAmount;
+            if (isPercentage) {
+                taxAmount = (taxRate / 100) * subtotal; // Calculate percentage tax
+            } else {
+                taxAmount = taxRate; // Fixed amount tax
+            }
+
+            // Update the tax amount in the UI
+            $(this).find('.tax-amount').text(`₹${taxAmount.toFixed(2)}`);
+            totalTaxAmount += taxAmount; // Add to total tax amount
+        });
+
+        // Update the total display
+        const totalAmount = subtotal + totalTaxAmount;
+        $('#total-display').text(`₹${totalAmount.toFixed(2)}`);
+    }
+</script>
