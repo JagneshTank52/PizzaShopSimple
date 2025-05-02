@@ -1,0 +1,330 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using PizzaShop.Entity.Data;
+using PizzaShop.Repository.Interface;
+
+namespace PizzaShop.Repository.Implementaion
+{
+    /// <summary>
+    /// Generic repository implementation that provides common data operations
+    /// </summary>
+    /// <typeparam name="TEntity">The entity type this repository works with</typeparam>
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+    {
+        protected readonly PizzaShopContext Context;
+        protected readonly DbSet<TEntity> DbSet;
+
+        /// <summary>
+        /// Initializes a new instance of the GenericRepository class.
+        /// </summary>
+        /// <param name="context">The database context</param>
+        public GenericRepository(PizzaShopContext context)
+        {
+            Context = context ?? throw new ArgumentNullException(nameof(context));
+            DbSet = context.Set<TEntity>();
+        }
+
+        #region Create Operations
+
+        /// <summary>
+        /// Adds a new entity to the repository
+        /// </summary>
+        /// <param name="entity">The entity to add</param>
+        public virtual void Add(TEntity entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+            
+            DbSet.Add(entity);
+        }
+
+        /// <summary>
+        /// Adds a range of entities to the repository
+        /// </summary>
+        /// <param name="entities">The entities to add</param>
+        public virtual void AddRange(IEnumerable<TEntity> entities)
+        {
+            if (entities == null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+            
+            DbSet.AddRange(entities);
+        }
+
+        /// <summary>
+        /// Asynchronously adds a new entity to the repository
+        /// </summary>
+        /// <param name="entity">The entity to add</param>
+        public virtual async Task AddAsync(TEntity entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+            
+            await DbSet.AddAsync(entity);
+        }
+
+        /// <summary>
+        /// Asynchronously adds a range of entities to the repository
+        /// </summary>
+        /// <param name="entities">The entities to add</param>
+        public virtual async Task AddRangeAsync(IEnumerable<TEntity> entities)
+        {
+            if (entities == null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+            
+            await DbSet.AddRangeAsync(entities);
+        }
+
+        #endregion
+
+        #region Read Operations
+
+        /// <summary>
+        /// Gets all entities from the repository
+        /// </summary>
+        /// <returns>A queryable collection of all entities</returns>
+        public virtual IQueryable<TEntity> GetAll()
+        {
+            return DbSet;
+        }
+
+        /// <summary>
+        /// Gets all entities that satisfy the specified condition
+        /// </summary>
+        /// <param name="predicate">The condition to filter entities</param>
+        /// <returns>A queryable collection of filtered entities</returns>
+        public virtual IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        {
+            if (predicate == null)
+            {
+                throw new ArgumentNullException(nameof(predicate));
+            }
+            
+            return DbSet.Where(predicate);
+        }
+
+        /// <summary>
+        /// Gets a single entity by its primary key
+        /// </summary>
+        /// <param name="id">The primary key value</param>
+        /// <returns>The entity found, or null</returns>
+        public virtual TEntity GetById(object id)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            
+            return DbSet.Find(id);
+        }
+
+        /// <summary>
+        /// Asynchronously gets a single entity by its primary key
+        /// </summary>
+        /// <param name="id">The primary key value</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the entity found, or null</returns>
+        public virtual async Task<TEntity> GetByIdAsync(object id)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            
+            return await DbSet.FindAsync(id);
+        }
+
+        /// <summary>
+        /// Gets the first entity that satisfies the specified condition, or a default value if no such entity exists
+        /// </summary>
+        /// <param name="predicate">The condition to filter entities</param>
+        /// <returns>The entity found, or null</returns>
+        public virtual TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate)
+        {
+            if (predicate == null)
+            {
+                throw new ArgumentNullException(nameof(predicate));
+            }
+            
+            return DbSet.FirstOrDefault(predicate);
+        }
+
+        /// <summary>
+        /// Asynchronously gets the first entity that satisfies the specified condition, or a default value if no such entity exists
+        /// </summary>
+        /// <param name="predicate">The condition to filter entities</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the entity found, or null</returns>
+        public virtual async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            if (predicate == null)
+            {
+                throw new ArgumentNullException(nameof(predicate));
+            }
+            
+            return await DbSet.FirstOrDefaultAsync(predicate);
+        }
+
+        /// <summary>
+        /// Determines whether any entity satisfies the specified condition
+        /// </summary>
+        /// <param name="predicate">The condition to test entities</param>
+        /// <returns>True if any entity satisfies the condition; otherwise, false</returns>
+        public virtual bool Any(Expression<Func<TEntity, bool>> predicate)
+        {
+            if (predicate == null)
+            {
+                throw new ArgumentNullException(nameof(predicate));
+            }
+            
+            return DbSet.Any(predicate);
+        }
+
+        /// <summary>
+        /// Asynchronously determines whether any entity satisfies the specified condition
+        /// </summary>
+        /// <param name="predicate">The condition to test entities</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains true if any entity satisfies the condition; otherwise, false</returns>
+        public virtual async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            if (predicate == null)
+            {
+                throw new ArgumentNullException(nameof(predicate));
+            }
+            
+            return await DbSet.AnyAsync(predicate);
+        }
+
+        /// <summary>
+        /// Counts the number of entities that satisfy the specified condition
+        /// </summary>
+        /// <param name="predicate">The condition to filter entities</param>
+        /// <returns>The number of entities that satisfy the condition</returns>
+        public virtual int Count(Expression<Func<TEntity, bool>> predicate = null)
+        {
+            return predicate == null ? DbSet.Count() : DbSet.Count(predicate);
+        }
+
+        /// <summary>
+        /// Asynchronously counts the number of entities that satisfy the specified condition
+        /// </summary>
+        /// <param name="predicate">The condition to filter entities</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the number of entities that satisfy the condition</returns>
+        public virtual async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate = null)
+        {
+            return predicate == null ? await DbSet.CountAsync() : await DbSet.CountAsync(predicate);
+        }
+
+        #endregion
+
+        #region Update Operations
+
+        /// <summary>
+        /// Updates an existing entity in the repository
+        /// </summary>
+        /// <param name="entity">The entity to update</param>
+        public virtual void Update(TEntity entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+            
+            DbSet.Attach(entity);
+            Context.Entry(entity).State = EntityState.Modified;
+        }
+
+        /// <summary>
+        /// Updates a range of existing entities in the repository
+        /// </summary>
+        /// <param name="entities">The entities to update</param>
+        public virtual void UpdateRange(IEnumerable<TEntity> entities)
+        {
+            if (entities == null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+            
+            foreach (var entity in entities)
+            {
+                DbSet.Attach(entity);
+                Context.Entry(entity).State = EntityState.Modified;
+            }
+        }
+
+        #endregion
+
+        #region Delete Operations
+
+        /// <summary>
+        /// Removes an entity from the repository
+        /// </summary>
+        /// <param name="entity">The entity to remove</param>
+        public virtual void Remove(TEntity entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+            
+            if (Context.Entry(entity).State == EntityState.Detached)
+            {
+                DbSet.Attach(entity);
+            }
+            
+            DbSet.Remove(entity);
+        }
+
+        /// <summary>
+        /// Removes a range of entities from the repository
+        /// </summary>
+        /// <param name="entities">The entities to remove</param>
+        public virtual void RemoveRange(IEnumerable<TEntity> entities)
+        {
+            if (entities == null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+            
+            foreach (var entity in entities)
+            {
+                if (Context.Entry(entity).State == EntityState.Detached)
+                {
+                    DbSet.Attach(entity);
+                }
+            }
+            
+            DbSet.RemoveRange(entities);
+        }
+
+        /// <summary>
+        /// Removes an entity by its primary key from the repository
+        /// </summary>
+        /// <param name="id">The primary key value</param>
+        public virtual void Remove(object id)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            
+            TEntity entityToDelete = DbSet.Find(id);
+            
+            if (entityToDelete != null)
+            {
+                Remove(entityToDelete);
+            }
+        }
+
+        #endregion
+    }
+}
