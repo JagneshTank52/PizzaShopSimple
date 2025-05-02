@@ -1,0 +1,246 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using PizzaShop.Entity.Data;
+using PizzaShop.Entity.Models;
+using PizzaShop.Repository.Interface;
+using PizzaShop.Repository.Implementaion;
+
+namespace PizzaShop.Repository.Implementaion
+{
+    /// <summary>
+    /// Implementation of the Unit of Work pattern that coordinates the work of multiple repositories
+    /// </summary>
+    public class UnitOfWork : IUnitOfWork, IDisposable
+    {
+        private readonly PizzaShopContext _context;
+        private IDbContextTransaction _transaction;
+        private bool _disposed;
+
+        // Repository instances - initialized lazily when needed
+        private ICategoryRepository _categoryRepository;
+        private ICustomerRepository _customerRepository;
+        private IItemRepository _itemRepository;
+        private IItemsModifierGroupRepository _itemsModifierGroupRepository;
+        private IModifierGroupRepository _modifierGroupRepository;
+        private IModifierRepository _modifierRepository;
+        private IOrderItemRepository _orderItemRepository;
+        private IOrderRepository _orderRepository;
+        private IRolePermissionRepository _rolePermissionRepository;
+        private IScheduleRepository _scheduleRepository;
+        private ITableRepository _tableRepository;
+        private ITaxesAndFeesRepository _taxesAndFeesRepository;
+        private IUserRepository _userRepository;
+        private IWaitingRepository _waitingRepository;
+
+        /// <summary>
+        /// Initializes a new instance of the UnitOfWork class.
+        /// </summary>
+        /// <param name="context">The database context</param>
+        public UnitOfWork(PizzaShopContext context)
+        {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+        }
+
+        #region Repository Properties
+
+        public ICategoryRepository CategoryRepository => 
+            _categoryRepository ??= new CategoryRepository(_context);
+
+        public ICustomerRepository CustomerRepository => 
+            _customerRepository ??= new CustomerRepository(_context);
+
+        public IItemRepository ItemRepository => 
+            _itemRepository ??= new ItemRepository(_context);
+
+        public IItemsModifierGroupRepository ItemsModifierGroupRepository => 
+            _itemsModifierGroupRepository ??= new ItemsModifierGroupRepository(_context);
+
+        public IModifierGroupRepository ModifierGroupRepository => 
+            _modifierGroupRepository ??= new ModifierGroupRepository(_context);
+
+        public IModifierRepository ModifierRepository => 
+            _modifierRepository ??= new ModifierRepository(_context);
+
+        public IOrderItemRepository OrderItemRepository => 
+            _orderItemRepository ??= new OrderItemRepository(_context);
+
+        public IOrderRepository OrderRepository => 
+            _orderRepository ??= new OrderRepository(_context);
+
+        public IRolePermissionRepository RolePermissionRepository => 
+            _rolePermissionRepository ??= new RolePermissionRepository(_context);
+
+        public IScheduleRepository ScheduleRepository => 
+            _scheduleRepository ??= new ScheduleRepository(_context);
+
+        public ITableRepository TableRepository => 
+            _tableRepository ??= new TableRepository(_context);
+
+        public ITaxesAndFeesRepository TaxesAndFeesRepository => 
+            _taxesAndFeesRepository ??= new TaxesAndFeesRepository(_context);
+
+        public IUserRepository UserRepository => 
+            _userRepository ??= new UserRepository(_context);
+
+        public IWaitingRepository WaitingRepository => 
+            _waitingRepository ??= new WaitingRepository(_context);
+
+        #endregion
+
+        #region Transaction Management
+
+        /// <summary>
+        /// Begins a new database transaction.
+        /// </summary>
+        public async Task BeginTransactionAsync()
+        {
+            if (_transaction != null)
+            {
+                throw new InvalidOperationException("A transaction is already in progress");
+            }
+
+            _transaction = await _context.Database.BeginTransactionAsync();
+        }
+
+        /// <summary>
+        /// Commits the current transaction if one exists.
+        /// </summary>
+        public async Task CommitTransactionAsync()
+        {
+            try
+            {
+                await SaveChangesAsync();
+
+                if (_transaction != null)
+                {
+                    await _transaction.CommitAsync();
+                    _transaction.Dispose();
+                    _transaction = null;
+                }
+            }
+            catch
+            {
+                await RollbackTransactionAsync();
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Rolls back the current transaction if one exists.
+        /// </summary>
+        public async Task RollbackTransactionAsync()
+        {
+            if (_transaction != null)
+            {
+                await _transaction.RollbackAsync();
+                _transaction.Dispose();
+                _transaction = null;
+            }
+        }
+
+        #endregion
+
+        #region Save Methods
+
+        /// <summary>
+        /// Saves all pending changes in the context to the database.
+        /// </summary>
+        /// <returns>The number of state entries written to the database</returns>
+        public int SaveChanges()
+        {
+            try
+            {
+                return _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                // Log the concurrency exception
+                // Consider implementing retry logic or custom handling
+                throw new ApplicationException("A concurrency error occurred while saving changes", ex);
+            }
+            catch (DbUpdateException ex)
+            {
+                // Log the database update exception
+                throw new ApplicationException("An error occurred while saving changes to the database", ex);
+            }
+            catch (Exception ex)
+            {
+                // Log the general exception
+                throw new ApplicationException("An error occurred while saving changes", ex);
+            }
+        }
+
+        /// <summary>
+        /// Asynchronously saves all pending changes in the context to the database.
+        /// </summary>
+        /// <param name="cancellationToken">A token to observe while waiting for the task to complete</param>
+        /// <returns>A task that represents the asynchronous save operation</returns>
+        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await _context.SaveChangesAsync(cancellationToken);
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                // Log the concurrency exception
+                throw new ApplicationException("A concurrency error occurred while saving changes", ex);
+            }
+            catch (DbUpdateException ex)
+            {
+                // Log the database update exception
+                throw new ApplicationException("An error occurred while saving changes to the database", ex);
+            }
+            catch (Exception ex)
+            {
+                // Log the general exception
+                throw new ApplicationException("An error occurred while saving changes", ex);
+            }
+        }
+
+        #endregion
+
+        #region IDisposable Implementation
+
+        /// <summary>
+        /// Disposes the current object.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Disposes the current object with the option to also dispose managed resources.
+        /// </summary>
+        /// <param name="disposing">True to dispose both managed and unmanaged resources; false to dispose only unmanaged resources</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    // Dispose managed resources
+                    _transaction?.Dispose();
+                    _context?.Dispose();
+                }
+
+                _disposed = true;
+            }
+        }
+
+        /// <summary>
+        /// Finalizer to ensure proper cleanup when Dispose is not called.
+        /// </summary>
+        ~UnitOfWork()
+        {
+            Dispose(false);
+        }
+
+        #endregion
+    }
+}
