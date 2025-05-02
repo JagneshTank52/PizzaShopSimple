@@ -1,0 +1,423 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using PizzaShop.Entity.Data;
+using PizzaShop.Repository.Interface;
+
+namespace PizzaShop.Repository.Implementaion
+{
+    /// <summary>
+    /// Custom generic repository implementation that provides data operations with advanced querying capabilities
+    /// </summary>
+    /// <typeparam name="T">The entity type this repository works with</typeparam>
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    {
+        protected readonly PizzaShopContext _context;
+        protected readonly DbSet<T> _dbSet;
+
+        /// <summary>
+        /// Initializes a new instance of the GenericRepository class.
+        /// </summary>
+        /// <param name="context">The database context</param>
+        public GenericRepository(PizzaShopContext context)
+        {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _dbSet = context.Set<T>();
+        }
+
+        #region Core CRUD Operations
+
+        /// <summary>
+        /// Adds a new entity to the repository with optional uniqueness check
+        /// </summary>
+        /// <param name="entity">The entity to add</param>
+        /// <param name="checkUniquePredicate">Optional predicate to check if entity already exists</param>
+        /// <returns>True if entity was added successfully, false otherwise</returns>
+        public virtual bool Add(T entity, Func<T, bool> checkUniquePredicate = null)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            if (checkUniquePredicate != null && _dbSet.Any(checkUniquePredicate))
+            {
+                return false;
+            }
+            
+            _dbSet.Add(entity);
+            return true;
+        }
+
+        /// <summary>
+        /// Adds a range of entities to the repository
+        /// </summary>
+        /// <param name="entities">The entities to add</param>
+        public virtual void AddRange(IEnumerable<T> entities)
+        {
+            if (entities == null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+            
+            _dbSet.AddRange(entities);
+        }
+
+        /// <summary>
+        /// Asynchronously adds a new entity to the repository
+        /// </summary>
+        /// <param name="entity">The entity to add</param>
+        public virtual async Task AddAsync(T entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+            
+            await _dbSet.AddAsync(entity);
+        }
+
+        /// <summary>
+        /// Asynchronously adds a range of entities to the repository
+        /// </summary>
+        /// <param name="entities">The entities to add</param>
+        public virtual async Task AddRangeAsync(IEnumerable<T> entities)
+        {
+            if (entities == null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+            
+            await _dbSet.AddRangeAsync(entities);
+        }
+
+        /// <summary>
+        /// Updates an existing entity in the repository with optional uniqueness check
+        /// </summary>
+        /// <param name="entity">The entity to update</param>
+        /// <param name="checkUniquePredicate">Optional predicate to check if entity with updated values already exists</param>
+        /// <returns>True if entity was updated successfully, false otherwise</returns>
+        public virtual bool Update(T entity, Func<T, bool> checkUniquePredicate = null)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            if (checkUniquePredicate != null && _dbSet.Any(checkUniquePredicate))
+            {
+                return false;
+            }
+            
+            _dbSet.Update(entity);
+            return true;
+        }
+
+        /// <summary>
+        /// Updates a range of existing entities in the repository
+        /// </summary>
+        /// <param name="entities">The entities to update</param>
+        public virtual void UpdateRange(IEnumerable<T> entities)
+        {
+            if (entities == null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+            
+            _dbSet.UpdateRange(entities);
+        }
+
+        /// <summary>
+        /// Asynchronously deletes an entity by its ID
+        /// </summary>
+        /// <param name="id">The ID of the entity to delete</param>
+        public virtual async Task DeleteAsync(int id)
+        {
+            var entity = await GetByIdAsync(id);
+            if (entity != null)
+            {
+                _dbSet.Remove(entity);
+            }
+        }
+
+        /// <summary>
+        /// Removes an entity from the repository
+        /// </summary>
+        /// <param name="entity">The entity to remove</param>
+        public virtual void Remove(T entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+            
+            if (_context.Entry(entity).State == EntityState.Detached)
+            {
+                _dbSet.Attach(entity);
+            }
+            
+            _dbSet.Remove(entity);
+        }
+
+        /// <summary>
+        /// Removes a range of entities from the repository
+        /// </summary>
+        /// <param name="entities">The entities to remove</param>
+        public virtual void RemoveRange(IEnumerable<T> entities)
+        {
+            if (entities == null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+            
+            _dbSet.RemoveRange(entities);
+        }
+
+        /// <summary>
+        /// Removes an entity by its primary key from the repository
+        /// </summary>
+        /// <param name="id">The primary key value</param>
+        public virtual void Remove(object id)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            
+            T entityToDelete = _dbSet.Find(id);
+            
+            if (entityToDelete != null)
+            {
+                Remove(entityToDelete);
+            }
+        }
+
+        #endregion
+
+        #region Advanced Query Operations
+
+        /// <summary>
+        /// Gets all entities with optional filtering, ordering, and includes
+        /// </summary>
+        /// <param name="filter">Optional filter expression</param>
+        /// <param name="orderBy">Optional ordering expression</param>
+        /// <param name="include">Optional include function for related entities</param>
+        /// <returns>A collection of entities matching the criteria</returns>
+        public IEnumerable<T> GetAll(
+            Expression<Func<T, bool>>? filter = null,
+            Expression<Func<T, object>>? orderBy = null,
+            Func<IQueryable<T>, IQueryable<T>>? include = null)
+        {
+            IQueryable<T> query = _dbSet;
+
+            // Apply filter
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            // Apply include
+            if (include != null)
+            {
+                query = include(query);
+            }
+
+            // Apply orderBy
+            if (orderBy != null)
+            {
+                query = query.OrderBy(orderBy);
+            }
+
+            return query.AsEnumerable();
+        }
+
+        /// <summary>
+        /// Gets paginated data with total record count and current page index
+        /// </summary>
+        /// <param name="pageSize">Size of each page</param>
+        /// <param name="pageIndex">Current page index (1-based)</param>
+        /// <param name="orderBy">Required ordering function</param>
+        /// <param name="filter">Optional filter expression</param>
+        /// <param name="include">Optional include function for related entities</param>
+        /// <param name="isExport">If true, returns all records without pagination</param>
+        /// <returns>A tuple containing the records, total record count, and adjusted page index</returns>
+        public (IEnumerable<T> records, int totalRecord, int pageIndex) GetPagedRecords(
+            int pageSize,
+            int pageIndex,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy,
+            Expression<Func<T, bool>>? filter = null,
+            Func<IQueryable<T>, IQueryable<T>>? include = null,
+            bool isExport = false
+        )
+        {
+            if (orderBy == null)
+            {
+                throw new ArgumentNullException(nameof(orderBy), "Ordering function cannot be null.");
+            }
+
+            IQueryable<T> query = _dbSet;
+
+            // Apply filter 
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            // Apply Include
+            if (include != null)
+            {
+                query = include(query);
+            }
+
+            int totalRecord = query.Count();
+
+            // Manage pagination - adjust page index if needed
+            if (totalRecord != 0 && totalRecord % pageSize == 0 && pageIndex > totalRecord / pageSize)
+            {
+                pageIndex--;
+            }
+
+            IEnumerable<T> records;
+            if (isExport)
+            {
+                records = orderBy(query).ToList();
+            }
+            else
+            {
+                records = orderBy(query).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+            }
+
+            return (records, totalRecord, pageIndex);
+        }
+
+        /// <summary>
+        /// Gets all entities that satisfy the specified condition
+        /// </summary>
+        /// <param name="predicate">The condition to filter entities</param>
+        /// <returns>A queryable collection of filtered entities</returns>
+        public virtual IQueryable<T> Find(Expression<Func<T, bool>> predicate)
+        {
+            if (predicate == null)
+            {
+                throw new ArgumentNullException(nameof(predicate));
+            }
+            
+            return _dbSet.Where(predicate);
+        }
+
+        /// <summary>
+        /// Gets a single entity by its primary key
+        /// </summary>
+        /// <param name="id">The primary key value</param>
+        /// <returns>The entity found, or null</returns>
+        public virtual T GetById(object id)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            
+            return _dbSet.Find(id);
+        }
+
+        /// <summary>
+        /// Asynchronously gets a single entity by its primary key
+        /// </summary>
+        /// <param name="id">The primary key value</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the entity found, or null</returns>
+        public virtual async Task<T> GetByIdAsync(object id)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            
+            return await _dbSet.FindAsync(id);
+        }
+
+        /// <summary>
+        /// Gets the first entity that satisfies the specified condition, or a default value if no such entity exists
+        /// </summary>
+        /// <param name="predicate">The condition to filter entities</param>
+        /// <returns>The entity found, or null</returns>
+        public virtual T FirstOrDefault(Expression<Func<T, bool>> predicate)
+        {
+            if (predicate == null)
+            {
+                throw new ArgumentNullException(nameof(predicate));
+            }
+            
+            return _dbSet.FirstOrDefault(predicate);
+        }
+
+        /// <summary>
+        /// Asynchronously gets the first entity that satisfies the specified condition, or a default value if no such entity exists
+        /// </summary>
+        /// <param name="predicate">The condition to filter entities</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the entity found, or null</returns>
+        public virtual async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
+        {
+            if (predicate == null)
+            {
+                throw new ArgumentNullException(nameof(predicate));
+            }
+            
+            return await _dbSet.FirstOrDefaultAsync(predicate);
+        }
+
+        /// <summary>
+        /// Determines whether any entity satisfies the specified condition
+        /// </summary>
+        /// <param name="predicate">The condition to test entities</param>
+        /// <returns>True if any entity satisfies the condition; otherwise, false</returns>
+        public virtual bool Any(Expression<Func<T, bool>> predicate)
+        {
+            if (predicate == null)
+            {
+                throw new ArgumentNullException(nameof(predicate));
+            }
+            
+            return _dbSet.Any(predicate);
+        }
+
+        /// <summary>
+        /// Asynchronously determines whether any entity satisfies the specified condition
+        /// </summary>
+        /// <param name="predicate">The condition to test entities</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains true if any entity satisfies the condition; otherwise, false</returns>
+        public virtual async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate)
+        {
+            if (predicate == null)
+            {
+                throw new ArgumentNullException(nameof(predicate));
+            }
+            
+            return await _dbSet.AnyAsync(predicate);
+        }
+
+        /// <summary>
+        /// Counts the number of entities that satisfy the specified condition
+        /// </summary>
+        /// <param name="predicate">The condition to filter entities</param>
+        /// <returns>The number of entities that satisfy the condition</returns>
+        public virtual int Count(Expression<Func<T, bool>> predicate = null)
+        {
+            return predicate == null ? _dbSet.Count() : _dbSet.Count(predicate);
+        }
+
+        /// <summary>
+        /// Asynchronously counts the number of entities that satisfy the specified condition
+        /// </summary>
+        /// <param name="predicate">The condition to filter entities</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the number of entities that satisfy the condition</returns>
+        public virtual async Task<int> CountAsync(Expression<Func<T, bool>> predicate = null)
+        {
+            return predicate == null ? await _dbSet.CountAsync() : await _dbSet.CountAsync(predicate);
+        }
+
+        #endregion
+    }
+}
