@@ -1,0 +1,136 @@
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using PizzaShop.Entity.Models;
+using PizzaShop.Entity.ViewModels.HelperVM;
+using PizzaShop.Entity.ViewModels.OrderAppVM;
+using PizzaShop.Entity.ViewModels.SectionAndTableVM;
+using PizzaShop.Repository.Interface;
+using PizzaShop.Service.Helper;
+using PizzaShop.Service.Interface;
+
+namespace PizzaShop.Service.Implementation
+{
+    public class WaitingService : IWatingService
+    {
+        private readonly IUnitOfWork _unitOfWork;
+
+        public WaitingService(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
+        // WAITING LIST
+        public NewPaginatedList<WatingListVM> WatingList(PageInfo pageInfo)
+        {
+            // 1 DEFAULT FILTER
+            Expression<Func<Wating, bool>> filter = f => !f.IsDeleted;
+
+            // Also add expression for order status
+            if (pageInfo.GruoupId != 0)
+            {
+                filter = filter.AndAlso(f => f.SectionId == pageInfo.GruoupId);
+            }
+
+            // 2 ORDER BY
+            Func<IQueryable<Wating>, IOrderedQueryable<Wating>> orderBy;
+
+            orderBy = pageInfo.Sorting switch
+            {
+                "wating_id" => q => pageInfo.SortOrder == "asc" ? q.OrderBy(o => o.WatingId) : q.OrderByDescending(o => o.WatingId),
+                _ => q => q.OrderBy(o => o.WatingId)
+            };
+
+            // 7 INCLUDE
+            Func<IQueryable<Wating>, IQueryable<Wating>> include = q => q.Include(i => i.Customer);
+
+            var pageResult = _unitOfWork.WaitingRepository.GetPagedRecords(pageInfo.PageSize, pageInfo.PageIndex, orderBy, filter, include);
+
+            var viewModels = pageResult.records.Select(s => new WatingListVM
+            {
+                WatingId = s.WatingId,
+                CreatedAt = s.CreatedAt,
+                WatingTime = "2 hour",
+                Name = s.Customer.Name,
+                NoOfPerson = s.NoOfPerson,
+                PhoneNumber = s.Customer.Phone,
+                Email = s.Customer.Email,
+            }).ToList();
+
+            NewPaginatedList<WatingListVM> watingList = new NewPaginatedList<WatingListVM>(viewModels, pageResult.totalRecord, pageInfo);
+
+            return watingList;
+        }
+
+        // DELETE WAITING TOKEN
+        public async Task<(bool status, string message)> CancleWatingToken(int id)
+        {
+            try
+            {
+                // Begin transaction to ensure data consistency
+                await _unitOfWork.BeginTransactionAsync();
+
+                Wating? waiting = await _unitOfWork.WaitingRepository.GetByIdAsync(id);
+
+                if (waiting == null)
+                {
+                    await _unitOfWork.RollbackTransactionAsync();
+                    return (false, "Waiting Token does not exist");
+                }
+
+                waiting.IsDeleted = true;
+                bool isChange = _unitOfWork.WaitingRepository.Update(waiting);
+
+                // Commit the transaction if successful
+                await _unitOfWork.CommitTransactionAsync();
+                return (true, "Waiting token cancelled successfully");
+            }
+            catch (Exception ex)
+            {
+                // Ensure transaction is rolled back on error
+                await _unitOfWork.RollbackTransactionAsync();
+                return (false, $"Waiting token cancellation failed: {ex.Message}");
+            }
+        }
+
+        // GET SECTION LIST FOR WAITING
+        public async Task<WatingAssignVM> GetSectionListForWating(int watingId)
+        {
+            Wating? watingCustomer = await _unitOfWork.WaitingRepository.GetWatingById(watingId);
+
+            WatingAssignVM assignModal = new WatingAssignVM
+            {
+                WatingId = watingId,
+                SectionId = watingCustomer.SectionId,
+                SectionList = _unitOfWork.SectionRepository.GetSectionListWithWating().Select(s => new SelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Name
+                }).ToList()
+            };
+
+            return assignModal;
+        }
+
+        // GET TABLE LIST FOR WAITING
+        public List<TableVM> GetTableListForWating(int sectionId)
+        {
+            List<Table> tableList = _unitOfWork.TableRepository.GetTableList(sectionId)!.ToList();
+
+            List<TableVM> availableTable = tableList.Where(w => w.Status == 1).Select(s => new TableVM
+            {
+                Id = s.Id,
+                SectionId = sectionId,
+                StatusId = s.Status,
+                StatusName = s.StatusNavigation!.Name,
+                TableName = s.Name,
+                Capacity = s.Capacity
+            }).ToList();
+
+            return availableTable;
+        }
+    }
+}
