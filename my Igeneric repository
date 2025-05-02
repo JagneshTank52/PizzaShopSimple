@@ -1,0 +1,176 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+
+namespace PizzaShop.Repository.Interface
+{
+    /// <summary>
+    /// Defines the generic repository interface for data operations with advanced querying capabilities
+    /// </summary>
+    /// <typeparam name="T">The entity type this repository works with</typeparam>
+    public interface IGenericRepository<T> where T : class
+    {
+        #region Core CRUD Operations
+        /// <summary>
+        /// Adds a new entity to the repository with optional uniqueness check
+        /// </summary>
+        /// <param name="entity">The entity to add</param>
+        /// <param name="checkUniquePredicate">Optional predicate to check if entity already exists</param>
+        /// <returns>True if entity was added successfully, false otherwise</returns>
+        bool Add(T entity, Func<T, bool> checkUniquePredicate = null);
+
+        /// <summary>
+        /// Adds a range of entities to the repository
+        /// </summary>
+        /// <param name="entities">The entities to add</param>
+        void AddRange(IEnumerable<T> entities);
+
+        /// <summary>
+        /// Asynchronously adds a new entity to the repository
+        /// </summary>
+        /// <param name="entity">The entity to add</param>
+        Task AddAsync(T entity);
+
+        /// <summary>
+        /// Asynchronously adds a range of entities to the repository
+        /// </summary>
+        /// <param name="entities">The entities to add</param>
+        Task AddRangeAsync(IEnumerable<T> entities);
+
+        /// <summary>
+        /// Updates an existing entity in the repository with optional uniqueness check
+        /// </summary>
+        /// <param name="entity">The entity to update</param>
+        /// <param name="checkUniquePredicate">Optional predicate to check if entity with updated values already exists</param>
+        /// <returns>True if entity was updated successfully, false otherwise</returns>
+        bool Update(T entity, Func<T, bool> checkUniquePredicate = null);
+
+        /// <summary>
+        /// Updates a range of existing entities in the repository
+        /// </summary>
+        /// <param name="entities">The entities to update</param>
+        void UpdateRange(IEnumerable<T> entities);
+
+        /// <summary>
+        /// Asynchronously deletes an entity by its ID
+        /// </summary>
+        /// <param name="id">The ID of the entity to delete</param>
+        Task DeleteAsync(int id);
+
+        /// <summary>
+        /// Removes an entity from the repository
+        /// </summary>
+        /// <param name="entity">The entity to remove</param>
+        void Remove(T entity);
+
+        /// <summary>
+        /// Removes a range of entities from the repository
+        /// </summary>
+        /// <param name="entities">The entities to remove</param>
+        void RemoveRange(IEnumerable<T> entities);
+
+        /// <summary>
+        /// Removes an entity by its primary key from the repository
+        /// </summary>
+        /// <param name="id">The primary key value</param>
+        void Remove(object id);
+        #endregion
+
+        #region Advanced Query Operations
+        /// <summary>
+        /// Gets all entities with optional filtering, ordering, and includes
+        /// </summary>
+        /// <param name="filter">Optional filter expression</param>
+        /// <param name="orderBy">Optional ordering expression</param>
+        /// <param name="include">Optional include function for related entities</param>
+        /// <returns>A collection of entities matching the criteria</returns>
+        IEnumerable<T> GetAll(
+            Expression<Func<T, bool>>? filter = null,
+            Expression<Func<T, object>>? orderBy = null,
+            Func<IQueryable<T>, IQueryable<T>>? include = null);
+
+        /// <summary>
+        /// Gets paginated data with total record count and current page index
+        /// </summary>
+        /// <param name="pageSize">Size of each page</param>
+        /// <param name="pageIndex">Current page index (1-based)</param>
+        /// <param name="orderBy">Required ordering function</param>
+        /// <param name="filter">Optional filter expression</param>
+        /// <param name="include">Optional include function for related entities</param>
+        /// <param name="isExport">If true, returns all records without pagination</param>
+        /// <returns>A tuple containing the records, total record count, and adjusted page index</returns>
+        (IEnumerable<T> records, int totalRecord, int pageIndex) GetPagedRecords(
+            int pageSize,
+            int pageIndex,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy,
+            Expression<Func<T, bool>>? filter = null,
+            Func<IQueryable<T>, IQueryable<T>>? include = null,
+            bool isExport = false);
+
+        /// <summary>
+        /// Gets all entities that satisfy the specified condition
+        /// </summary>
+        /// <param name="predicate">The condition to filter entities</param>
+        /// <returns>A queryable collection of filtered entities</returns>
+        IQueryable<T> Find(Expression<Func<T, bool>> predicate);
+
+        /// <summary>
+        /// Gets a single entity by its primary key
+        /// </summary>
+        /// <param name="id">The primary key value</param>
+        /// <returns>The entity found, or null</returns>
+        T GetById(object id);
+
+        /// <summary>
+        /// Asynchronously gets a single entity by its primary key
+        /// </summary>
+        /// <param name="id">The primary key value</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the entity found, or null</returns>
+        Task<T> GetByIdAsync(object id);
+
+        /// <summary>
+        /// Gets the first entity that satisfies the specified condition, or a default value if no such entity exists
+        /// </summary>
+        /// <param name="predicate">The condition to filter entities</param>
+        /// <returns>The entity found, or null</returns>
+        T FirstOrDefault(Expression<Func<T, bool>> predicate);
+
+        /// <summary>
+        /// Asynchronously gets the first entity that satisfies the specified condition, or a default value if no such entity exists
+        /// </summary>
+        /// <param name="predicate">The condition to filter entities</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the entity found, or null</returns>
+        Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
+
+        /// <summary>
+        /// Determines whether any entity satisfies the specified condition
+        /// </summary>
+        /// <param name="predicate">The condition to test entities</param>
+        /// <returns>True if any entity satisfies the condition; otherwise, false</returns>
+        bool Any(Expression<Func<T, bool>> predicate);
+
+        /// <summary>
+        /// Asynchronously determines whether any entity satisfies the specified condition
+        /// </summary>
+        /// <param name="predicate">The condition to test entities</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains true if any entity satisfies the condition; otherwise, false</returns>
+        Task<bool> AnyAsync(Expression<Func<T, bool>> predicate);
+
+        /// <summary>
+        /// Counts the number of entities that satisfy the specified condition
+        /// </summary>
+        /// <param name="predicate">The condition to filter entities</param>
+        /// <returns>The number of entities that satisfy the condition</returns>
+        int Count(Expression<Func<T, bool>> predicate = null);
+
+        /// <summary>
+        /// Asynchronously counts the number of entities that satisfy the specified condition
+        /// </summary>
+        /// <param name="predicate">The condition to filter entities</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the number of entities that satisfy the condition</returns>
+        Task<int> CountAsync(Expression<Func<T, bool>> predicate = null);
+        #endregion
+    }
+}
