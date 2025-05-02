@@ -1,0 +1,62 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using PizzaShop.Repository.Interface;
+
+namespace PizzaShop.Repository.Interface
+{
+    /// <summary>
+    /// Defines the Unit of Work interface for managing database operations and repositories
+    /// </summary>
+    public interface IUnitOfWork : IDisposable
+    {
+        #region Repository Properties
+        ICategoryRepository CategoryRepository { get; }
+        ICustomerRepository CustomerRepository { get; }
+        IItemRepository ItemRepository { get; }
+        IItemsModifierGroupRepository ItemsModifierGroupRepository { get; }
+        IModifierGroupRepository ModifierGroupRepository { get; }
+        IModifierRepository ModifierRepository { get; }
+        IOrderItemRepository OrderItemRepository { get; }
+        IOrderRepository OrderRepository { get; }
+        IRolePermissionRepository RolePermissionRepository { get; }
+        IScheduleRepository ScheduleRepository { get; }
+        ITableRepository TableRepository { get; }
+        ITaxesAndFeesRepository TaxesAndFeesRepository { get; }
+        IUserRepository UserRepository { get; }
+        IWaitingRepository WaitingRepository { get; }
+        #endregion
+
+        #region Transaction Management
+        /// <summary>
+        /// Begins a new database transaction.
+        /// </summary>
+        Task BeginTransactionAsync();
+
+        /// <summary>
+        /// Commits the current transaction if one exists.
+        /// </summary>
+        Task CommitTransactionAsync();
+
+        /// <summary>
+        /// Rolls back the current transaction if one exists.
+        /// </summary>
+        Task RollbackTransactionAsync();
+        #endregion
+
+        #region Save Methods
+        /// <summary>
+        /// Saves all pending changes in the context to the database.
+        /// </summary>
+        /// <returns>The number of state entries written to the database</returns>
+        int SaveChanges();
+
+        /// <summary>
+        /// Asynchronously saves all pending changes in the context to the database.
+        /// </summary>
+        /// <param name="cancellationToken">A token to observe while waiting for the task to complete</param>
+        /// <returns>A task that represents the asynchronous save operation</returns>
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+        #endregion
+    }
+}
