@@ -1,0 +1,109 @@
+@using PizzaShop.Entity.ViewModels.OrderAppVM;
+@model OrderTicketList
+
+@if (Model.orderTicket.Count == 0)
+{
+    <div class="no-data-message text-center">
+        <h2>No Orders Found</h2>
+        <p>Please check back later or add new orders.</p>
+    </div>
+}
+else
+{
+    @foreach (var ticket in Model.orderTicket)
+    {
+        <div class="card ticket" data-bs-toggle="modal" data-bs-target="#order-information"
+            onclick="getOrderInformation(@ticket.id)">
+            <!-- Card Header -->
+            <div class="card-header d-flex flex-column justify-content-between px-1">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="ticket-id fw-bold">#@ticket.id</span>
+                    <span>
+                        <i class="bi bi-stopwatch"></i>
+                        <span class="ticket-time" data-time="@ticket.time">@ticket.time</span>
+                    </span>
+                </div>
+                <div class="ticket-section">
+                    @ticket.sectionName - @ticket.tableName
+                </div>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body ticket-body px-1">
+                <ul class="list-unstyled mb-0">
+                    @foreach (var item in ticket.Items)
+                    {
+                        <li>
+                            <div class="d-flex justify-content-between">
+                                <span class="item-name">@item.Name</span>
+
+                                <span class="item-name">
+                                    @if (item.itemStatus)
+                                    {
+                                        @item.preparedItem
+                                    }
+                                    else
+                                    {
+                                        @(item.Quantity - item.preparedItem)
+                                    }
+                                </span>
+                            </div>
+                            <ul class="mb-0">
+                                @foreach (var modifier in item.ItemModifier)
+                                {
+                                    <li class="modifier-name">@modifier.Name</li>
+                                }
+                            </ul>
+                            @if (item.ItemInstruction != "No Instruction" && item.ItemInstruction != null)
+                            {
+                                <p class="m-0 ps-3 modifier-name">
+                                    <span class="instruction">Instruction:</span> @item.ItemInstruction
+                                </p>
+                            }
+                        </li>
+                    }
+
+                </ul>
+            </div>
+            <div class="card-footer modifier-name" style="height: 50px;">
+                @if (ticket.orderInstruction != "No Instruction" && ticket.orderInstruction != null)
+                {
+                    <span class="instruction">Order Instruction:</span> @ticket.orderInstruction
+                }
+            </div>
+        </div>
+    }
+}
+
+<script>
+    $(document).ready(function () {
+        totalOrder = @Model.totalOrder;
+        updateTicketTimes();
+    });
+
+    
+
+    // Function to update the time for each ticket
+    function updateTicketTimes() {
+        $('.ticket-time').each(function () {
+            const updatedAt = $(this).data('time'); // Get the initial time
+
+            if (updatedAt) {
+                // Update the content of the ticket-time span with the formatted difference
+                const now = new Date();
+                const updatedTime = new Date(updatedAt);
+                const diff = new Date(now - updatedTime);
+
+                // Calculate days, hours, minutes, and seconds
+                const days = Math.floor((now - updatedTime) / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
+                const hours = diff.getUTCHours();
+                const minutes = diff.getUTCMinutes();
+                const seconds = diff.getUTCSeconds();
+
+                var updatedTimeString = `${days} days ${hours} hours ${minutes} min ${seconds} sec`;
+                $(this).text(updatedTimeString);
+            }
+        });
+    }
+
+    setInterval(updateTicketTimes, 1000);
+</script>
