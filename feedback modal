@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Review Modal</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for stars -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .modal-header {
+            border-bottom: none;
+            padding: 15px 20px 0px 20px;
+        }
+        
+        .modal-body {
+            padding: 0px 20px 15px 20px;
+        }
+        
+        .rating-row {
+            display: flex;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+        
+        .rating-label {
+            flex: 1;
+            color: #6c757d;
+            font-weight: 500;
+        }
+        
+        .stars {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+        }
+        
+        .star {
+            font-size: 24px;
+            color: #e0e0e0;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        
+        .star:hover,
+        .star.selected {
+            color: #FFD700;
+        }
+        
+        .star:hover ~ .star,
+        .star.selected ~ .star {
+            color: #FFD700;
+        }
+        
+        textarea {
+            resize: none;
+            border-radius: 8px;
+            border-color: #e0e0e0;
+            padding: 10px;
+            width: 100%;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        
+        .btn-primary {
+            background-color: #0085ca;
+            border-color: #0085ca;
+            border-radius: 4px;
+            padding: 8px 25px;
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: #6c757d;
+            border-color: #6c757d;
+            border-radius: 4px;
+            padding: 8px 15px;
+        }
+        
+        .modal-footer {
+            justify-content: center;
+            border-top: none;
+            padding-top: 0;
+        }
+        
+        .btn-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Button to trigger modal -->
+    <button type="button" class="btn btn-primary" id="openReviewBtn" onclick="openReviewModal(1)">
+        Open Review Modal
+    </button>
+    
+    <script>
+        // Function to open the modal with a specific feedbackId
+        function openReviewModal(id) {
+            // Set the feedbackId
+            window.setFeedbackId(id);
+            
+            // Open the modal
+            $('#reviewModal').modal('show');
+        }
+    </script>
+
+    <!-- Review Modal -->
+    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reviewModalLabel">Customer Review</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Food Rating -->
+                    <div class="rating-row">
+                        <span class="rating-label">Food</span>
+                        <div class="stars" id="food-rating">
+                            <span class="star" data-value="5"><i class="fas fa-star"></i></span>
+                            <span class="star" data-value="4"><i class="fas fa-star"></i></span>
+                            <span class="star" data-value="3"><i class="fas fa-star"></i></span>
+                            <span class="star" data-value="2"><i class="fas fa-star"></i></span>
+                            <span class="star" data-value="1"><i class="fas fa-star"></i></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Rating -->
+                    <div class="rating-row">
+                        <span class="rating-label">Service</span>
+                        <div class="stars" id="service-rating">
+                            <span class="star" data-value="5"><i class="fas fa-star"></i></span>
+                            <span class="star" data-value="4"><i class="fas fa-star"></i></span>
+                            <span class="star" data-value="3"><i class="fas fa-star"></i></span>
+                            <span class="star" data-value="2"><i class="fas fa-star"></i></span>
+                            <span class="star" data-value="1"><i class="fas fa-star"></i></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Ambience Rating -->
+                    <div class="rating-row">
+                        <span class="rating-label">Ambience</span>
+                        <div class="stars" id="ambience-rating">
+                            <span class="star" data-value="5"><i class="fas fa-star"></i></span>
+                            <span class="star" data-value="4"><i class="fas fa-star"></i></span>
+                            <span class="star" data-value="3"><i class="fas fa-star"></i></span>
+                            <span class="star" data-value="2"><i class="fas fa-star"></i></span>
+                            <span class="star" data-value="1"><i class="fas fa-star"></i></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Comment -->
+                    <div class="form-group mt-3">
+                        <textarea class="form-control" id="reviewComment" rows="5" placeholder="Comment"></textarea>
+                    </div>
+                    
+                    <!-- Buttons -->
+                    <div class="btn-container text-center">
+                        <button type="button" class="btn btn-primary" id="saveReview">Save</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap and jQuery JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Initialize ratings
+            let foodRating = 0;
+            let serviceRating = 0;
+            let ambienceRating = 0;
+            // Default feedbackId - you'll need to set this dynamically
+            let feedbackId = 1; 
+            
+            // Function to set the feedbackId (call this when opening the modal)
+            function setFeedbackId(id) {
+                feedbackId = id;
+            }
+            
+            // Handle star hover and click for all rating categories
+            $('.stars .star').hover(
+                function() {
+                    // On hover in
+                    const stars = $(this).parent().find('.star');
+                    const value = $(this).data('value');
+                    
+                    // Reset all stars
+                    stars.removeClass('selected');
+                    
+                    // Highlight stars up to the hovered one
+                    for (let i = 1; i <= value; i++) {
+                        $(this).parent().find('.star[data-value="' + i + '"]').addClass('selected');
+                    }
+                },
+                function() {
+                    // On hover out - restore selected state based on the rating value
+                    const category = $(this).parent().attr('id');
+                    let rating = 0;
+                    
+                    if (category === 'food-rating') rating = foodRating;
+                    else if (category === 'service-rating') rating = serviceRating;
+                    else if (category === 'ambience-rating') rating = ambienceRating;
+                    
+                    updateStars($(this).parent(), rating);
+                }
+            );
+            
+            // Handle click on stars
+            $('.stars .star').click(function() {
+                const value = $(this).data('value');
+                const category = $(this).parent().attr('id');
+                
+                // Update the appropriate rating
+                if (category === 'food-rating') foodRating = value;
+                else if (category === 'service-rating') serviceRating = value;
+                else if (category === 'ambience-rating') ambienceRating = value;
+                
+                // Update the visual stars
+                updateStars($(this).parent(), value);
+            });
+            
+            // Function to update stars based on rating value
+            function updateStars(starsContainer, rating) {
+                // Reset all stars
+                starsContainer.find('.star').removeClass('selected');
+                
+                // Select appropriate stars based on rating
+                for (let i = 1; i <= rating; i++) {
+                    starsContainer.find('.star[data-value="' + i + '"]').addClass('selected');
+                }
+            }
+            
+            // Save review button
+            $('#saveReview').click(function() {
+                // Show loading state
+                const saveBtn = $(this);
+                const originalText = saveBtn.text();
+                saveBtn.prop('disabled', true).text('Saving...');
+                
+                const comment = $('#reviewComment').val().trim();
+                
+                // Create review object
+                const reviewData = {
+                    feedbackId: feedbackId,
+                    foodRating: foodRating,
+                    serviceRating: serviceRating,
+                    ambienceRating: ambienceRating,
+                    comment: comment
+                };
+                
+                // Send data to backend using AJAX
+                $.ajax({
+                    url: '/api/feedback', // Update with your actual API endpoint
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(reviewData),
+                    success: function(response) {
+                        console.log('Review submitted successfully:', response);
+                        
+                        // Close the modal
+                        $('#reviewModal').modal('hide');
+                        
+                        // Show success message
+                        alert('Thank you for your review!');
+                        
+                        // Reset the form
+                        resetForm();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error submitting review:', error);
+                        alert('There was an error submitting your review. Please try again.');
+                    },
+                    complete: function() {
+                        // Reset button state
+                        saveBtn.prop('disabled', false).text(originalText);
+                    }
+                });
+            });
+            
+            // Function to reset the form
+            function resetForm() {
+                foodRating = 0;
+                serviceRating = 0;
+                ambienceRating = 0;
+                
+                // Reset all stars
+                $('.stars').each(function() {
+                    updateStars($(this), 0);
+                });
+                
+                // Clear comment
+                $('#reviewComment').val('');
+            }
+            
+            // Expose the setFeedbackId function globally
+            window.setFeedbackId = setFeedbackId;
+        });
+    </script>
+</body>
+</html>
