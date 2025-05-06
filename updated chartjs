@@ -1,0 +1,145 @@
+// Common chart options for both charts to maintain consistency
+const commonChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+        legend: {
+            labels: {
+                font: { size: 13 },
+                color: '#333'
+            }
+        },
+        tooltip: {
+            callbacks: {
+                label: function(context) {
+                    // Format numbers with commas
+                    return context.dataset.label + ': ' + context.parsed.y.toLocaleString();
+                }
+            }
+        }
+    },
+    scales: {
+        x: {
+            ticks: {
+                color: '#333',
+                font: { size: 11 }
+            },
+            grid: {
+                color: 'rgba(0, 0, 0, 0.05)'
+            }
+        },
+        y: {
+            beginAtZero: true,
+            ticks: {
+                color: '#333',
+                font: { size: 11 },
+                callback: function(value) {
+                    // Format numbers with commas on the y-axis
+                    return value.toLocaleString();
+                }
+            },
+            grid: {
+                color: 'rgba(0, 0, 0, 0.05)'
+            }
+        }
+    },
+    elements: {
+        line: {
+            tension: 0.4 // Smooth curve
+        },
+        point: {
+            radius: 4,
+            hoverRadius: 6
+        }
+    },
+    animation: {
+        duration: 1000,
+        easing: 'easeOutQuart'
+    }
+};
+
+// Revenue chart setup
+var ctx1 = $('#revenueChart')[0].getContext('2d');
+var revenueChart = new Chart(ctx1, {
+    type: 'line',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [{
+            label: 'Revenue',
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2000, 0],
+            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderWidth: 2,
+            fill: true,
+            pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 1
+        }]
+    },
+    options: commonChartOptions
+});
+
+// Customer growth chart setup
+var ctx2 = $('#customerGrowthChart')[0].getContext('2d');
+var customerGrowthChart = new Chart(ctx2, {
+    type: 'line',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [{
+            label: 'Customer',
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5],
+            borderColor: 'rgba(153, 102, 255, 1)',
+            backgroundColor: 'rgba(153, 102, 255, 0.2)',
+            borderWidth: 2,
+            fill: true,
+            pointBackgroundColor: 'rgba(153, 102, 255, 1)',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 1
+        }]
+    },
+    options: commonChartOptions
+});
+
+// Function to update both charts with new data
+function updateCharts(data) {
+    // Update Revenue Chart
+    revenueChart.data.labels = data.label; // The labels array
+    revenueChart.data.datasets[0].data = data.revenueData; // The revenue data array
+    
+    // Update Customer Growth Chart
+    customerGrowthChart.data.labels = data.label; // The same labels array
+    customerGrowthChart.data.datasets[0].data = data.customerCounts; // The customer counts array
+    
+    // Optional: Animate the update with a slower duration for better visualization
+    revenueChart.update({
+        duration: 800,
+        easing: 'easeOutQuart'
+    });
+    
+    customerGrowthChart.update({
+        duration: 800,
+        easing: 'easeOutQuart'
+    });
+}
+
+// Example of how to handle empty data or zero values better
+function enhanceDataVisualization(chart) {
+    // Check if all data values are zero
+    const allZeros = chart.data.datasets[0].data.every(value => value === 0);
+    
+    if (allZeros) {
+        // Add a better visual indicator for empty data
+        chart.options.plugins.tooltip.callbacks.title = function() {
+            return 'No data available for this period';
+        };
+        
+        // You could also add a custom annotation plugin to show a message
+        // This requires Chart.js annotation plugin
+    }
+    
+    chart.update();
+}
+
+// Optional: Call this function if you want to check and enhance empty datasets
+// enhanceDataVisualization(revenueChart);
+// enhanceDataVisualization(customerGrowthChart);
